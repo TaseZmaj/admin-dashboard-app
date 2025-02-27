@@ -97,8 +97,12 @@ The ability to view:
 Theese are some of the design ideas:
 
 - [Design1](https://www.behance.net/gallery/184403667/E-commerce-Admin-Dashboard-Design)
-  - ![]("./public/designs/Design1.jpg")
+
+  - ![](./public/designs/Design1.jpg)
+
 - [Design2](https://www.behance.net/gallery/177641865/Admin-Dashboard-Design?tracking_source=search_projects|e-commerce+admin+dashboard+design&l=0)
-  - ![]("./public/designs/Design2.jpg)
+
+  - ![](./public/designs/Design2.jpg)
+
 - [Design3](https://www.behance.net/gallery/212217641/Cybersecurity-Dashboard)
-  - ![]("./public/designs/Design3.jpg")
+  - ![](./public/designs/Design3.jpg)
