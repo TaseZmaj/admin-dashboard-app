@@ -9,7 +9,7 @@ A work-in-progress project for my portfolio designed exclusively with frontend t
     - [Requests](#requests)
     - [Features](#features)
     - [Pages](#pages)
-      - [Dashboard](#dashboard-homepage);
+      - [Dashboard](#dashboard-homepage)
       - [Goods](#goods-page)
       - [Services](#services-page)
       - [Profits]()
@@ -68,7 +68,7 @@ Based on that filter:
   The data will be displayed with these components:
 - The **lists** will also display the data from the _current_ week/month/year/last 2 years. <!-- They are called lists here, but in practice - define them as card components. -->
 
-1. <span style="color: #ffd233;">Sales revenue card</span> - displays total revenue.
+1. <span style="color:#f2bc00"> **Sales revenue card**</span> - displays total revenue.
 2. **Sales profit card** - displays sales profit (revenue - expenses).
 3. **New customers card** - displays the number of new customers (based on data from the past week, month, year or 2 years according to the filter).
 4. **Average order value card** - displays the average price of the total orders of all customers based on the specified filter.
@@ -101,10 +101,6 @@ The elements in the Dashboard must be **draggable** so that the Admin can custom
   - Bar charts for comparisons
   - Pie charts for distribution
 
-### Other functionalities
-
-If the admin IS NOT logged in - don't allow other routes other than the /login route
-
 #### Goods page
 
 - list of all goods sales, sorted by filter (alphabet, price, date)
@@ -125,7 +121,7 @@ If the admin IS NOT logged in - don't allow other routes other than the /login r
     -The month before
     -The year before and two years before
 
-### Analytics page
+#### Analytics page
 
 - The analytics page is a page to analyze the performance of employees. It is mostly comprised of charts and a where the employees are ordered in a decending order where the employee who made the company the most revenue is ranked at the top.
 - Just as the [dashboard home page](#dashboard-homepage) and the [profits page](#profits), there will be the same filter - "last 7 days", "last 30 days", "last year", "last 2 years" for a comparrison of the employee's sales data.
@@ -134,14 +130,18 @@ If the admin IS NOT logged in - don't allow other routes other than the /login r
 1. A pie chart for the display of employees
    - List of all employees, sorted by filter (alphabed, most/least sales, date)
 
-### Login page
+#### Login page
 
 - Upon opening the app this is the main page
 
-### Error page
+#### Error page
 
 - Invalid URL handling
 - Link to previous page and/or Homepage
+
+### Other functionalities
+
+If the admin IS NOT logged in - don't allow other routes other than the /login route
 
 ## Technologies
 
