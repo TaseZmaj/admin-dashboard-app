@@ -125,8 +125,10 @@ If the admin IS NOT logged in - don't allow other routes other than the /login r
 
 ### Analytics page
 
--Chart for total sales
--List of all employees, sorted by filter (alphabed, most/least sales, date)
+Just as the [dashboard home page](#dashboard-homepage) and the [profits page](#profits), there will be the same filter - "last 7 days", "last 30 days", "last year", "last 2 years" for a comparrison of the sales data. The data will be presented as charts which include:
+
+1.  -Chart for total sales
+    -List of all employees, sorted by filter (alphabed, most/least sales, date)
 
 ### Login page
 
