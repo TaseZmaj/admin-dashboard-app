@@ -68,7 +68,7 @@ Based on that filter:
   The data will be displayed with these components:
 - The **lists** will also display the data from the _current_ week/month/year/last 2 years. <!-- They are called lists here, but in practice - define them as card components. -->
 
-1. **Sales revenue card** - displays total revenue.
+1. <p style="color: #ffd233;">Sales revenue card</p> - displays total revenue.
 2. **Sales profit card** - displays sales profit (revenue - expenses).
 3. **New customers card** - displays the number of new customers (based on data from the past week, month, year or 2 years according to the filter).
 4. **Average order value card** - displays the average price of the total orders of all customers based on the specified filter.
@@ -108,11 +108,13 @@ If the admin IS NOT logged in - don't allow other routes other than the /login r
 #### Goods page
 
 - list of all goods sales, sorted by filter (alphabet, price, date)
+- upon clicking one of the list item - go to a [dynamically generated good page](Dynamic-good-page) for that particular _good_ just the same as in the [Dashboard homepage](#dashboard-homepage)
 - add pagination
 
 #### Services page
 
 - list of all services sales, sorted by filter (alphabet, price, date)
+- upon clicking one of the list item - go to a [dynamically generated good page](Dynamic-service-page) for that particular _service_ just the same as in the [Dashboard homepage](#dashboard-homepage)
 - add pagination
 
 #### Profits page (with Analytics)
@@ -125,10 +127,12 @@ If the admin IS NOT logged in - don't allow other routes other than the /login r
 
 ### Analytics page
 
-Just as the [dashboard home page](#dashboard-homepage) and the [profits page](#profits), there will be the same filter - "last 7 days", "last 30 days", "last year", "last 2 years" for a comparrison of the sales data. The data will be presented as charts which include:
+- The analytics page is a page to analyze the performance of employees. It is mostly comprised of charts and a where the employees are ordered in a decending order where the employee who made the company the most revenue is ranked at the top.
+- Just as the [dashboard home page](#dashboard-homepage) and the [profits page](#profits), there will be the same filter - "last 7 days", "last 30 days", "last year", "last 2 years" for a comparrison of the employee's sales data.
+- The elements that comprise this page include:
 
-1.  -Chart for total sales
-    -List of all employees, sorted by filter (alphabed, most/least sales, date)
+1. A pie chart for the display of employees
+   - List of all employees, sorted by filter (alphabed, most/least sales, date)
 
 ### Login page
 
@@ -171,6 +175,9 @@ These are some of the current design ideas:
 
 - [Design 3](https://www.behance.net/gallery/212217641/Cybersecurity-Dashboard)
   ![](./public/designs/Design3.jpg)
+
+- [Design 4](https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html)
+  ![](./public/designs/Design4.jpg)
 
 ## Admin-dashboard example <!--TODO: Remove after completion -->
 
