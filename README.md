@@ -68,7 +68,7 @@ Based on that filter:
   The data will be displayed with these components:
 - The **lists** will also display the data from the _current_ week/month/year/last 2 years. <!-- They are called lists here, but in practice - define them as card components. -->
 
-1. <p style="color: #ffd233;">Sales revenue card</p> - displays total revenue.
+1. <span style="color: #ffd233;">Sales revenue card</span> - displays total revenue.
 2. **Sales profit card** - displays sales profit (revenue - expenses).
 3. **New customers card** - displays the number of new customers (based on data from the past week, month, year or 2 years according to the filter).
 4. **Average order value card** - displays the average price of the total orders of all customers based on the specified filter.
