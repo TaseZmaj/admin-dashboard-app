@@ -1,8 +1,10 @@
-# Administrator Dashboard 
+# Administrator Dashboard
 
 A work-in-progress project for my portfolio designed exclusively with frontend technologies using a dummy API and some generated mock data.
 
 # Overview
+
+<!--TODO: FIX THE LINKS!!!-->
 
 - [Requests and Features](#Requests-and-features)
 
