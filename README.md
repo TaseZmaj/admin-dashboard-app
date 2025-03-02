@@ -12,13 +12,17 @@ A work-in-progress project for my portfolio designed exclusively with frontend t
 
 - [Pages](#pages)
 
+  - [Login](#login-page)
   - [Dashboard](#dashboard-homepage)
   - [Goods](#goods-page)
   - [Services](#services-page)
   - [Analytics](#analytics-page)
-  - [Customers](#sales-channels-page)
-  - [Sales Channels]()
-  - [Login](#login-page)
+  - [Sales Channels](#sales-channels-page)
+  - [Customers](#customers-page)
+  - [Dynamic Good page](#dynamic-good-page)
+  - [Dynamic Service page](#dynamic-service-page)
+  - [Dynamic Salesperson page](#dynamic-salesperson-page)
+  - [Dynamic Sales Channel page](#dynamic-sales-channel-page)
   - [Error](#error-page)
 
 - [Technologies](#technologies)
@@ -220,11 +224,55 @@ Another functionality - A comparrison sub-page that implements the time filter. 
 
 ## Sales channels page
 
-This page includes a **list** of all the sales channels (physical locations) that the business owns. Upon clicking one of these physical locations a (Dynamic sales channel page)[#dynamic-sales-channel-page] is opened in which data for the location is displayed.
+<!--TODO: Write page blue print -->
+
+This page includes a **list** of all the sales channels. Upon clicking one of these physical locations a (Dynamic sales channel page)[#dynamic-sales-channel-page] is opened in which data for the location is displayed.
+
+<!-- A sales channel refers to the method or platform a business uses to sell products or services. Examples include:
+
+Direct Sales – Selling directly to customers (e.g., in-store, online shop).
+Retail Sales – Selling through third-party stores.
+Wholesale – Selling in bulk to other businesses.
+E-commerce – Selling via online platforms (Amazon, Shopify, etc.).
+Social Media Sales – Selling through Instagram, Facebook, etc.-->
+
+<br>
+
+## Customers page
+
+<!--TODO: Write page blue print -->
+
+<br>
+
+## Dynamic good page
+
+<!--TODO: Write page blue print -->
+
+<br>
+
+## Dynamic service page
+
+<!--TODO: Write page blue print -->
+
+<br>
+
+## Dynamic salesperson page
+
+<!--TODO: Write page blue print -->
+
+<br>
+
+## Dynamic sales channel page
+
+<!--TODO: Write page blue print -->
 
 <br>
 
 ## Error page
+
+<!--TODO: Write page blue print -->
+
+<br>
 
 This page will be used for invalid URLs. It must include a link to previous page and/or Homepage
 
