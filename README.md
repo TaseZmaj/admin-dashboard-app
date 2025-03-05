@@ -594,3 +594,4 @@ Freestyle this one
 # Admin-dashboard example <!--TODO: Remove after completion -->
 
 - [An example](https://example.admin.refine.dev)
+- [Material UI example](https://mui.com/material-ui/getting-started/templates/dashboard/)
