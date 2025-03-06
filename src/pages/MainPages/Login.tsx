@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import useAuth from "../../hooks/useAuth";
 import {
   Box,
   FormControl,
@@ -11,9 +14,21 @@ import {
 } from "@mui/material";
 
 function Login() {
-  function handleSubmit(event: React.SyntheticEvent) {
+  const { logIn, isAuthenticated } = useAuth();
+  const [username, setUsername] = useState("Stefan Tasevski");
+  const [password, setPassword] = useState("password");
+  const navigate = useNavigate();
+  // TODO: Add a "See password" icon on the right of the password input
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
+
+  async function handleSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
-    console.log(event);
+    if (username && password) logIn(username, password);
   }
 
   return (
@@ -62,7 +77,11 @@ function Login() {
               fullWidth
             >
               <InputLabel htmlFor="username">Username</InputLabel>
-              <Input id="username" />
+              <Input
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
             </FormControl>
 
             <FormControl
@@ -74,7 +93,12 @@ function Login() {
               fullWidth
             >
               <InputLabel htmlFor="password">Password</InputLabel>
-              <Input type="password" id="password" />
+              <Input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </FormControl>
 
             <FormControlLabel
