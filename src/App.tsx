@@ -12,6 +12,7 @@ const Compare = lazy(() => import("./pages/MainPages/Compare.tsx"));
 const Login = lazy(() => import("./pages/MainPages/Login.tsx"));
 const Error = lazy(() => import("./pages/MainPages/Error.tsx"));
 import Loading from "./pages/MainPages/Loading.tsx";
+import AppTheme from "./theme/AppTheme.tsx";
 
 const SingleGood = lazy(() => import("./pages/DynamicPages/SingleGood.tsx"));
 const SingleService = lazy(
@@ -31,34 +32,36 @@ const SingleOrder = lazy(() => import("./pages/DynamicPages/SingleOrder.tsx"));
 export default function App() {
   return (
     <BrowserRouter>
-      <Suspense fallback={<Loading />}>
-        <Routes>
-          <Route index path="/" element={<Homepage />}></Route>
-          <Route path="goods" element={<Goods />}></Route>
-          <Route path="services" element={<Services />}></Route>
-          <Route path="analytics" element={<Analytics />}></Route>
-          <Route path="sales-channels" element={<SalesChannels />}></Route>
-          <Route path="customers" element={<Customers />}></Route>
-          <Route path="orders" element={<Orders />}></Route>
+      <AppTheme>
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            <Route index path="/" element={<Homepage />}></Route>
+            <Route path="goods" element={<Goods />}></Route>
+            <Route path="services" element={<Services />}></Route>
+            <Route path="analytics" element={<Analytics />}></Route>
+            <Route path="sales-channels" element={<SalesChannels />}></Route>
+            <Route path="customers" element={<Customers />}></Route>
+            <Route path="orders" element={<Orders />}></Route>
 
-          <Route path="goods/:goodId" element={<SingleGood />} />
-          <Route path="services/:serviceId" element={<SingleService />} />
-          <Route path="customers/:customerId" element={<SingleCustomer />} />
-          <Route path="order/:orderId" element={<SingleOrder />}></Route>
-          <Route
-            path="sales-channels/:salesChannelId"
-            element={<SingleSalesChannel />}
-          />
-          <Route
-            path="salesperson/:salesPersonId"
-            element={<SingleSalesPerson />}
-          />
+            <Route path="goods/:goodId" element={<SingleGood />} />
+            <Route path="services/:serviceId" element={<SingleService />} />
+            <Route path="customers/:customerId" element={<SingleCustomer />} />
+            <Route path="order/:orderId" element={<SingleOrder />} />
+            <Route
+              path="sales-channels/:salesChannelId"
+              element={<SingleSalesChannel />}
+            />
+            <Route
+              path="salesperson/:salesPersonId"
+              element={<SingleSalesPerson />}
+            />
 
-          <Route path="compare" element={<Compare />} />
-          <Route path="login" element={<Login />} />
-          <Route path="*" element={<Error />} />
-        </Routes>
-      </Suspense>
+            <Route path="compare" element={<Compare />} />
+            <Route path="login" element={<Login />} />
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </Suspense>
+      </AppTheme>
     </BrowserRouter>
   );
 }

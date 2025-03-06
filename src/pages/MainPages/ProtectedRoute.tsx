@@ -1,3 +1,7 @@
-export default function ProtectedRoute() {
-  return <div>ProtectedRoute</div>;
+export default function ProtectedRoute({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <div>{children}</div>;
 }
