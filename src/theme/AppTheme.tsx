@@ -1,5 +1,5 @@
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { orange, blue } from "@mui/material/colors";
+import { orange, blue, red } from "@mui/material/colors";
 
 export default function AppTheme({ children }: { children: React.ReactNode }) {
   const customTheme = createTheme({
@@ -10,9 +10,12 @@ export default function AppTheme({ children }: { children: React.ReactNode }) {
         dark: orange[600],
       },
       secondary: {
-        main: blue[200],
-        light: blue[400],
+        main: blue[400],
+        light: blue[200],
         dark: blue[700],
+      },
+      warning: {
+        main: red[600],
       },
     },
     typography: {
