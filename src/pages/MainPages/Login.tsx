@@ -11,24 +11,52 @@ import {
   Button,
   FormControlLabel,
   Checkbox,
+  FormHelperText,
 } from "@mui/material";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import validateForm from "../../utils/formValidation";
+import CustomInput from "../../components/CustomInput";
 
-function Login() {
+export default function Login() {
   const { logIn, isAuthenticated } = useAuth();
-  const [username, setUsername] = useState("Stefan Tasevski");
-  const [password, setPassword] = useState("password");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [passVisibility, setPassVisibility] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-  // TODO: Add a "See password" icon on the right of the password input
+
+  // TODO: Swap the error use states with the useError() context
 
   useEffect(() => {
     if (isAuthenticated) {
+      handleResetErrors();
       navigate("/");
     }
   }, [isAuthenticated, navigate]);
 
-  async function handleSubmit(event: React.SyntheticEvent) {
+  function handleSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
-    if (username && password) logIn(username, password);
+
+    try {
+      if (username && password && validateForm(username, password)) {
+        logIn(username, password);
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(error);
+        setErrorMessage(error.message);
+      } else {
+        console.error("Unknown Error");
+      }
+      setError(true);
+    }
+  }
+
+  function handleResetErrors() {
+    setError(false);
+    setErrorMessage("");
   }
 
   return (
@@ -45,7 +73,6 @@ function Login() {
         <Card
           variant="outlined"
           sx={{
-            border: "1px solid rgba(0, 0, 0, 0.12)",
             minWidth: "fit-content",
             minHeight: "fit-content",
             width: "300px",
@@ -63,43 +90,115 @@ function Login() {
               display: "flex",
               flexDirection: "column",
               width: "100%",
-              gap: 3,
+              gap: 2.2,
             }}
           >
-            {/* <TextField label="Username" variant="outlined" fullWidth />
-            <TextField label="Password" variant="outlined" fullWidth /> */}
-            <FormControl
-              size="medium"
-              variant="outlined"
-              color="primary"
-              margin="normal"
-              required
-              fullWidth
-            >
-              <InputLabel htmlFor="username">Username</InputLabel>
-              <Input
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </FormControl>
+            {/*TODO: Swap the error use states with the useError() context */}
+            <CustomInput
+              type="username"
+              state={username}
+              setter={setUsername}
+            />
 
-            <FormControl
-              size="medium"
-              variant="outlined"
-              color="primary"
-              margin="normal"
-              required
-              fullWidth
+            <CustomInput
+              type="password"
+              state={password}
+              setter={setPassword}
+            />
+
+            {/* <Box
+              sx={{
+                height: "70px",
+              }}
             >
-              <InputLabel htmlFor="password">Password</InputLabel>
-              <Input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </FormControl>
+              <FormControl
+                onFocus={() => handleResetErrors()}
+                size="medium"
+                variant="outlined"
+                color="primary"
+                margin="normal"
+                required
+                fullWidth
+                error={
+                  error && errorMessage.includes("username") ? true : false
+                }
+              >
+                <InputLabel htmlFor="username">Username</InputLabel>
+                <Input
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  autoFocus
+                />
+                {error && errorMessage.includes("username") ? (
+                  <FormHelperText error variant="standard" id="my-helper-text">
+                    {errorMessage}
+                  </FormHelperText>
+                ) : null}
+              </FormControl>
+            </Box>
+
+            <Box
+              sx={{
+                height: "70px",
+              }}
+            >
+              <FormControl
+                onFocus={() => handleResetErrors()}
+                size="medium"
+                variant="outlined"
+                color="primary"
+                margin="normal"
+                required
+                fullWidth
+                error={
+                  error && errorMessage.includes("password") ? true : false
+                }
+              >
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <Input
+                  type={!passVisibility ? "password" : ""}
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {passVisibility ? (
+                  <VisibilityOutlinedIcon
+                    sx={{
+                      position: "absolute",
+                      right: 0,
+                      top: 21,
+                      cursor: "pointer",
+                      transition: "all 0.1s ease-in-out",
+                      ":hover": {
+                        scale: 1.15,
+                      },
+                    }}
+                    color="warning"
+                    onClick={() => setPassVisibility((v) => !v)}
+                  />
+                ) : (
+                  <VisibilityOffOutlinedIcon
+                    sx={{
+                      position: "absolute",
+                      right: 0,
+                      top: 21,
+                      cursor: "pointer",
+                      transition: "all 0.1s ease-in-out",
+                      ":hover": {
+                        scale: 1.15,
+                      },
+                    }}
+                    onClick={() => setPassVisibility((v) => !v)}
+                  />
+                )}
+                {error && errorMessage.includes("password") ? (
+                  <FormHelperText error variant="standard" id="my-helper-text">
+                    {errorMessage}
+                  </FormHelperText>
+                ) : null}
+              </FormControl>
+            </Box> */}
 
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -107,7 +206,6 @@ function Login() {
                 <Typography sx={{ fontSize: "0.9rem" }}>Remember me</Typography>
               }
             />
-
             <Button type="submit" fullWidth variant="contained" color="primary">
               Login
             </Button>
@@ -117,5 +215,3 @@ function Login() {
     </>
   );
 }
-
-export default Login;
