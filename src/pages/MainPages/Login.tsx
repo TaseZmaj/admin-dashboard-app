@@ -1,37 +1,28 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
+import useErrors from "../../hooks/useErrors";
+import validateForm from "../../utils/formValidation";
 import {
   Box,
-  FormControl,
   Typography,
-  InputLabel,
-  Input,
   Card,
   Button,
   FormControlLabel,
   Checkbox,
-  FormHelperText,
 } from "@mui/material";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import validateForm from "../../utils/formValidation";
-import CustomInput from "../../components/CustomInput";
+import FromInput from "../../components/FormInput";
 
 export default function Login() {
+  const { loginError, resetErrors } = useErrors();
   const { logIn, isAuthenticated } = useAuth();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [passVisibility, setPassVisibility] = useState(false);
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [username, setUsername] = useState("Stefan Tasevski");
+  const [password, setPassword] = useState("password");
   const navigate = useNavigate();
-
-  // TODO: Swap the error use states with the useError() context
 
   useEffect(() => {
     if (isAuthenticated) {
-      handleResetErrors();
+      resetErrors();
       navigate("/");
     }
   }, [isAuthenticated, navigate]);
@@ -45,18 +36,20 @@ export default function Login() {
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.error(error);
-        setErrorMessage(error.message);
+        if (error.message.toLowerCase().includes("username"))
+          loginError({
+            errorMessage: error.message,
+            errorType: "invalidUsername",
+          });
+        if (error.message.toLowerCase().includes("password"))
+          loginError({
+            errorMessage: error.message,
+            errorType: "invalidPassword",
+          });
       } else {
         console.error("Unknown Error");
       }
-      setError(true);
     }
-  }
-
-  function handleResetErrors() {
-    setError(false);
-    setErrorMessage("");
   }
 
   return (
@@ -93,113 +86,20 @@ export default function Login() {
               gap: 2.2,
             }}
           >
-            {/*TODO: Swap the error use states with the useError() context */}
-            <CustomInput
+            <FromInput
               type="username"
               state={username}
               setter={setUsername}
+              variant="outlined"
             />
-
-            <CustomInput
+            <FromInput
               type="password"
               state={password}
               setter={setPassword}
+              variant="outlined"
             />
 
-            {/* <Box
-              sx={{
-                height: "70px",
-              }}
-            >
-              <FormControl
-                onFocus={() => handleResetErrors()}
-                size="medium"
-                variant="outlined"
-                color="primary"
-                margin="normal"
-                required
-                fullWidth
-                error={
-                  error && errorMessage.includes("username") ? true : false
-                }
-              >
-                <InputLabel htmlFor="username">Username</InputLabel>
-                <Input
-                  id="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  autoFocus
-                />
-                {error && errorMessage.includes("username") ? (
-                  <FormHelperText error variant="standard" id="my-helper-text">
-                    {errorMessage}
-                  </FormHelperText>
-                ) : null}
-              </FormControl>
-            </Box>
-
-            <Box
-              sx={{
-                height: "70px",
-              }}
-            >
-              <FormControl
-                onFocus={() => handleResetErrors()}
-                size="medium"
-                variant="outlined"
-                color="primary"
-                margin="normal"
-                required
-                fullWidth
-                error={
-                  error && errorMessage.includes("password") ? true : false
-                }
-              >
-                <InputLabel htmlFor="password">Password</InputLabel>
-                <Input
-                  type={!passVisibility ? "password" : ""}
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                {passVisibility ? (
-                  <VisibilityOutlinedIcon
-                    sx={{
-                      position: "absolute",
-                      right: 0,
-                      top: 21,
-                      cursor: "pointer",
-                      transition: "all 0.1s ease-in-out",
-                      ":hover": {
-                        scale: 1.15,
-                      },
-                    }}
-                    color="warning"
-                    onClick={() => setPassVisibility((v) => !v)}
-                  />
-                ) : (
-                  <VisibilityOffOutlinedIcon
-                    sx={{
-                      position: "absolute",
-                      right: 0,
-                      top: 21,
-                      cursor: "pointer",
-                      transition: "all 0.1s ease-in-out",
-                      ":hover": {
-                        scale: 1.15,
-                      },
-                    }}
-                    onClick={() => setPassVisibility((v) => !v)}
-                  />
-                )}
-                {error && errorMessage.includes("password") ? (
-                  <FormHelperText error variant="standard" id="my-helper-text">
-                    {errorMessage}
-                  </FormHelperText>
-                ) : null}
-              </FormControl>
-            </Box> */}
-
+            {/* TODO: Add remember me functionality - localStorage maybe? */}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label={
