@@ -1,3 +1,6 @@
+import { useState } from "react";
+import useErrors from "../hooks/useErrors";
+import capitalize from "../utils/capitalize";
 import {
   Box,
   FormControl,
@@ -7,17 +10,20 @@ import {
 } from "@mui/material";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import useErrors from "../hooks/useErrors";
-import { useState } from "react";
-import capitalize from "../utils/capitalize";
 
 interface Props {
   type: "username" | "password";
   state: string;
   setter: (value: string) => void;
+  variant: "outlined" | "filled" | "standard";
 }
 
-export default function CustomInput({ type, state, setter }: Props) {
+export default function CustomInput({
+  type,
+  state,
+  setter,
+  variant = "standard",
+}: Props) {
   const { error, errorMessage, resetErrors } = useErrors();
   const [passVisibility, setPassVisibility] = useState(false);
 
@@ -30,7 +36,7 @@ export default function CustomInput({ type, state, setter }: Props) {
       <FormControl
         onFocus={() => resetErrors()}
         size="medium"
-        variant="outlined"
+        variant={variant}
         color="primary"
         margin="normal"
         required
@@ -38,16 +44,30 @@ export default function CustomInput({ type, state, setter }: Props) {
         error={error && errorMessage.includes(type) ? true : false}
       >
         <InputLabel htmlFor={type}>{capitalize(type)}</InputLabel>
-        <Input
-          id={type}
-          type={type === "password" && !passVisibility ? "password" : ""}
-          value={state}
-          onChange={(event: { target: { value: string } }) =>
-            setter(event.target.value)
-          }
-          autoFocus
-        />
 
+        {/* Autofocus on username input */}
+        {type === "username" ? (
+          <Input
+            autoFocus
+            id={type}
+            type={type}
+            value={state}
+            onChange={(event: { target: { value: string } }) =>
+              setter(event.target.value)
+            }
+          />
+        ) : (
+          <Input
+            id={type}
+            type={!passVisibility ? "password" : ""}
+            value={state}
+            onChange={(event: { target: { value: string } }) =>
+              setter(event.target.value)
+            }
+          />
+        )}
+
+        {/* Password Visibility Icon */}
         {type === "password" ? (
           passVisibility ? (
             <VisibilityOutlinedIcon
