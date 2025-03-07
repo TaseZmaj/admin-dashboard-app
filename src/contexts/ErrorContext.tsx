@@ -1,39 +1,48 @@
-import { createContext, useReducer } from "react";
+import { useReducer, createContext } from "react";
 
 interface State {
   error: boolean;
+  errorType: ErrorType;
   errorMessage: string;
-  // TODO: Maybe add another state here errorType, so you dont have to use .include in the
-  //components
 }
 
 type Action =
-  | { type: "usernameError"; payload: string }
-  | { type: "passwordError"; payload: string }
   | {
-      type: "resetError";
+      type: "loginError";
+      payload: LoginErrorPayload;
+    }
+  | {
+      type: "resetErrors";
     };
 
-interface ErrorContextType {
-  error: boolean;
-  errorMessage: string;
-  usernameError: () => void;
-  passwordError: () => void;
+interface ErrorContextType extends State {
+  loginError: (errorPackage: LoginErrorPayload) => void;
   resetErrors: () => void;
+}
+
+type ErrorType = "invalidUsername" | "invalidPassword" | "";
+
+interface LoginErrorPayload {
+  errorMessage: string;
+  errorType: ErrorType;
 }
 
 const initialState: State = {
   error: false,
   errorMessage: "",
+  errorType: "",
 };
 
 function reducer(state: State, action: Action) {
   switch (action.type) {
-    case "usernameError":
-      return { ...state, error: true };
-    case "passwordError":
-      return { ...state, error: true, errorMessage: action.payload };
-    case "resetError":
+    case "loginError":
+      return {
+        ...state,
+        error: true,
+        errorMessage: action.payload.errorMessage,
+        errorType: action.payload.errorType,
+      };
+    case "resetErrors":
       return initialState;
     default:
       throw new Error("Invalid action type");
@@ -43,26 +52,26 @@ function reducer(state: State, action: Action) {
 const ErrorContext = createContext<ErrorContextType | null>(null);
 
 function ErrorProvider({ children }: { children: React.ReactNode }) {
-  const [{ error, errorMessage }, dispatch] = useReducer(reducer, initialState);
+  const [{ error, errorMessage, errorType }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
 
   function resetErrors() {
-    dispatch({ type: "resetError" });
+    dispatch({ type: "resetErrors" });
   }
 
-  function usernameError() {
-    dispatch({ type: "usernameError", payload: "Invalid username!" });
-  }
-  function passwordError() {
-    dispatch({ type: "passwordError", payload: "Invalid password!" });
+  function loginError(errorPackage: LoginErrorPayload) {
+    dispatch({ type: "loginError", payload: errorPackage });
   }
 
   return (
     <ErrorContext
       value={{
         error,
+        errorType,
         errorMessage,
-        usernameError,
-        passwordError,
+        loginError,
         resetErrors,
       }}
     >

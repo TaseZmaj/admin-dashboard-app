@@ -7,9 +7,7 @@ interface State {
 
 type Action = { type: "login"; payload: string } | { type: "logout" };
 
-interface AuthContextType {
-  username: string;
-  isAuthenticated: boolean;
+interface AuthContextType extends State {
   logIn: (username: string, password: string) => void;
   logOut: () => void;
 }
