@@ -61,8 +61,8 @@ function ErrorProvider({ children }: { children: React.ReactNode }) {
     dispatch({ type: "resetErrors" });
   }
 
-  function loginError(errorPackage: LoginErrorPayload) {
-    dispatch({ type: "loginError", payload: errorPackage });
+  function loginError(errorPayload: LoginErrorPayload) {
+    dispatch({ type: "loginError", payload: errorPayload });
   }
 
   return (
