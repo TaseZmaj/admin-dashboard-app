@@ -1,14 +1,9 @@
-import { Button, Typography } from "@mui/material";
-import { Link } from "react-router";
+import { Typography } from "@mui/material";
 
 function Homepage() {
   return (
     <div>
-      <Button>Click me!</Button>
       <Typography>Dashboard Homepage</Typography>
-      <Button>
-        <Link to="/goods">Goods page</Link>
-      </Button>
     </div>
   );
 }
