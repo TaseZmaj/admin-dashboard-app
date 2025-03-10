@@ -1,6 +1,6 @@
 import { useState } from "react";
-import useErrors from "../hooks/useErrors";
-import capitalize from "../utils/capitalize";
+import useErrors from "../../hooks/useErrors";
+import capitalize from "../../utils/capitalize.ts";
 import {
   Box,
   FormControl,
@@ -26,6 +26,8 @@ export default function CustomInput({
 }: Props) {
   const { error, errorMessage, resetErrors } = useErrors();
   const [passVisibility, setPassVisibility] = useState(false);
+
+  // TODO: Make this component as ABSTRACT as possible
 
   return (
     <Box
