@@ -1,10 +1,12 @@
 import { Typography } from "@mui/material";
+import NavBar from "../../components/Dynamic/Navbar/NavBar.tsx";
 
 function Homepage() {
   return (
-    <div>
+    <>
+      <NavBar />
       <Typography>Dashboard Homepage</Typography>
-    </div>
+    </>
   );
 }
 
