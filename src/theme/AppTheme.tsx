@@ -5,7 +5,7 @@ export default function AppTheme({ children }: { children: React.ReactNode }) {
   const customTheme = createTheme({
     palette: {
       primary: {
-        main: orange[400],
+        main: orange[400], //#ffca28
         light: orange[200],
         dark: orange[600],
       },
