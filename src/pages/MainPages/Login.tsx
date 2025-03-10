@@ -11,7 +11,8 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material";
-import FromInput from "../../components/FormInput";
+import FromInput from "../../components/Dynamic/FormInput.tsx";
+import Logo from "../../components/Static/Logo.tsx";
 
 export default function Login() {
   const { loginError, resetErrors } = useErrors();
@@ -70,12 +71,26 @@ export default function Login() {
             minHeight: "fit-content",
             width: "300px",
             p: "20px 35px 30px 35px",
+            // boxShadow: " 0px 0px 68px 0px rgba(255,201,40,0.49)",
+            // border: "none",
           }}
         >
-          {/* TODO: Insert Tranzit.mk logo here */}
-          <Typography variant="h4" sx={{ mb: "20px", mt: "10px" }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Logo size="medium" />
+          </Box>
+          <Typography
+            variant="h4"
+            sx={{ mb: "20px", mt: "10px", textAlign: "center" }}
+          >
             Login
           </Typography>
+
           <Box
             component="form"
             onSubmit={handleSubmit}
