@@ -509,6 +509,7 @@ This page will be used for invalid URLs. It must include a link to previous page
   2. Analytics of the items
 - Both pages should include the time filter select field
   - Maybe make this feature on _desktop_ as well 🤔
+- Add smooth scrolling - Right after the scrolling is complete, let the sliding section keep sliding just a tiny bit - looks smoother
 
 <br>
 
