@@ -3,7 +3,7 @@ import NavMenu from "./NavMenu";
 
 const drawerWidth = "220px";
 
-export default function SideBarNav() {
+function SideBarNav() {
   return (
     <Drawer
       variant="permanent"
@@ -28,7 +28,10 @@ export default function SideBarNav() {
           "orders",
           "compare",
         ]}
+        includeDividers={true}
       />
     </Drawer>
   );
 }
+
+export default SideBarNav;
