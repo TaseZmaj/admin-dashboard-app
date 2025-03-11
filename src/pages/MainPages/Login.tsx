@@ -118,7 +118,15 @@ export default function Login() {
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label={
-                <Typography sx={{ fontSize: "0.9rem" }}>Remember me</Typography>
+                <Typography
+                  sx={{
+                    fontSize: "0.9rem",
+                    userSelect: "none",
+                    curosr: "pointer",
+                  }}
+                >
+                  Remember me
+                </Typography>
               }
             />
             <Button type="submit" fullWidth variant="contained" color="primary">

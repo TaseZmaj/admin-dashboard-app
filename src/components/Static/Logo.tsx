@@ -10,5 +10,5 @@ export default function Logo({ size = "medium" }: Props) {
   if (size === "medium") imgStyle = { ...imgStyle, width: "200px" };
   if (size === "large") imgStyle = { ...imgStyle, width: "250px" };
 
-  return <img style={imgStyle} src={TranzitLogo} />;
+  return <img style={imgStyle} src={TranzitLogo} alt="Tranzit Logo" />;
 }
