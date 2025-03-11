@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import {
   ListItem,
   ListItemButton,
@@ -17,8 +17,8 @@ import CompareArrowsOutlinedIcon from "@mui/icons-material/CompareArrowsOutlined
 import WarehouseOutlinedIcon from "@mui/icons-material/WarehouseOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
-import { useEffect } from "react";
-import { useTheme } from "@mui/material/styles";
+// import { useEffect } from "react";
+// import { useTheme } from "@mui/material/styles";
 
 type NavLinks =
   | "dashboard"
@@ -36,68 +36,64 @@ interface Props {
 }
 
 export default function NavItem({ children, link }: Props) {
-  const location = useLocation();
-  const theme = useTheme();
+  // const location = useLocation();
+  // const theme = useTheme();
+  const navigate = useNavigate();
 
   // Mozebi toolbarot bese popametna idea.....
 
-  const navStyles = {
-    padding: 0,
-    marginTop: "5px",
-    backgroundColor: location.pathname === `/${link}` ? "red" : "",
-    color: location.pathname === `/${link}` ? "white" : "#212121",
-  };
-  const iconStyles = {
-    color: location.pathname === `/${link}` ? "white" : "#212121",
-  };
+  // const navStyles = {
+  //   // padding: 0,
+  //   // marginTop: "5px",
+  //   // backgroundColor: location.pathname === `/${link}` ? "red" : "",
+  //   // color: location.pathname === `/${link}` ? "white" : "#212121",
+  // };
+  // const iconStyles = {
+  //   color: location.pathname === `/${link}` ? "white" : "#212121",
+  // };
 
-  useEffect(() => {
-    console.log(
-      "If location.pathname: " + location.pathname + " === link: " + `/${link}`
-    );
-  }, []);
+  // const isActiveNav = location.pathname === `/${link}`;
+
+  // useEffect(() => {
+  //   console.log(
+  //     "If location.pathname: " + location.pathname + " === link: " + `/${link}`
+  //   );
+  // }, []);
 
   return (
-    <ListItem sx={navStyles}>
-      <NavLink
-        to={link === "dashboard" ? "/" : `/${link.replace(/\s+/g, "-")}`}
-        style={{
-          textDecoration: "none",
-          flexGrow: 1,
-          color: "#212121",
+    <ListItem
+      sx={{
+        p: "4px 2px",
+      }}
+    >
+      <ListItemButton
+        dense
+        // className={location.pathname === `/${link}` && "active"}
+        sx={{
+          height: "40px",
+          p: "2px 7px",
+          borderRadius: "5px",
         }}
+        onClick={() =>
+          navigate(link === "dashboard" ? "/" : `/${link.replace(/\s+/g, "-")}`)
+        }
       >
-        <ListItemButton
-          dense
-          sx={{
-            height: "40px",
-            p: "2px 7px",
-            borderRadius: "5px",
-          }}
-        >
-          <ListItemIcon>
-            {link === "dashboard" && (
-              <DashboardCustomizeOutlinedIcon sx={iconStyles} />
-            )}
-            {link === "goods" && <ShoppingBagOutlinedIcon sx={iconStyles} />}
-            {link === "services" && <HandymanOutlinedIcon sx={iconStyles} />}
-            {link === "employees" && <AssignmentOutlinedIcon sx={iconStyles} />}
-            {link === "sales channels" && (
-              <WarehouseOutlinedIcon sx={iconStyles} />
-            )}
-            {link === "customers" && <PeopleAltOutlinedIcon sx={iconStyles} />}
-            {link === "orders" && <ShoppingCartOutlinedIcon sx={iconStyles} />}
-            {link === "compare" && (
-              <CompareArrowsOutlinedIcon sx={iconStyles} />
-            )}
-          </ListItemIcon>
-          <ListItemText>
-            <Typography sx={{ fontSize: "0.9rem", fontWeight: "500" }}>
-              {capitalize(children)}
-            </Typography>
-          </ListItemText>
-        </ListItemButton>
-      </NavLink>
+        <ListItemIcon>
+          {link === "dashboard" && <DashboardCustomizeOutlinedIcon />}
+          {link === "goods" && <ShoppingBagOutlinedIcon />}
+          {link === "services" && <HandymanOutlinedIcon />}
+          {link === "employees" && <AssignmentOutlinedIcon />}
+          {link === "sales channels" && <WarehouseOutlinedIcon />}
+          {link === "customers" && <PeopleAltOutlinedIcon />}
+          {link === "orders" && <ShoppingCartOutlinedIcon />}
+          {link === "compare" && <CompareArrowsOutlinedIcon />}
+        </ListItemIcon>
+        <ListItemText>
+          <Typography sx={{ fontSize: "0.9rem", fontWeight: "500" }}>
+            {capitalize(children)}
+          </Typography>
+        </ListItemText>
+      </ListItemButton>
     </ListItem>
   );
 }
