@@ -9,14 +9,14 @@ import AppTheme from "./theme/AppTheme.tsx";
 const Homepage = lazy(() => import("./pages/MainPages/Homepage.tsx"));
 const Goods = lazy(() => import("./pages/MainPages/Goods.tsx"));
 const Services = lazy(() => import("./pages/MainPages/Services.tsx"));
-const Analytics = lazy(() => import("./pages/MainPages/Analytics.tsx"));
+const Employees = lazy(() => import("./pages/MainPages/Employees.tsx"));
 const SalesChannels = lazy(() => import("./pages/MainPages/SalesChannels.tsx"));
 const Customers = lazy(() => import("./pages/MainPages/Customers.tsx"));
 const Orders = lazy(() => import("./pages/MainPages/Orders.tsx"));
 const Compare = lazy(() => import("./pages/MainPages/Compare.tsx"));
 const Login = lazy(() => import("./pages/MainPages/Login.tsx"));
 const Error = lazy(() => import("./pages/MainPages/Error.tsx"));
-import Loading from "./pages/MainPages/Loading.tsx";
+import Loading from "./components/Static/Loading.tsx";
 import ProtectedRoute from "./pages/MainPages/ProtectedRoute.tsx";
 
 const SingleGood = lazy(() => import("./pages/DynamicPages/SingleGood.tsx"));
@@ -69,10 +69,10 @@ export default function App() {
                   }
                 ></Route>
                 <Route
-                  path="analytics"
+                  path="employees"
                   element={
                     <ProtectedRoute>
-                      <Analytics />
+                      <Employees />
                     </ProtectedRoute>
                   }
                 ></Route>
