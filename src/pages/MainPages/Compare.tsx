@@ -1,10 +1,12 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import SideBarNav from "../../components/Dynamic/Navigation/SideBarNav";
 
 function Compare() {
   return (
-    <div>
+    <Box sx={{ display: "flex" }}>
+      <SideBarNav />
       <Typography>Compare page</Typography>
-    </div>
+    </Box>
   );
 }
 

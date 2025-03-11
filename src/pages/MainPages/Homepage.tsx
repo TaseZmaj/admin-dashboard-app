@@ -1,12 +1,12 @@
-import { Typography } from "@mui/material";
-import NavBar from "../../components/Dynamic/Navbar/NavBar.tsx";
+import { Box, Typography } from "@mui/material";
+import SideBarNav from "../../components/Dynamic/Navigation/SideBarNav.tsx";
 
 function Homepage() {
   return (
-    <>
-      <NavBar />
+    <Box sx={{ display: "flex" }}>
+      <SideBarNav />
       <Typography>Dashboard Homepage</Typography>
-    </>
+    </Box>
   );
 }
 
