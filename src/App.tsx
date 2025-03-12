@@ -62,6 +62,12 @@ export default function App() {
   //--> Navbar toggle opcija na tablet + backdrop dimmed koga
   //ke e uklucen
 
+  //TODOs: 9. Make the dividers inside of the NavMenu their own
+  //components - abstract
+
+  //TODO: 10. Komponentot za Bar-ot gore shto ke bide treba da e
+  //<AppBar/>
+
   return (
     <ErrorProvider>
       <AuthProvider>
