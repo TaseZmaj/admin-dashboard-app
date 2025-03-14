@@ -1,6 +1,6 @@
 # Administrator Dashboard
 
-A work-in-progress project for my portfolio designed exclusively with frontend technologies using a dummy API and some generated mock data.
+A work-in-progress project for my portfolio designed with React, Material UI and Firebase.
 
 # Overview
 
@@ -521,6 +521,10 @@ This page will be used for invalid URLs. It must include a link to previous page
 - [React Context API](https://react.dev/reference/react/createContext) for managing global state.
 - [React Router](https://reactrouter.com) for managing routes.
 - [Typescript](https://www.typescriptlang.org/docs/) language of choice.
+
+### Data:
+
+- [Firebase](https://firebase.google.com/docs?gclsrc=aw.ds&gad_source=1&gclid=CjwKCAjwp8--BhBREiwAj7og13mmqGwmrp8vFxq0s7VWMEBf_KzOgRDFOcJ1-Fex4dzxRJbODbm74hoCTMgQAvD_BwE) for the data.
 
 ### Styling:
 
