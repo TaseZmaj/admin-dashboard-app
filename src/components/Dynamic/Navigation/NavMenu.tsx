@@ -1,6 +1,7 @@
-import { Fragment, useMemo } from "react";
-import { Stack, List, Divider, Typography } from "@mui/material";
+import { Fragment } from "react";
+import { Stack, List, Divider } from "@mui/material";
 import NavItem from "./NavItem";
+import MenuDivider from "./MenuDivider";
 
 type NavLinks =
   | "dashboard"
@@ -16,55 +17,47 @@ type NavLinks =
 // The rest (...) can be zero or more of the allowed values.
 interface Props {
   links: [NavLinks, ...NavLinks[]];
-  includeDividers: boolean;
+  includeDividers?: boolean;
+  includeBorders?: boolean;
 }
 
-export default function NavMenu({ links, includeDividers = true }: Props) {
-  const stackSX = useMemo(() => {
-    return {
-      m: "5px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    };
-  }, []);
+export default function NavMenu({
+  links,
+  includeDividers = true,
+  includeBorders = true,
+}: Props) {
+  const stackSX = {
+    m: "5px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  };
 
   return (
-    <Stack sx={stackSX}>
-      <List>
-        {links.map((link, i) => (
-          <Fragment key={i}>
-            {includeDividers && link === "dashboard" && (
-              <Typography
-                sx={{
-                  fontWeight: "600",
-                  fontSize: "0.8rem",
-                  pl: "5px",
-                }}
-              >
-                General
-              </Typography>
-            )}
-            {includeDividers && link === "dashboard" && <Divider />}
+    <>
+      {includeBorders ? <Divider /> : null}
+      <Stack sx={stackSX}>
+        <List>
+          {links.map((link, i) => (
+            <Fragment key={i}>
+              {includeDividers && link === "dashboard" && (
+                <MenuDivider topGap="small" fontSize="small">
+                  General
+                </MenuDivider>
+              )}
 
-            <NavItem link={link}>{link}</NavItem>
+              <NavItem link={link}>{link}</NavItem>
 
-            {includeDividers && link === "dashboard" && (
-              <Typography
-                sx={{
-                  fontWeight: "600",
-                  fontSize: "0.8rem",
-                  pl: "5px",
-                  mt: "10px",
-                }}
-              >
-                Analytics
-              </Typography>
-            )}
-            {includeDividers && link === "dashboard" && <Divider />}
-          </Fragment>
-        ))}
-      </List>
-    </Stack>
+              {includeDividers && link === "dashboard" && (
+                <MenuDivider topGap="small" fontSize="small">
+                  Analytics
+                </MenuDivider>
+              )}
+            </Fragment>
+          ))}
+        </List>
+      </Stack>
+      {includeBorders ? <Divider /> : null}
+    </>
   );
 }
