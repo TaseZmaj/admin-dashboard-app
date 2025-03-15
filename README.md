@@ -34,6 +34,7 @@ A work-in-progress project for my portfolio designed with React, Material UI and
 
 - [Technologies](#technologies)
   - [Logic](#logic)
+  - [Data](#data)
   - [Styling](#styling)
   - [Animation](#animations)
   - [Other](#other)
