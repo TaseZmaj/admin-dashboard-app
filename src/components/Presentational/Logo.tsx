@@ -3,14 +3,21 @@ import LightTranzitLogo from "../../assets/Tranzit logo belo v2.svg";
 import DarkTranzitLogo from "../../assets/Tranzit logo crno v2.svg";
 
 interface Props {
-  size: "small" | "medium" | "large";
+  size?: "tiny" | "small" | "medium" | "large" | "extra large";
 }
 
+const IMG_WIDTH = {
+  tiny: "6rem",
+  small: "8rem",
+  medium: "10rem",
+  large: "12.5rem",
+  "extra large": "15rem",
+};
+
 export default function Logo({ size = "medium" }: Props) {
-  let imgStyle = {};
-  if (size === "small") imgStyle = { ...imgStyle, width: "150px" };
-  if (size === "medium") imgStyle = { ...imgStyle, width: "200px" };
-  if (size === "large") imgStyle = { ...imgStyle, width: "250px" };
+  let imgStyle = {
+    width: IMG_WIDTH[size],
+  };
   const theme = useTheme();
 
   return (
