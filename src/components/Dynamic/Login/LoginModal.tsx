@@ -55,7 +55,7 @@ export default function Login() {
   }
 
   return (
-    <Paper elevation={8}>
+    <Paper elevation={5}>
       <Card
         variant="outlined"
         sx={{
@@ -79,7 +79,7 @@ export default function Login() {
         </Box>
         <Typography
           variant="h4"
-          sx={{ mb: "20px", mt: "10px", textAlign: "center" }}
+          sx={{ mb: "20px", mt: "20px", textAlign: "center" }}
         >
           Login
         </Typography>
