@@ -1,5 +1,7 @@
-import { Drawer } from "@mui/material";
+import { Box, Drawer, drawerClasses } from "@mui/material";
+import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import NavMenu from "./NavMenu";
+import Logo from "../../Presentational/Logo";
 
 const drawerWidth = "220px";
 
@@ -8,15 +10,25 @@ function SideBarNav() {
     <Drawer
       variant="permanent"
       sx={{
-        flexShrink: 0,
         width: drawerWidth,
-        minWidth: "fit-content",
-        "& .MuiDrawer-paper": {
+        flexShrink: 0,
+        [`& .${drawerClasses.paper}`]: {
           width: drawerWidth,
+          backgroundColor: "background.paper",
           boxSizing: "border-box",
         },
       }}
     >
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          p: "15px 20px",
+        }}
+      >
+        <Logo size="small" />
+        <MenuRoundedIcon sx={{ ml: "auto", cursor: "pointer" }} />
+      </Box>
       <NavMenu
         links={[
           "dashboard",
