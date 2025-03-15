@@ -1,6 +1,6 @@
 import { Paper } from "@mui/material";
 import LoginModal from "../../components/Dynamic/Login/LoginModal.tsx";
-import ThemeToggle from "../../components/Dynamic/ThemeToggle.tsx";
+import ThemeToggle from "../../components/Dynamic/Util/ThemeToggle.tsx";
 
 export default function Login() {
   return (
