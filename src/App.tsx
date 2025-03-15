@@ -40,33 +40,33 @@ const SingleOrder = lazy(
 );
 
 export default function App() {
-  //TODO 1. Theme switch buttom component
-  //--->Color sheme sredi za da mozes da menuvash theme
-  //--->Positioning-ot napravi go abstrakten
-  //---> Theme switch transition implementiraj
+  {
+    //TODO: 10. Komponentot za Bar-ot gore shto ke bide treba da e
+    //<AppBar/>
+    //TODO 1. Theme switch button component
+    //--->Color sheme sredi za da mozes da menuvash theme
+    //--->Positioning-ot napravi go abstrakten
+    //---> Theme switch transition implementiraj
+    // TODO: Make this a dropdown menu with Light, Dark and System color switch options
+  }
 
   // TODOs: 2. Active page display-ni na navbar
 
   // TODOs: 3. Implementiraj Styled API za po clean code
-
+  
   // TODOs: 4. Popravi go Glow-ot na dark mode na LoginModal
   //  ---> na hover napravi go da sveti maaaalku pojako glow-ot
 
-  // TODOs: 5. Logout portion of SideNavBar
+  {
+    // TODOs: 5. Logout portion of SideNavBar
+    // TODOs: 6. Avatar portion of SideNavBar
+  }
 
-  // TODOs: 6. Avatar portion of SideNavBar
-
-  //TODOs: 7. Mobile Responcive NavBar
+  //TODOs: 7. Mobile Responsive NavBar
 
   //TODOs: 8. Hamburger menu Navbar toggle
   //--> Navbar toggle opcija na tablet + backdrop dimmed koga
   //ke e uklucen
-
-  //TODOs: 9. Make the dividers inside of the NavMenu their own
-  //components - abstract
-
-  //TODO: 10. Komponentot za Bar-ot gore shto ke bide treba da e
-  //<AppBar/>
 
   return (
     <ErrorProvider>
@@ -77,7 +77,9 @@ export default function App() {
               <Routes>
                 {/* Public routes */}
                 <Route path="login" element={<Login />} />
-                <Route path="*" element={<Error />} />
+                <Route element={<Layout />}>
+                  <Route path="*" element={<Error />} />
+                </Route>
 
                 {/* Protected Routes */}
                 <Route
