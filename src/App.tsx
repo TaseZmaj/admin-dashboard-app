@@ -16,6 +16,8 @@ const Orders = lazy(() => import("./pages/Protected/Orders.tsx"));
 const Compare = lazy(() => import("./pages/Protected/Compare.tsx"));
 const Login = lazy(() => import("./pages/PublicPages/Login.tsx"));
 const Error = lazy(() => import("./pages/PublicPages/Error.tsx"));
+
+// Make these lazy too?
 import Loading from "./components/Presentational/Loading.tsx";
 import ProtectedRoute from "./pages/UtilPages/ProtectedRoute.tsx";
 import Layout from "./pages/UtilPages/Layout.tsx";
@@ -53,7 +55,7 @@ export default function App() {
   // TODOs: 2. Active page display-ni na navbar
 
   // TODOs: 3. Implementiraj Styled API za po clean code
-  
+
   // TODOs: 4. Popravi go Glow-ot na dark mode na LoginModal
   //  ---> na hover napravi go da sveti maaaalku pojako glow-ot
 
@@ -67,7 +69,10 @@ export default function App() {
   //TODOs: 8. Hamburger menu Navbar toggle
   //--> Navbar toggle opcija na tablet + backdrop dimmed koga
   //ke e uklucen
-
+  {
+    // TODOs: 9. Implement firebase for the admin user and the company data
+    //IMPORTANT: Make a separate git branch for this
+  }
   return (
     <ErrorProvider>
       <AuthProvider>
