@@ -1,6 +1,6 @@
 import { Box, Drawer, drawerClasses } from "@mui/material";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import NavMenu from "./NavMenu";
+import NavMenu from "./NavMenu.tsx";
 import Logo from "../../Presentational/Logo";
 
 const drawerWidth = "220px";
@@ -23,7 +23,7 @@ function SideBarNav() {
         sx={{
           display: "flex",
           alignItems: "center",
-          p: "15px 20px",
+          p: "20px 20px 15px 20px",
         }}
       >
         <Logo size="small" />
@@ -41,6 +41,15 @@ function SideBarNav() {
           "compare",
         ]}
         includeDividers={true}
+        topBorder={true}
+        bottomBorder={false}
+      />
+      <NavMenu
+        links={["logout"]}
+        includeDividers={false}
+        topBorder={true}
+        bottomBorder={false}
+        position="bottom"
       />
     </Drawer>
   );
