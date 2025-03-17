@@ -1,9 +1,10 @@
 import { Fragment } from "react";
-import { Stack, List, Divider } from "@mui/material";
+import { Stack, List, Divider, Box } from "@mui/material";
 import NavItem from "./NavItem";
 import MenuDivider from "./MenuDivider";
+import { Percentage } from "../../../utils/typePercentage";
 
-type NavLinks =
+export type NavLinks =
   | "dashboard"
   | "goods"
   | "services"
@@ -11,37 +12,55 @@ type NavLinks =
   | "sales channels"
   | "customers"
   | "orders"
-  | "compare";
+  | "compare"
+  | "logout";
 
 // The first element of the array must be one of the specified values.
 // The rest (...) can be zero or more of the allowed values.
 interface Props {
   links: [NavLinks, ...NavLinks[]];
   includeDividers?: boolean;
-  includeBorders?: boolean;
+  topBorder?: boolean;
+  bottomBorder?: boolean;
+  listWidth?: Percentage;
+  position?: "bottom" | "normal";
 }
 
 export default function NavMenu({
   links,
   includeDividers = true,
-  includeBorders = true,
+  topBorder = true,
+  bottomBorder = true,
+  listWidth = "85%",
+  position = "normal",
 }: Props) {
   const stackSX = {
-    m: "5px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
   };
+  const listSX = {
+    width: listWidth,
+  };
+  const boxSX = {
+    // mb: position === "top" ? "auto" : "7px",
+    mt: position === "bottom" ? "auto" : "7px",
+  };
 
   return (
-    <>
-      {includeBorders ? <Divider /> : null}
+    <Box sx={boxSX}>
+      {topBorder ? <Divider /> : null}
       <Stack sx={stackSX}>
-        <List>
+        <List sx={listSX}>
           {links.map((link, i) => (
             <Fragment key={i}>
               {includeDividers && link === "dashboard" && (
-                <MenuDivider topGap="small" fontSize="small">
+                <MenuDivider
+                  includeLine={false}
+                  topGap="small"
+                  fontSize="small"
+                  caps={true}
+                >
                   General
                 </MenuDivider>
               )}
@@ -49,7 +68,12 @@ export default function NavMenu({
               <NavItem link={link}>{link}</NavItem>
 
               {includeDividers && link === "dashboard" && (
-                <MenuDivider topGap="small" fontSize="small">
+                <MenuDivider
+                  includeLine={false}
+                  topGap="small"
+                  fontSize="small"
+                  caps={true}
+                >
                   Analytics
                 </MenuDivider>
               )}
@@ -57,7 +81,7 @@ export default function NavMenu({
           ))}
         </List>
       </Stack>
-      {includeBorders ? <Divider /> : null}
-    </>
+      {bottomBorder ? <Divider /> : null}
+    </Box>
   );
 }
