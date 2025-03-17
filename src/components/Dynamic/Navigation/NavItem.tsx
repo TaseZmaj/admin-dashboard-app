@@ -17,18 +17,10 @@ import CompareArrowsOutlinedIcon from "@mui/icons-material/CompareArrowsOutlined
 import WarehouseOutlinedIcon from "@mui/icons-material/WarehouseOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
-// import { useEffect } from "react";
-// import { useTheme } from "@mui/material/styles";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import useAuth from "../../../hooks/useAuth";
 
-type NavLinks =
-  | "dashboard"
-  | "goods"
-  | "services"
-  | "employees"
-  | "sales channels"
-  | "customers"
-  | "orders"
-  | "compare";
+import { NavLinks } from "./NavMenu";
 
 interface Props {
   children: NavLinks;
@@ -36,29 +28,17 @@ interface Props {
 }
 
 export default function NavItem({ children, link }: Props) {
-  // const location = useLocation();
-  // const theme = useTheme();
+  const { logOut } = useAuth();
   const navigate = useNavigate();
 
-  // Mozebi toolbarot bese popametna idea.....
-
-  // const navStyles = {
-  //   // padding: 0,
-  //   // marginTop: "5px",
-  //   // backgroundColor: location.pathname === `/${link}` ? "red" : "",
-  //   // color: location.pathname === `/${link}` ? "white" : "#212121",
-  // };
-  // const iconStyles = {
-  //   color: location.pathname === `/${link}` ? "white" : "#212121",
-  // };
-
-  // const isActiveNav = location.pathname === `/${link}`;
-
-  // useEffect(() => {
-  //   console.log(
-  //     "If location.pathname: " + location.pathname + " === link: " + `/${link}`
-  //   );
-  // }, []);
+  function handleNavigation() {
+    if (link === "dashboard") navigate("/");
+    else if (link === "logout") {
+      logOut();
+    } else {
+      navigate(`/${link.replace(/\s+/g, "-")}`);
+    }
+  }
 
   return (
     <ListItem
@@ -68,15 +48,12 @@ export default function NavItem({ children, link }: Props) {
     >
       <ListItemButton
         dense
-        // className={location.pathname === `/${link}` && "active"}
         sx={{
           height: "40px",
           p: "2px 7px",
           borderRadius: "5px",
         }}
-        onClick={() =>
-          navigate(link === "dashboard" ? "/" : `/${link.replace(/\s+/g, "-")}`)
-        }
+        onClick={() => handleNavigation()}
       >
         <ListItemIcon>
           {link === "dashboard" && <DashboardCustomizeOutlinedIcon />}
@@ -87,6 +64,7 @@ export default function NavItem({ children, link }: Props) {
           {link === "customers" && <PeopleAltOutlinedIcon />}
           {link === "orders" && <ShoppingCartOutlinedIcon />}
           {link === "compare" && <CompareArrowsOutlinedIcon />}
+          {link === "logout" && <LogoutOutlinedIcon />}
         </ListItemIcon>
         <ListItemText>
           <Typography sx={{ fontSize: "0.9rem", fontWeight: "500" }}>
