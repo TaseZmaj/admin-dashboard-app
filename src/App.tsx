@@ -18,9 +18,11 @@ const Login = lazy(() => import("./pages/PublicPages/Login.tsx"));
 const Error = lazy(() => import("./pages/PublicPages/Error.tsx"));
 
 // Make these lazy too?
-import Loading from "./components/Presentational/Loading.tsx";
-import ProtectedRoute from "./pages/UtilPages/ProtectedRoute.tsx";
-import Layout from "./pages/UtilPages/Layout.tsx";
+const Loading = lazy(() => import("./components/Presentational/Loading.tsx"));
+const ProtectedRoute = lazy(
+  () => import("./pages/UtilPages/ProtectedRoute.tsx")
+);
+const Layout = lazy(() => import("./pages/UtilPages/Layout.tsx"));
 
 const SingleGood = lazy(
   () => import("./pages/Protected/DynamicPages/SingleGood.tsx")
@@ -73,6 +75,12 @@ export default function App() {
     // TODOs: 9. Implement firebase for the admin user and the company data
     //IMPORTANT: Make a separate git branch for this
   }
+  {
+    // TODOs: 10. Add another account with firebase and POST method 🤔
+  }
+  {
+    // TODOs: 11. Create a higher level state for the drawer to open
+  }
   return (
     <ErrorProvider>
       <AuthProvider>
@@ -82,9 +90,6 @@ export default function App() {
               <Routes>
                 {/* Public routes */}
                 <Route path="login" element={<Login />} />
-                <Route element={<Layout />}>
-                  <Route path="*" element={<Error />} />
-                </Route>
 
                 {/* Protected Routes */}
                 <Route
@@ -105,6 +110,7 @@ export default function App() {
                   <Route path="customers" element={<Customers />}></Route>
                   <Route path="orders" element={<Orders />}></Route>
                   <Route path="compare" element={<Compare />}></Route>
+                  <Route path="*" element={<Error />} />
 
                   {/* Dynamic Routes */}
                   <Route path="goods/:goodId" element={<SingleGood />} />
