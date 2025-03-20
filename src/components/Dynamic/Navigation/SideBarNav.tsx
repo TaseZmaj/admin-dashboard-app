@@ -23,11 +23,13 @@ function SideBarNav() {
         sx={{
           display: "flex",
           alignItems: "center",
-          p: "20px 20px 15px 20px",
+          justifyContent: "center",
+          // p: "20px 20px 15px 20px",
+          p: "17px 10px 5px 10px",
         }}
       >
-        <Logo size="small" />
-        <MenuRoundedIcon sx={{ ml: "auto", cursor: "pointer" }} />
+        <Logo size="medium" />
+        {/* <MenuRoundedIcon sx={{ ml: "auto", cursor: "pointer" }} /> */}
       </Box>
       <NavMenu
         links={[
