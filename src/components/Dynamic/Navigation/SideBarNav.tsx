@@ -1,5 +1,5 @@
 import { Box, Drawer, drawerClasses } from "@mui/material";
-import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
+// import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import NavMenu from "./NavMenu.tsx";
 import Logo from "../../Presentational/Logo";
 
@@ -24,11 +24,10 @@ function SideBarNav() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          // p: "20px 20px 15px 20px",
           p: "17px 10px 5px 10px",
         }}
       >
-        <Logo size="medium" />
+        <Logo size="medium" homeLink={true} />
         {/* <MenuRoundedIcon sx={{ ml: "auto", cursor: "pointer" }} /> */}
       </Box>
       <NavMenu
