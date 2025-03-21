@@ -17,7 +17,6 @@ const Compare = lazy(() => import("./pages/Protected/Compare.tsx"));
 const Login = lazy(() => import("./pages/PublicPages/Login.tsx"));
 const Error = lazy(() => import("./pages/PublicPages/Error.tsx"));
 
-// Make these lazy too?
 const Loading = lazy(() => import("./components/Presentational/Loading.tsx"));
 const ProtectedRoute = lazy(
   () => import("./pages/UtilPages/ProtectedRoute.tsx")
@@ -45,42 +44,39 @@ const SingleOrder = lazy(
 
 export default function App() {
   {
-    //TODO: 10. Komponentot za Bar-ot gore shto ke bide treba da e
+    //TODO: Komponentot za Bar-ot gore shto ke bide treba da e
     //<AppBar/>
-    //TODO 1. Theme switch button component
+    //Vo app bar - Avatar-ot mozes da go napravis Dropdown menu koristejki "Account menu" (vidi docs)
+    //TODO: Theme switch button component
     //--->Color sheme sredi za da mozes da menuvash theme
     //--->Positioning-ot napravi go abstrakten
-    //---> Theme switch transition implementiraj
+    //--->Theme switch transition implementiraj
     // TODO: Make this a dropdown menu with Light, Dark and System color switch options
   }
 
-  // TODOs: 2. Active page display-ni na navbar
+  // TODO: Active page display-ni na navbar
 
-  // TODOs: 3. Implementiraj Styled API za po clean code
+  // TODO: Implementiraj Styled API za po clean code
 
-  // TODOs: 4. Popravi go Glow-ot na dark mode na LoginModal
+  // TODO: Popravi go Glow-ot na dark mode na LoginModal
   //  ---> na hover napravi go da sveti maaaalku pojako glow-ot
 
-  {
-    // TODOs: 5. Logout portion of SideNavBar
-    // TODOs: 6. Avatar portion of SideNavBar
-  }
+  //TODO: Mobile Responsive NavBar
 
-  //TODOs: 7. Mobile Responsive NavBar
-
-  //TODOs: 8. Hamburger menu Navbar toggle
+  //TODO: Hamburger menu Navbar toggle
+  //TODO:  Create a higher level state for the drawer to open
   //--> Navbar toggle opcija na tablet + backdrop dimmed koga
   //ke e uklucen
   {
-    // TODOs: 9. Implement firebase for the admin user and the company data
+    // TODO: Implement firebase for the admin user and the company data
     //IMPORTANT: Make a separate git branch for this
   }
   {
-    // TODOs: 10. Add another account with firebase and POST method 🤔
+    // TODO: Add another account with firebase and POST method 🤔
   }
-  {
-    // TODOs: 11. Create a higher level state for the drawer to open
-  }
+  // TODO: Make style overrides in the theme for:
+  //-> Override background colors
+  //-> Make the color theme dropdown menu items have prettier colors on hover and selected
   return (
     <ErrorProvider>
       <AuthProvider>
