@@ -1,8 +1,11 @@
 import { Paper } from "@mui/material";
 import LoginModal from "../../components/Dynamic/Login/LoginModal.tsx";
-import ThemeToggle from "../../components/Dynamic/Util/ThemeToggle.tsx";
+import ColorModeToggle from "../../components/Dynamic/Util/ColormodeToggle.tsx";
+import { useTheme, Theme } from "@mui/material";
 
 export default function Login() {
+  const { palette } = useTheme() as Theme;
+
   return (
     <Paper
       sx={{
@@ -12,9 +15,10 @@ export default function Login() {
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 0,
+        backgroundColor: palette.background.default,
       }}
     >
-      <ThemeToggle />
+      <ColorModeToggle />
       <LoginModal />
     </Paper>
   );
