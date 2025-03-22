@@ -68,15 +68,22 @@ export default function App() {
   //--> Navbar toggle opcija na tablet + backdrop dimmed koga
   //ke e uklucen
   {
+    // TODO: Make firebase mock data and figure out how to connect it
+    // TODO: Add another account with firebase via POST method in the "+Account page" 🤔
     // TODO: Implement firebase for the admin user and the company data
-    //IMPORTANT: Make a separate git branch for this
-  }
-  {
-    // TODO: Add another account with firebase and POST method 🤔
+    // IMPORTANT: Make a separate git branch for this so as to not confilct with the already coded AuthContext.
+    // If it doesn't work out, you can revert the changes
   }
   // TODO: Make style overrides in the theme for:
   //-> Override background colors
   //-> Make the color theme dropdown menu items have prettier colors on hover and selected
+
+  // TODO: Add GLOWING effects in dark mode throughout the whole App
+  // TODO: Create a toggle for the glowing effects maybe 🤔
+
+  // TODO: Make a settings page and implement it at the navbar for customizing: 1.Users and the 2.UI of the Dashboard
+  //-> The state for the UI (eg. Glow effects) can live inside the AppTheme context maybe?
+
   return (
     <ErrorProvider>
       <AuthProvider>
