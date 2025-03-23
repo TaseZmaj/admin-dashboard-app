@@ -2,6 +2,7 @@ import { Outlet } from "react-router";
 import SideBarNav from "../../components/Dynamic/Navigation/SideBarNav";
 import { Paper, Box } from "@mui/material";
 import { Theme, useTheme } from "@mui/material";
+import TopBar from "../../components/Dynamic/TopBar/TopBar";
 
 export default function Layout() {
   const { palette } = useTheme() as Theme;
@@ -17,7 +18,10 @@ export default function Layout() {
     >
       <SideBarNav />
       <Box component="main" sx={{ flexGrow: 1 }}>
-        <Outlet />
+        <TopBar />
+        <Box sx={{ p: "20px" }}>
+          <Outlet />
+        </Box>
       </Box>
     </Paper>
   );
