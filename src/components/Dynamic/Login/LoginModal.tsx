@@ -18,13 +18,17 @@ import {
 import FromInput from "../../../components/Dynamic/Login/FormInput.tsx";
 import Logo from "../../../components/Presentational/Logo.tsx";
 
-export default function Login() {
+interface LoginModalProps {
+  glow?: boolean;
+}
+
+export default function LoginModal({ glow = false }: LoginModalProps) {
   const { loginError, resetErrors } = useErrors();
   const { logIn, isAuthenticated } = useAuth();
   const [username, setUsername] = useState("Stefan Tasevski");
   const [password, setPassword] = useState("password");
   const navigate = useNavigate();
-  const [paperElevation, setPaperElevation] = useState(2);
+  const [paperElevation, setPaperElevation] = useState(5);
 
   const { palette } = useTheme() as Theme;
 
@@ -65,24 +69,20 @@ export default function Login() {
 
   return (
     <Paper
-      onMouseEnter={() =>
-        resolvedMode === "dark" ? setPaperElevation(5) : () => null
-      }
-      onMouseLeave={() =>
-        resolvedMode === "dark" ? setPaperElevation(2) : () => null
-      }
+      onMouseEnter={() => resolvedMode === "dark" && setPaperElevation(2)}
+      onMouseLeave={() => resolvedMode === "dark" && setPaperElevation(5)}
       elevation={paperElevation}
       sx={{
         transitionDelay: 0,
         [`&.MuiPaper-elevation${2}`]: {
           boxShadow:
-            resolvedMode === "dark"
+            resolvedMode === "dark" && glow === true
               ? "rgba(255, 202, 40, 0.2) 0px 8px 24px"
               : "",
         },
         [`&.MuiPaper-elevation${5}`]: {
           boxShadow:
-            resolvedMode === "dark"
+            resolvedMode === "dark" && glow === true
               ? "rgba(255, 202, 40, 0.05) 0px 10px 50px, rgba(255, 202, 40, 0.12) 0px 0px 30px, rgba(255, 202, 40, 0.12) 0px 4px 6px, rgba(255, 202, 40, 0.17) 0px 12px 13px, rgba(255, 202, 40, 0.09) 0px -3px 5px"
               : "",
         },
@@ -95,10 +95,10 @@ export default function Login() {
           minHeight: "fit-content",
           width: "300px",
           p: "20px 35px 30px 35px",
-          borderColor: resolvedMode === "dark" ? palette.primary.light : "",
-          // boxShadow: " 0px 0px 68px 0px rgba(255,201,40,0.49)",
-          // border: "none",
-          // boxShadow: "0px 0px 212px 18px rgba(255,204,128,1)",
+          borderColor:
+            resolvedMode === "dark" && glow === true
+              ? palette.primary.light
+              : "",
         }}
       >
         <Box
@@ -132,12 +132,14 @@ export default function Login() {
             state={username}
             setter={setUsername}
             variant="outlined"
+            required={true}
           />
           <FromInput
             type="password"
             state={password}
             setter={setPassword}
             variant="outlined"
+            required={true}
           />
 
           {/* TODO: Add remember me functionality - localStorage maybe? */}
