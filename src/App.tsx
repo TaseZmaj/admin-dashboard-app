@@ -16,6 +16,7 @@ const Orders = lazy(() => import("./pages/Protected/Orders.tsx"));
 const Compare = lazy(() => import("./pages/Protected/Compare.tsx"));
 const Login = lazy(() => import("./pages/PublicPages/Login.tsx"));
 const Error = lazy(() => import("./pages/PublicPages/Error.tsx"));
+const Reviews = lazy(() => import("./pages/Protected/Reviews.tsx"));
 
 const Loading = lazy(() => import("./components/Presentational/Loading.tsx"));
 const ProtectedRoute = lazy(
@@ -58,9 +59,6 @@ export default function App() {
 
   // TODO: Implementiraj Styled API za po clean code
 
-  // TODO: Popravi go Glow-ot na dark mode na LoginModal
-  //  ---> na hover napravi go da sveti maaaalku pojako glow-ot
-
   //TODO: Mobile Responsive NavBar
 
   //TODO: Hamburger menu Navbar toggle
@@ -79,10 +77,15 @@ export default function App() {
   //-> Make the color theme dropdown menu items have prettier colors on hover and selected
 
   // TODO: Add GLOWING effects in dark mode throughout the whole App
-  // TODO: Create a toggle for the glowing effects maybe 🤔
+  // TODO: Create a toggle for the glowing effects in a new Settings page under UI section 🤔
 
   // TODO: Make a settings page and implement it at the navbar for customizing: 1.Users and the 2.UI of the Dashboard
   //-> The state for the UI (eg. Glow effects) can live inside the AppTheme context maybe?
+
+  //TODO: Dim the colors in the SideNavBar menu Dividers
+
+  // TODO: Maybe make the FormInput component be able to be either a
+  //TextField or a FormInput so that it can be integrated into the AppBar
 
   return (
     <ErrorProvider>
@@ -112,6 +115,7 @@ export default function App() {
                   ></Route>
                   <Route path="customers" element={<Customers />}></Route>
                   <Route path="orders" element={<Orders />}></Route>
+                  <Route path="reviews" element={<Reviews />}></Route>
                   <Route path="compare" element={<Compare />}></Route>
                   <Route path="*" element={<Error />} />
 
