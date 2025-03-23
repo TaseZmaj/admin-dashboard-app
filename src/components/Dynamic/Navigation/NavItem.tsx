@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import {
   ListItem,
   ListItemButton,
@@ -18,6 +18,7 @@ import WarehouseOutlinedIcon from "@mui/icons-material/WarehouseOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import useAuth from "../../../hooks/useAuth";
 
 import { NavLinks } from "./NavMenu";
@@ -64,6 +65,9 @@ export default function NavItem({ children, link }: Props) {
           {link === "customers" && <PeopleAltOutlinedIcon />}
           {link === "orders" && <ShoppingCartOutlinedIcon />}
           {link === "compare" && <CompareArrowsOutlinedIcon />}
+          {link === "reviews" && (
+            <StarBorderRoundedIcon sx={{ fontSize: "1.6rem" }} />
+          )}
           {link === "logout" && <LogoutOutlinedIcon />}
         </ListItemIcon>
         <ListItemText>
