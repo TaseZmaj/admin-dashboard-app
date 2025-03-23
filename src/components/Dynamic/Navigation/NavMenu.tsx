@@ -13,6 +13,7 @@ export type NavLinks =
   | "customers"
   | "orders"
   | "compare"
+  | "reviews"
   | "logout";
 
 // The first element of the array must be one of the specified values.
@@ -46,6 +47,9 @@ export default function NavMenu({
     // mb: position === "top" ? "auto" : "7px",
     mt: position === "bottom" ? "auto" : "7px",
   };
+
+  // TODO: Make the top and bottom border - CSS borders using palette.divider
+  //instead of <Divider/>s
 
   return (
     <Box sx={boxSX}>
