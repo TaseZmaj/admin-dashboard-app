@@ -7,22 +7,27 @@ import {
   InputLabel,
   FormHelperText,
   Input,
+  SxProps,
 } from "@mui/material";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 interface Props {
-  type: "username" | "password";
+  sx?: SxProps;
+  type?: "username" | "password" | "search";
+  variant?: "outlined" | "filled" | "standard";
+  required?: boolean;
   state: string;
   setter: (value: string) => void;
-  variant: "outlined" | "filled" | "standard";
 }
 
-export default function CustomInput({
-  type,
+export default function FormInput({
+  type = "search",
   state,
   setter,
   variant = "standard",
+  sx = {},
+  required = false,
 }: Props) {
   const { error, errorMessage, resetErrors } = useErrors();
   const [passVisibility, setPassVisibility] = useState(false);
@@ -33,6 +38,7 @@ export default function CustomInput({
     <Box
       sx={{
         height: "70px",
+        ...sx,
       }}
     >
       <FormControl
@@ -41,14 +47,15 @@ export default function CustomInput({
         variant={variant}
         color="primary"
         margin="normal"
-        required
+        required={required}
         fullWidth
         error={error && errorMessage.includes(type) ? true : false}
       >
         <InputLabel htmlFor={type}>{capitalize(type)}</InputLabel>
 
         {/* Autofocus on username input */}
-        {type === "username" ? (
+
+        {type === "username" && (
           <Input
             autoFocus
             id={type}
@@ -58,7 +65,19 @@ export default function CustomInput({
               setter(event.target.value)
             }
           />
-        ) : (
+        )}
+        {type === "search" && (
+          <Input
+            autoFocus
+            id={type}
+            type={type}
+            value={state}
+            onChange={(event: { target: { value: string } }) =>
+              setter(event.target.value)
+            }
+          />
+        )}
+        {type === "password" && (
           <Input
             id={type}
             type={!passVisibility ? "password" : ""}
