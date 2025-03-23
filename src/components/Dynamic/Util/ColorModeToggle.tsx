@@ -7,6 +7,7 @@ import {
   useColorScheme,
   Theme,
   Paper,
+  SxProps,
 } from "@mui/material";
 import { useState } from "react";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
@@ -15,18 +16,30 @@ import { useTheme } from "@mui/material";
 
 interface ColorModeToggleProps {
   size?: "small" | "medium" | "large";
+  sx?: SxProps<Theme>;
+  glow?: boolean;
 }
 
 type ColorMode = "light" | "dark" | "system";
 
+const ICON_SIZE = {
+  small: "1.2rem",
+  medium: "1.5rem",
+  large: "1.8rem",
+};
+
 export default function ColorModeToggle({
   size = "medium",
+  sx = {},
+  glow = false,
 }: ColorModeToggleProps) {
   const { palette } = useTheme() as Theme;
-  const { mode, systemMode, setMode } = useColorScheme();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [paperElevation, setPaperElevation] = useState(1);
+
+  const { mode, systemMode, setMode } = useColorScheme();
+
   const resolvedMode = (systemMode || mode) as "light" | "dark";
 
   function handleHoverEffect() {
@@ -44,6 +57,9 @@ export default function ColorModeToggle({
     handleCloseMenu();
   }
 
+  const iconSX = {
+    fontSize: ICON_SIZE[size],
+  };
   // TODO: Add some more abstraction and customization
   // TODO: If mode === undefined handle-ni
   // TODO: Make the code a bit more readable
@@ -51,49 +67,52 @@ export default function ColorModeToggle({
   return (
     <>
       <Paper
-        onMouseEnter={() =>
-          resolvedMode === "dark" ? setPaperElevation(5) : () => null
-        }
-        onMouseLeave={() =>
-          resolvedMode === "dark" ? setPaperElevation(1) : () => null
-        }
+        onMouseEnter={() => resolvedMode === "dark" && setPaperElevation(5)}
+        onMouseLeave={() => resolvedMode === "dark" && setPaperElevation(1)}
         elevation={paperElevation}
         sx={{
-          position: "absolute",
-          right: 25,
-          top: 25,
-          transitionDelay: 0,
+          transitionDelay: "0s",
           [`&.MuiPaper-elevation${1}`]: {
             boxShadow:
-              resolvedMode === "dark"
+              resolvedMode === "dark" && glow === true
                 ? "rgba(255, 202, 40, 0.1) 0px 5px 24px"
                 : "",
           },
           [`&.MuiPaper-elevation${5}`]: {
             boxShadow:
-              resolvedMode === "dark"
+              resolvedMode === "dark" && glow === true
                 ? "rgba(255, 202, 40, 0.2) 0px 5px 24px"
                 : "",
           },
+          ...sx,
         }}
       >
         <Card
           variant="outlined"
           sx={{
-            borderColor: resolvedMode === "dark" ? palette.primary.light : "",
+            borderColor:
+              resolvedMode === "dark" && glow === true
+                ? palette.primary.light
+                : "",
           }}
         >
-          <IconButton size={size} disableRipple onClick={(e) => handleClick(e)}>
-            {mode === "dark" ? <LightModeOutlinedIcon /> : null}
-            {mode === "light" ? <DarkModeOutlinedIcon /> : null}
-            {mode === "system" ? <LightModeOutlinedIcon /> : null}
+          <IconButton disableRipple onClick={(e) => handleClick(e)}>
+            {resolvedMode === "dark" ? (
+              <LightModeOutlinedIcon sx={iconSX} />
+            ) : null}
+            {resolvedMode === "light" ? (
+              <DarkModeOutlinedIcon sx={iconSX} />
+            ) : null}
           </IconButton>
         </Card>
       </Paper>
       <Menu
         sx={{
           "& .MuiPaper-root": {
-            borderColor: resolvedMode === "dark" ? palette.primary.light : "",
+            borderColor:
+              resolvedMode === "dark" && glow === true
+                ? palette.primary.light
+                : "",
           },
         }}
         open={open}

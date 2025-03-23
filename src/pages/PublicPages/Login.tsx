@@ -1,6 +1,6 @@
 import { Paper } from "@mui/material";
 import LoginModal from "../../components/Dynamic/Login/LoginModal.tsx";
-import ColorModeToggle from "../../components/Dynamic/Util/ColormodeToggle.tsx";
+import ColorModeToggle from "../../components/Dynamic/Util/ColorModeToggle.tsx";
 import { useTheme, Theme } from "@mui/material";
 
 export default function Login() {
@@ -18,7 +18,7 @@ export default function Login() {
         backgroundColor: palette.background.default,
       }}
     >
-      <ColorModeToggle />
+      <ColorModeToggle sx={{ position: "absolute", right: 25, top: 25 }} />
       <LoginModal />
     </Paper>
   );
