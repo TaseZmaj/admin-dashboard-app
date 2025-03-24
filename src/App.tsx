@@ -45,14 +45,9 @@ const SingleOrder = lazy(
 
 export default function App() {
   {
-    //TODO: Komponentot za Bar-ot gore shto ke bide treba da e
-    //<AppBar/>
     //Vo app bar - Avatar-ot mozes da go napravis Dropdown menu koristejki "Account menu" (vidi docs)
     //TODO: Theme switch button component
-    //--->Color sheme sredi za da mozes da menuvash theme
-    //--->Positioning-ot napravi go abstrakten
     //--->Theme switch transition implementiraj
-    // TODO: Make this a dropdown menu with Light, Dark and System color switch options
   }
 
   // TODO: Active page display-ni na navbar
@@ -73,7 +68,6 @@ export default function App() {
     // If it doesn't work out, you can revert the changes
   }
   // TODO: Make style overrides in the theme for:
-  //-> Override background colors
   //-> Make the color theme dropdown menu items have prettier colors on hover and selected
 
   // TODO: Add GLOWING effects in dark mode throughout the whole App
