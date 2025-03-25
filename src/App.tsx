@@ -81,6 +81,9 @@ export default function App() {
   // TODO: Maybe make the FormInput component be able to be either a
   //TextField or a FormInput so that it can be integrated into the AppBar
 
+  // TODO: MAKE THE DROPDOWN MENU AN ABSTRACTION! in ColorModeSwitch and UserAvatar, and the Paper as well (but you can probably do this with Styled API)
+  //A large part of the code is the same
+
   return (
     <ErrorProvider>
       <AuthProvider>
