@@ -36,7 +36,7 @@ export default function ColorModeToggle({
   const { palette } = useTheme() as Theme;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const [paperElevation, setPaperElevation] = useState(1);
+  const [paperElevation, setPaperElevation] = useState<number>(1);
 
   const { mode, systemMode, setMode } = useColorScheme();
 
@@ -72,6 +72,8 @@ export default function ColorModeToggle({
         elevation={paperElevation}
         sx={{
           transitionDelay: "0s",
+          maxWidth: "fit-content",
+          maxHeight: "fit-content",
           [`&.MuiPaper-elevation${1}`]: {
             boxShadow:
               resolvedMode === "dark" && glow === true
