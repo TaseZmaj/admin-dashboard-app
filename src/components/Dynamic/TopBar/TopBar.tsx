@@ -1,7 +1,8 @@
-import { AppBar, TextField, Toolbar, useColorScheme } from "@mui/material";
+import { AppBar, Box, Toolbar, useColorScheme } from "@mui/material";
 import { Theme, useTheme } from "@mui/material";
 import ColorModeToggle from "../Util/ColorModeToggle";
-import FormInput from "../Login/FormInput";
+import SearchInput from "./SearchInput.tsx";
+import UserAvatar from "./UserAvatar.tsx";
 
 export default function TopBar() {
   const { palette } = useTheme() as Theme;
@@ -29,23 +30,25 @@ export default function TopBar() {
       variant="outlined"
     >
       <Toolbar>
-        {/* TODO: Maybe make the FormInput component be able to be either a 
-      TextField or a FormInput so that it can be integrated into the AppBar */}
-
-        <TextField
-          sx={{ width: "300px", mr: "10px" }}
-          variant="outlined"
-          label="Search..."
-          size="small"
-        ></TextField>
-
-        <FormInput variant="filled" sx={{ width: "200px" }} />
-
-        <ColorModeToggle
-          size="small"
-          sx={{ position: "absolute", right: 25 }}
-          glow={false}
-        />
+        <SearchInput />
+        <Box
+          sx={{
+            height: "100%",
+            ml: "auto",
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+            gap: "1rem",
+            width: "300px",
+            // backgroundColor: "teal",
+          }}
+        >
+          <ColorModeToggle size="small" />
+          <ColorModeToggle size="small" />
+          <ColorModeToggle size="small" />
+          <ColorModeToggle size="small" />
+          <UserAvatar />
+        </Box>
       </Toolbar>
     </AppBar>
   );
