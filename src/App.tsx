@@ -45,8 +45,6 @@ const SingleOrder = lazy(
 
 export default function App() {
   {
-    //Vo app bar - Avatar-ot mozes da go napravis Dropdown menu koristejki "Account menu" (vidi docs)
-    //TODO: Theme switch button component
     //--->Theme switch transition implementiraj
   }
 
@@ -77,9 +75,6 @@ export default function App() {
   //-> The state for the UI (eg. Glow effects) can live inside the AppTheme context maybe?
 
   //TODO: Dim the colors in the SideNavBar menu Dividers
-
-  // TODO: Maybe make the FormInput component be able to be either a
-  //TextField or a FormInput so that it can be integrated into the AppBar
 
   // TODO: MAKE THE DROPDOWN MENU AN ABSTRACTION! in ColorModeSwitch and UserAvatar, and the Paper as well (but you can probably do this with Styled API)
   //A large part of the code is the same
