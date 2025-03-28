@@ -1,8 +1,7 @@
 import { AppBar, Box, Toolbar, useColorScheme } from "@mui/material";
 import { Theme, useTheme } from "@mui/material";
-import ColorModeToggle from "../Util/ColorModeToggle";
 import SearchInput from "./SearchInput.tsx";
-import UserAvatar from "./UserAvatar.tsx";
+import IconDropDownMenu from "../Util/IconDropDownMenu.tsx";
 
 export default function TopBar() {
   const { palette } = useTheme() as Theme;
@@ -43,11 +42,8 @@ export default function TopBar() {
             // backgroundColor: "teal",
           }}
         >
-          <ColorModeToggle size="small" />
-          <ColorModeToggle size="small" />
-          <ColorModeToggle size="small" />
-          <ColorModeToggle size="small" />
-          <UserAvatar />
+          <IconDropDownMenu type="colorModeToggle" size="small" />
+          <IconDropDownMenu type="avatar" size="small" />
         </Box>
       </Toolbar>
     </AppBar>
