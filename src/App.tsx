@@ -64,6 +64,7 @@ export default function App() {
     // TODO: Implement firebase for the admin user and the company data
     // IMPORTANT: Make a separate git branch for this so as to not confilct with the already coded AuthContext.
     // If it doesn't work out, you can revert the changes
+    //TODO: Make the functionality for the notifications icon button dropdown menu - with firebase
   }
   // TODO: Make style overrides in the theme for:
   //-> Make the color theme dropdown menu items have prettier colors on hover and selected
@@ -75,9 +76,6 @@ export default function App() {
   //-> The state for the UI (eg. Glow effects) can live inside the AppTheme context maybe?
 
   //TODO: Dim the colors in the SideNavBar menu Dividers
-
-  // TODO: MAKE THE DROPDOWN MENU AN ABSTRACTION! in ColorModeSwitch and UserAvatar, and the Paper as well (but you can probably do this with Styled API)
-  //A large part of the code is the same
 
   return (
     <ErrorProvider>

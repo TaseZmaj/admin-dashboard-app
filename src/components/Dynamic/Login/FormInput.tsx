@@ -33,6 +33,7 @@ export default function FormInput({
   const [passVisibility, setPassVisibility] = useState(false);
 
   // TODO: Make this component as ABSTRACT as possible
+  // TODO: Remove the search variant if unused
 
   return (
     <Box
