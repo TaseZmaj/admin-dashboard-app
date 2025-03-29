@@ -11,16 +11,20 @@ import {
   Avatar,
 } from "@mui/material";
 import { useState } from "react";
-import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import { useTheme } from "@mui/material";
 import useAuth from "../../../hooks/useAuth";
+
+// Icons and imgs
+import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
+import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import DummyIcon2 from "../../../assets/DummyIcon2.png";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
 
 interface IconDropDownMenuProps {
   sx?: SxProps<Theme>;
   size?: "tiny" | "small" | "medium" | "large";
-  type: "avatar" | "colorModeToggle";
+  type: "avatar" | "colorModeToggle" | "notifications";
   glow?: boolean;
 }
 
@@ -76,8 +80,13 @@ export default function IconDropDownMenu({
     handleCloseMenu();
   }
 
+  //TODO: maybe make the menu items abstract 🤔, a lot of the code repeats itself
+
   // TODO: make the DropDown menu in Avatar INNACESSIBLE if the user is not logged in
   // Or make the pages the list items take the user to - protected
+
+  //TODO: When notifications exist - icon is the bell ringing
+  //When there are no notifications - the icon is the normal bell
 
   return (
     <>
@@ -140,6 +149,21 @@ export default function IconDropDownMenu({
               }}
             ></Avatar>
           </IconButton>
+        ) : null}
+        {type === "notifications" ? (
+          <Card
+            variant="outlined"
+            sx={{
+              borderColor:
+                resolvedMode === "dark" && glow === true
+                  ? palette.primary.light
+                  : "",
+            }}
+          >
+            <IconButton disableRipple onClick={(e) => handleClick(e)}>
+              <NotificationsActiveOutlinedIcon sx={iconSX} />
+            </IconButton>
+          </Card>
         ) : null}
       </Paper>
       <Menu
@@ -258,6 +282,61 @@ export default function IconDropDownMenu({
               }}
             >
               <Typography>Item 3</Typography>
+            </MenuItem>
+          </>
+        ) : null}
+        {type === "notifications" ? (
+          <>
+            <MenuItem
+              onClick={() => handleCloseMenu()}
+              sx={{
+                m: "1px 5px",
+                borderRadius: 1,
+                "&.Mui-selected": {
+                  backgroundColor:
+                    mode === "light" ? palette.primary.light : "",
+                },
+                "&.Mui-selected:hover": {
+                  backgroundColor:
+                    mode === "light" ? palette.primary.light : "",
+                },
+              }}
+            >
+              <Typography>Notification 1</Typography>
+            </MenuItem>
+            <MenuItem
+              onClick={() => handleCloseMenu()}
+              sx={{
+                m: "1px 5px",
+                borderRadius: 1,
+                "&.Mui-selected": {
+                  backgroundColor:
+                    mode === "light" ? palette.primary.light : "",
+                },
+                "&.Mui-selected:hover": {
+                  backgroundColor:
+                    mode === "light" ? palette.primary.light : "",
+                },
+              }}
+            >
+              <Typography>Notification 2</Typography>
+            </MenuItem>
+            <MenuItem
+              onClick={() => handleCloseMenu()}
+              sx={{
+                m: "1px 5px",
+                borderRadius: 1,
+                "&.Mui-selected": {
+                  backgroundColor:
+                    mode === "light" ? palette.primary.light : "",
+                },
+                "&.Mui-selected:hover": {
+                  backgroundColor:
+                    mode === "light" ? palette.primary.light : "",
+                },
+              }}
+            >
+              <Typography>Notification 3</Typography>
             </MenuItem>
           </>
         ) : null}

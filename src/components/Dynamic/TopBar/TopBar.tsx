@@ -42,8 +42,9 @@ export default function TopBar() {
             // backgroundColor: "teal",
           }}
         >
+          <IconDropDownMenu type="notifications" size="small" />
           <IconDropDownMenu type="colorModeToggle" size="small" />
-          <IconDropDownMenu type="avatar" size="small" />
+          <IconDropDownMenu type="avatar" size="small" sx={{ ml: "20px" }} />
         </Box>
       </Toolbar>
     </AppBar>
