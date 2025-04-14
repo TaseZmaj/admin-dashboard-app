@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 
 function Services() {
-  return <Typography>Services page</Typography>;
+  return <Typography></Typography>;
 }
 
 export default Services;

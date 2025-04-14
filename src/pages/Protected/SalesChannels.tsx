@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 
 function SalesChannels() {
-  return <Typography>Sales Channels page</Typography>;
+  return <Typography></Typography>;
 }
 
 export default SalesChannels;

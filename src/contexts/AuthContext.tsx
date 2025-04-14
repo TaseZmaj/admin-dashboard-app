@@ -20,7 +20,7 @@ const initialState: State = {
 function reducer(state: State, action: Action) {
   switch (action.type) {
     case "login":
-      return { ...state, user: action.payload, isAuthenticated: true };
+      return { ...state, username: action.payload, isAuthenticated: true };
     case "logout":
       return initialState;
     default:

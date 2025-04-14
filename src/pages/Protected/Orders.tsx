@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 
 function Orders() {
-  return <Typography>Orders page</Typography>;
+  return <Typography></Typography>;
 }
 
 export default Orders;

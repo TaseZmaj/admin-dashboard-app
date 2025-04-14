@@ -17,7 +17,7 @@ import useAuth from "../hooks/useAuth";
 // Icons and imgs
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import DummyIcon2 from "../assets/DummyIcon2.png";
+import avatarImg from "../assets/Avatar4.png";
 // import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
 
@@ -25,21 +25,23 @@ interface IconDropDownMenuProps {
   sx?: SxProps<Theme>;
   size?: "tiny" | "small" | "medium" | "large";
   type: "avatar" | "colorModeToggle" | "notifications";
+  shadow?: boolean;
   glow?: boolean;
+  circular?: boolean;
 }
 
 type ColorMode = "light" | "dark" | "system";
 
 const ICON_SIZE = {
   tiny: "1rem",
-  small: "1.2rem",
+  small: "1.35rem",
   medium: "1.5rem",
   large: "1.8rem",
 };
 
 const AVATAR_WIDTH_HEIGHT = {
-  tiny: "37px",
-  small: "42px",
+  tiny: "40px",
+  small: "45px",
   medium: "54px",
   large: "60px",
 };
@@ -48,13 +50,15 @@ export default function IconDropDownMenu({
   size = "medium",
   sx = {},
   glow = false,
+  circular = false,
+  shadow = true,
   type,
 }: IconDropDownMenuProps) {
   const { palette } = useTheme() as Theme;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const { mode, systemMode, setMode } = useColorScheme();
-  const [paperElevation, setPaperElevation] = useState<number>(1);
+  const [paperElevation, setPaperElevation] = useState<number>(shadow ? 1 : 0);
   const { username } = useAuth();
 
   const resolvedMode = (systemMode || mode) as "light" | "dark";
@@ -67,7 +71,7 @@ export default function IconDropDownMenu({
     setAnchorEl(e.currentTarget);
   }
   function handleHoverEffect() {
-    resolvedMode === "dark" ? setPaperElevation(1) : () => null;
+    resolvedMode === "dark" ? shadow && setPaperElevation(1) : () => null;
   }
   function handleCloseMenu() {
     handleHoverEffect();
@@ -91,11 +95,15 @@ export default function IconDropDownMenu({
   return (
     <>
       <Paper
-        onMouseEnter={() => resolvedMode === "dark" && setPaperElevation(5)}
-        onMouseLeave={() => resolvedMode === "dark" && setPaperElevation(1)}
+        onMouseEnter={() =>
+          resolvedMode === "dark" && shadow && setPaperElevation(5)
+        }
+        onMouseLeave={() =>
+          resolvedMode === "dark" && shadow && setPaperElevation(1)
+        }
         elevation={paperElevation}
         sx={{
-          borderRadius: type === "avatar" ? "50%" : "4px",
+          borderRadius: circular ? "50%" : "4px",
           transitionDelay: "0s",
           maxWidth: "fit-content",
           maxHeight: "fit-content",
@@ -122,6 +130,7 @@ export default function IconDropDownMenu({
                 resolvedMode === "dark" && glow === true
                   ? palette.primary.light
                   : "",
+              borderRadius: circular ? "50%" : "4px",
             }}
           >
             <IconButton disableRipple onClick={(e) => handleClick(e)}>
@@ -137,15 +146,16 @@ export default function IconDropDownMenu({
         {type === "avatar" ? (
           <IconButton
             disableRipple
-            sx={{ p: "0" }}
+            sx={{ p: "0", borderRadius: circular ? "50%" : "4px" }}
             onClick={(e) => handleClick(e)}
           >
             <Avatar
               alt={username}
-              src={DummyIcon2}
+              src={avatarImg}
               sx={{
                 width: AVATAR_WIDTH_HEIGHT[size],
                 height: AVATAR_WIDTH_HEIGHT[size],
+                borderRadius: circular ? "50%" : "4px",
               }}
             ></Avatar>
           </IconButton>
@@ -154,6 +164,7 @@ export default function IconDropDownMenu({
           <Card
             variant="outlined"
             sx={{
+              borderRadius: circular ? "50%" : "4px",
               borderColor:
                 resolvedMode === "dark" && glow === true
                   ? palette.primary.light

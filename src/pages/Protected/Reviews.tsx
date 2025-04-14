@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 
 function Reviews() {
-  return <Typography>Customer reviews page</Typography>;
+  return <Typography></Typography>;
 }
 
 export default Reviews;

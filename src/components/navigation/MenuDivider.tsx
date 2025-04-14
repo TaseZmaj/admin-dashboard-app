@@ -52,7 +52,7 @@ export default function MenuDivider({
 
   return (
     <>
-      <Typography sx={dividerSX}>
+      <Typography color="textSecondary" sx={dividerSX}>
         {caps ? capitalize(children).toUpperCase() : capitalize(children)}
       </Typography>
       {includeLine ? <Divider /> : null}

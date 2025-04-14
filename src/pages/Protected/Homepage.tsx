@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 
 function Homepage() {
-  return <Typography>Dashboard Homepage</Typography>;
+  return <Typography></Typography>;
 }
 
 export default Homepage;

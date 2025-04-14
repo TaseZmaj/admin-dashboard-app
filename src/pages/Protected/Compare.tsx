@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 
 function Compare() {
-  return <Typography>Compare page</Typography>;
+  return <Typography></Typography>;
 }
 
 export default Compare;

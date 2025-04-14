@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 
 function Customers() {
-  return <Typography>Customers page</Typography>;
+  return <Typography></Typography>;
 }
 
 export default Customers;

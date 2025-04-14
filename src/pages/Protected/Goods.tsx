@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 
 function Goods() {
-  return <Typography>Goods page</Typography>;
+  return <Typography></Typography>;
 }
 
 export default Goods;
