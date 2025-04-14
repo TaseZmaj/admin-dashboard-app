@@ -12,13 +12,13 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useTheme } from "@mui/material";
-import useAuth from "../../../hooks/useAuth";
+import useAuth from "../hooks/useAuth";
 
 // Icons and imgs
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import DummyIcon2 from "../../../assets/DummyIcon2.png";
-import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import DummyIcon2 from "../assets/DummyIcon2.png";
+// import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
 
 interface IconDropDownMenuProps {

@@ -1,7 +1,7 @@
 import { Paper } from "@mui/material";
-import LoginModal from "../../components/Dynamic/Login/LoginModal.tsx";
+import LoginModal from "../../components/login/LoginModal.tsx";
 import { useTheme, Theme } from "@mui/material";
-import IconDropDownMenu from "../../components/Dynamic/Util/IconDropDownMenu.tsx";
+import IconDropDownMenu from "../../components/IconDropDownMenu.tsx";
 
 export default function Login() {
   const { palette } = useTheme() as Theme;

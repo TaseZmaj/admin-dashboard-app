@@ -100,3 +100,15 @@ export type Percentage = `${
   | 98
   | 99
   | 100}%`;
+
+export type NavLinks =
+  | "dashboard"
+  | "goods"
+  | "services"
+  | "employees"
+  | "sales channels"
+  | "customers"
+  | "orders"
+  | "compare"
+  | "reviews"
+  | "logout";

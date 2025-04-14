@@ -1,7 +1,7 @@
 import { Box, Drawer, drawerClasses, Theme, useTheme } from "@mui/material";
 // import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import NavMenu from "./NavMenu.tsx";
-import Logo from "../../Presentational/Logo";
+import NavMenu from "./NavMenu";
+import Logo from "../Logo";
 
 const drawerWidth = "220px";
 const logoSectionHeight = "83px";

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import useAuth from "../../../hooks/useAuth";
-import useErrors from "../../../hooks/useErrors";
-import validateForm from "../../../utils/formValidation";
+import useAuth from "../../hooks/useAuth.ts";
+import useErrors from "../../hooks/useErrors.ts";
+import validateForm from "../../utils/formValidation.ts";
 import {
   Box,
   Typography,
@@ -15,8 +15,8 @@ import {
   useTheme,
   Theme,
 } from "@mui/material";
-import FromInput from "../../../components/Dynamic/Login/FormInput.tsx";
-import Logo from "../../../components/Presentational/Logo.tsx";
+import FromInput from "./FormInput.tsx";
+import Logo from "../Logo.tsx";
 
 interface LoginModalProps {
   glow?: boolean;

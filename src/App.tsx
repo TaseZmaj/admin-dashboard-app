@@ -6,41 +6,41 @@ import ErrorProvider from "./contexts/ErrorContext.tsx";
 
 import AppTheme from "./theme/AppTheme.tsx";
 
-const Homepage = lazy(() => import("./pages/Protected/Homepage.tsx"));
-const Goods = lazy(() => import("./pages/Protected/Goods.tsx"));
-const Services = lazy(() => import("./pages/Protected/Services.tsx"));
-const Employees = lazy(() => import("./pages/Protected/Employees.tsx"));
-const SalesChannels = lazy(() => import("./pages/Protected/SalesChannels.tsx"));
-const Customers = lazy(() => import("./pages/Protected/Customers.tsx"));
-const Orders = lazy(() => import("./pages/Protected/Orders.tsx"));
-const Compare = lazy(() => import("./pages/Protected/Compare.tsx"));
-const Login = lazy(() => import("./pages/PublicPages/Login.tsx"));
-const Error = lazy(() => import("./pages/PublicPages/Error.tsx"));
-const Reviews = lazy(() => import("./pages/Protected/Reviews.tsx"));
+const Homepage = lazy(() => import("./pages/protected/Homepage.tsx"));
+const Goods = lazy(() => import("./pages/protected/Goods.tsx"));
+const Services = lazy(() => import("./pages/protected/Services.tsx"));
+const Employees = lazy(() => import("./pages/protected/Employees.tsx"));
+const SalesChannels = lazy(() => import("./pages/protected/SalesChannels.tsx"));
+const Customers = lazy(() => import("./pages/protected/Customers.tsx"));
+const Orders = lazy(() => import("./pages/protected/Orders.tsx"));
+const Compare = lazy(() => import("./pages/protected/Compare.tsx"));
+const Login = lazy(() => import("./pages/publicPages/Login.tsx"));
+const Error = lazy(() => import("./pages/publicPages/Error.tsx"));
+const Reviews = lazy(() => import("./pages/protected/Reviews.tsx"));
 
-const Loading = lazy(() => import("./components/Presentational/Loading.tsx"));
+const Loading = lazy(() => import("./components/Loading.tsx"));
 const ProtectedRoute = lazy(
-  () => import("./pages/UtilPages/ProtectedRoute.tsx")
+  () => import("./pages/utilPages/ProtectedRoute.tsx")
 );
-const Layout = lazy(() => import("./pages/UtilPages/Layout.tsx"));
+const Layout = lazy(() => import("./pages/utilPages/Layout.tsx"));
 
 const SingleGood = lazy(
-  () => import("./pages/Protected/DynamicPages/SingleGood.tsx")
+  () => import("./pages/protected/dynamicPages/SingleGood.tsx")
 );
 const SingleService = lazy(
-  () => import("./pages/Protected/DynamicPages/SingleService.tsx")
+  () => import("./pages/protected/dynamicPages/SingleService.tsx")
 );
 const SingleSalesPerson = lazy(
-  () => import("./pages/Protected/DynamicPages/SingleSalesPerson.tsx")
+  () => import("./pages/protected/dynamicPages/SingleSalesPerson.tsx")
 );
 const SingleSalesChannel = lazy(
-  () => import("./pages/Protected/DynamicPages/SingleSalesChannel.tsx")
+  () => import("./pages/protected/dynamicPages/SingleSalesChannel.tsx")
 );
 const SingleCustomer = lazy(
-  () => import("./pages/Protected/DynamicPages/SingleCustomer.tsx")
+  () => import("./pages/protected/dynamicPages/SingleCustomer.tsx")
 );
 const SingleOrder = lazy(
-  () => import("./pages/Protected/DynamicPages/SingleOrder.tsx")
+  () => import("./pages/protected/dynamicPages/SingleOrder.tsx")
 );
 
 export default function App() {

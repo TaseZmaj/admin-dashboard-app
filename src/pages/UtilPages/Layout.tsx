@@ -1,8 +1,8 @@
 import { Outlet } from "react-router";
-import SideBarNav from "../../components/Dynamic/Navigation/SideBarNav";
+import SideBarNav from "../../components/navigation/SideBarNav";
 import { Paper, Box } from "@mui/material";
 import { Theme, useTheme } from "@mui/material";
-import TopBar from "../../components/Dynamic/TopBar/TopBar";
+import TopBar from "../../components/topbar/TopBar";
 
 export default function Layout() {
   const { palette } = useTheme() as Theme;

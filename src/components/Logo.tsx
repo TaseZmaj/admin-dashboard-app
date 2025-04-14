@@ -1,9 +1,9 @@
 import { useColorScheme } from "@mui/material";
-import LightTranzitLogo from "../../assets/Tranzit logo belo v2.svg";
-import DarkTranzitLogo from "../../assets/Tranzit logo crno v2.svg";
+import LightTranzitLogo from "../assets/Tranzit logo belo v2.svg";
+import DarkTranzitLogo from "../assets/Tranzit logo crno v2.svg";
 import { useNavigate } from "react-router";
 
-interface Props {
+interface LogoProps {
   size?: "tiny" | "small" | "medium" | "large" | "extra large";
   homeLink?: boolean;
 }
@@ -18,7 +18,7 @@ const IMG_WIDTH = {
 
 // TODO: Fix logo size inconsistency between light and dark mode
 
-export default function Logo({ size = "medium", homeLink = false }: Props) {
+export default function Logo({ size = "medium", homeLink = false }: LogoProps) {
   const navigate = useNavigate();
   let imgStyle = {
     width: IMG_WIDTH[size],

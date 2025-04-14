@@ -1,7 +1,7 @@
 import { AppBar, Box, Toolbar, useColorScheme } from "@mui/material";
 import { Theme, useTheme } from "@mui/material";
 import SearchInput from "./SearchInput.tsx";
-import IconDropDownMenu from "../Util/IconDropDownMenu.tsx";
+import IconDropDownMenu from "../IconDropDownMenu.tsx";
 
 export default function TopBar() {
   const { palette } = useTheme() as Theme;

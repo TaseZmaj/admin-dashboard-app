@@ -6,7 +6,9 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import capitalize from "../../../utils/capitalize";
+import { capitalize } from "../../utils/stringUtils";
+import { NavLinks } from "../../utils/customTypes";
+import useAuth from "../../hooks/useAuth";
 
 // Icons
 import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomizeOutlined";
@@ -19,9 +21,6 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
-import useAuth from "../../../hooks/useAuth";
-
-import { NavLinks } from "./NavMenu";
 
 interface Props {
   children: NavLinks;

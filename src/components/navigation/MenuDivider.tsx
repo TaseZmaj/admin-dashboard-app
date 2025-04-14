@@ -1,7 +1,7 @@
 import { Divider, Typography } from "@mui/material";
-import capitalize from "../../../utils/capitalize";
+import { capitalize } from "../../utils/stringUtils";
 
-interface Props {
+interface MenuDividerProps {
   fontSize?: "tiny" | "small" | "medium" | "large" | "extra large";
   textPos?: "right" | "center" | "left";
   topGap?: "none" | "small" | "medium" | "large";
@@ -40,7 +40,7 @@ export default function MenuDivider({
   includeLine = true,
   caps = false,
   children,
-}: Props) {
+}: MenuDividerProps) {
   const dividerSX = {
     fontWeight: FONT_WEIGHTS[fontWeight],
     fontSize: FONT_SIZES[fontSize],

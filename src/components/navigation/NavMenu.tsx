@@ -2,19 +2,8 @@ import { Fragment } from "react";
 import { Stack, List, Divider, Box } from "@mui/material";
 import NavItem from "./NavItem";
 import MenuDivider from "./MenuDivider";
-import { Percentage } from "../../../utils/typePercentage";
-
-export type NavLinks =
-  | "dashboard"
-  | "goods"
-  | "services"
-  | "employees"
-  | "sales channels"
-  | "customers"
-  | "orders"
-  | "compare"
-  | "reviews"
-  | "logout";
+import { Percentage } from "../../utils/customTypes";
+import { NavLinks } from "../../utils/customTypes";
 
 // The first element of the array must be one of the specified values.
 // The rest (...) can be zero or more of the allowed values.

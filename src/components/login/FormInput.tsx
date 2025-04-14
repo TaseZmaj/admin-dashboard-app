@@ -1,6 +1,6 @@
 import { useState } from "react";
-import useErrors from "../../../hooks/useErrors.ts";
-import capitalize from "../../../utils/capitalize.ts";
+import useErrors from "../../hooks/useErrors.ts";
+import { capitalize } from "../../utils/stringUtils.ts";
 import {
   Box,
   FormControl,
