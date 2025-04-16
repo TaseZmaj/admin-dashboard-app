@@ -17,7 +17,7 @@ import useAuth from "../hooks/useAuth";
 // Icons and imgs
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import avatarImg from "../assets/Avatar4.png";
+import avatarImg from "../assets/avatars/Avatar4.png";
 // import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
 

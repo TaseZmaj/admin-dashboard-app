@@ -1,13 +1,6 @@
 import { Outlet, useLocation } from "react-router";
 import SideBarNav from "../../components/navigation/SideBarNav";
-import {
-  Paper,
-  Box,
-  Typography,
-  Button,
-  useColorScheme,
-  Container,
-} from "@mui/material";
+import { Paper, Box, Typography, Button, useColorScheme } from "@mui/material";
 import { Theme, useTheme } from "@mui/material";
 import TopBar from "../../components/topbar/TopBar";
 import { capitalize, normalizePathname } from "../../utils/stringUtils";
@@ -101,9 +94,9 @@ export default function Layout() {
               </Button>
             </Box>
           </Box>
-          <Container sx={{ flexGrow: 1 }}>
+          <Box sx={{ flexGrow: 1 }}>
             <Outlet />
-          </Container>
+          </Box>
         </Box>
       </Box>
     </Paper>

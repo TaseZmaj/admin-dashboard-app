@@ -1,7 +1,9 @@
-import { Typography } from "@mui/material";
+import Table from "../../components/Table";
+
+// TODO: Maybe add a few cards at the side of the list?
 
 function Goods() {
-  return <Typography></Typography>;
+  return <Table type="goods" />;
 }
 
 export default Goods;
