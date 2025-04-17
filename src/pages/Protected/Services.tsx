@@ -1,7 +1,7 @@
-import { Typography } from "@mui/material";
+import DataTable from "../../components/data_display/DataTable";
 
 function Services() {
-  return <Typography></Typography>;
+  return <DataTable type="services" />;
 }
 
 export default Services;

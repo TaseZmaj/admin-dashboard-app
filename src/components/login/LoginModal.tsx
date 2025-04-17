@@ -11,12 +11,12 @@ import {
   FormControlLabel,
   Checkbox,
   Paper,
-  useColorScheme,
   useTheme,
   Theme,
 } from "@mui/material";
 import FromInput from "./FormInput.tsx";
 import Logo from "../Logo.tsx";
+import useResolvedMode from "../../hooks/useResolvedMode.ts";
 
 interface LoginModalProps {
   glow?: boolean;
@@ -31,9 +31,7 @@ export default function LoginModal({ glow = false }: LoginModalProps) {
   const [paperElevation, setPaperElevation] = useState(5);
 
   const { palette } = useTheme() as Theme;
-
-  const { mode, systemMode } = useColorScheme();
-  const resolvedMode = (systemMode || mode) as "light" | "dark";
+  const resolvedMode = useResolvedMode();
 
   useEffect(() => {
     if (isAuthenticated) {

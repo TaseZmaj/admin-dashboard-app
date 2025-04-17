@@ -92,6 +92,147 @@ export default function IconDropDownMenu({
   //TODO: When notifications exist - icon is the bell ringing
   //When there are no notifications - the icon is the normal bell
 
+  function renderMenuItems() {
+    if (type === "colorModeToggle") {
+      return [
+        <MenuItem
+          selected={mode === "system"}
+          sx={{
+            m: "1px 5px",
+            borderRadius: 1,
+            "&.Mui-selected": {
+              backgroundColor: mode === "light" ? palette.primary.light : "",
+            },
+            "&.Mui-selected:hover": {
+              backgroundColor: mode === "light" ? palette.primary.light : "",
+            },
+          }}
+          onClick={() => handleModeChange("system")}
+        >
+          <Typography>System</Typography>
+        </MenuItem>,
+        <MenuItem
+          selected={mode === "light"}
+          sx={{
+            m: "0 5px",
+            borderRadius: 1,
+            "&.Mui-selected": {
+              backgroundColor: palette.primary.light,
+            },
+            "&.Mui-selected:hover": {
+              backgroundColor: palette.primary.light,
+            },
+          }}
+          onClick={() => handleModeChange("light")}
+        >
+          <Typography>Light</Typography>
+        </MenuItem>,
+        <MenuItem
+          selected={mode === "dark"}
+          sx={{
+            m: "0 5px",
+            borderRadius: 1,
+          }}
+          onClick={() => handleModeChange("dark")}
+        >
+          <Typography>Dark</Typography>
+        </MenuItem>,
+      ];
+    }
+    if (type === "avatar") {
+      return [
+        <MenuItem
+          onClick={() => handleCloseMenu()}
+          sx={{
+            m: "1px 5px",
+            borderRadius: 1,
+            "&.Mui-selected": {
+              backgroundColor: mode === "light" ? palette.primary.light : "",
+            },
+            "&.Mui-selected:hover": {
+              backgroundColor: mode === "light" ? palette.primary.light : "",
+            },
+          }}
+        >
+          <Typography>Item 1</Typography>
+        </MenuItem>,
+        <MenuItem
+          onClick={() => handleCloseMenu()}
+          sx={{
+            m: "0 5px",
+            borderRadius: 1,
+            "&.Mui-selected": {
+              backgroundColor: palette.primary.light,
+            },
+            "&.Mui-selected:hover": {
+              backgroundColor: palette.primary.light,
+            },
+          }}
+        >
+          <Typography>Item 2</Typography>
+        </MenuItem>,
+        <MenuItem
+          onClick={() => handleCloseMenu()}
+          sx={{
+            m: "0 5px",
+            borderRadius: 1,
+          }}
+        >
+          <Typography>Item 3</Typography>
+        </MenuItem>,
+      ];
+    }
+    if (type === "notifications") {
+      return [
+        <MenuItem
+          onClick={() => handleCloseMenu()}
+          sx={{
+            m: "1px 5px",
+            borderRadius: 1,
+            "&.Mui-selected": {
+              backgroundColor: mode === "light" ? palette.primary.light : "",
+            },
+            "&.Mui-selected:hover": {
+              backgroundColor: mode === "light" ? palette.primary.light : "",
+            },
+          }}
+        >
+          <Typography>Notification 1</Typography>
+        </MenuItem>,
+        <MenuItem
+          onClick={() => handleCloseMenu()}
+          sx={{
+            m: "1px 5px",
+            borderRadius: 1,
+            "&.Mui-selected": {
+              backgroundColor: mode === "light" ? palette.primary.light : "",
+            },
+            "&.Mui-selected:hover": {
+              backgroundColor: mode === "light" ? palette.primary.light : "",
+            },
+          }}
+        >
+          <Typography>Notification 2</Typography>
+        </MenuItem>,
+        <MenuItem
+          onClick={() => handleCloseMenu()}
+          sx={{
+            m: "1px 5px",
+            borderRadius: 1,
+            "&.Mui-selected": {
+              backgroundColor: mode === "light" ? palette.primary.light : "",
+            },
+            "&.Mui-selected:hover": {
+              backgroundColor: mode === "light" ? palette.primary.light : "",
+            },
+          }}
+        >
+          <Typography>Notification 3</Typography>
+        </MenuItem>,
+      ];
+    }
+  }
+
   return (
     <>
       <Paper
@@ -203,154 +344,7 @@ export default function IconDropDownMenu({
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        {type === "colorModeToggle" ? (
-          <>
-            <MenuItem
-              selected={mode === "system"}
-              sx={{
-                m: "1px 5px",
-                borderRadius: 1,
-                "&.Mui-selected": {
-                  backgroundColor:
-                    mode === "light" ? palette.primary.light : "",
-                },
-                "&.Mui-selected:hover": {
-                  backgroundColor:
-                    mode === "light" ? palette.primary.light : "",
-                },
-              }}
-              onClick={() => handleModeChange("system")}
-            >
-              <Typography>System</Typography>
-            </MenuItem>
-            <MenuItem
-              selected={mode === "light"}
-              sx={{
-                m: "0 5px",
-                borderRadius: 1,
-                "&.Mui-selected": {
-                  backgroundColor: palette.primary.light,
-                },
-                "&.Mui-selected:hover": {
-                  backgroundColor: palette.primary.light,
-                },
-              }}
-              onClick={() => handleModeChange("light")}
-            >
-              <Typography>Light</Typography>
-            </MenuItem>
-            <MenuItem
-              selected={mode === "dark"}
-              sx={{
-                m: "0 5px",
-                borderRadius: 1,
-              }}
-              onClick={() => handleModeChange("dark")}
-            >
-              <Typography>Dark</Typography>
-            </MenuItem>
-          </>
-        ) : null}
-        {type === "avatar" ? (
-          <>
-            <MenuItem
-              onClick={() => handleCloseMenu()}
-              sx={{
-                m: "1px 5px",
-                borderRadius: 1,
-                "&.Mui-selected": {
-                  backgroundColor:
-                    mode === "light" ? palette.primary.light : "",
-                },
-                "&.Mui-selected:hover": {
-                  backgroundColor:
-                    mode === "light" ? palette.primary.light : "",
-                },
-              }}
-            >
-              <Typography>Item 1</Typography>
-            </MenuItem>
-            <MenuItem
-              onClick={() => handleCloseMenu()}
-              sx={{
-                m: "0 5px",
-                borderRadius: 1,
-                "&.Mui-selected": {
-                  backgroundColor: palette.primary.light,
-                },
-                "&.Mui-selected:hover": {
-                  backgroundColor: palette.primary.light,
-                },
-              }}
-            >
-              <Typography>Item 2</Typography>
-            </MenuItem>
-            <MenuItem
-              onClick={() => handleCloseMenu()}
-              sx={{
-                m: "0 5px",
-                borderRadius: 1,
-              }}
-            >
-              <Typography>Item 3</Typography>
-            </MenuItem>
-          </>
-        ) : null}
-        {type === "notifications" ? (
-          <>
-            <MenuItem
-              onClick={() => handleCloseMenu()}
-              sx={{
-                m: "1px 5px",
-                borderRadius: 1,
-                "&.Mui-selected": {
-                  backgroundColor:
-                    mode === "light" ? palette.primary.light : "",
-                },
-                "&.Mui-selected:hover": {
-                  backgroundColor:
-                    mode === "light" ? palette.primary.light : "",
-                },
-              }}
-            >
-              <Typography>Notification 1</Typography>
-            </MenuItem>
-            <MenuItem
-              onClick={() => handleCloseMenu()}
-              sx={{
-                m: "1px 5px",
-                borderRadius: 1,
-                "&.Mui-selected": {
-                  backgroundColor:
-                    mode === "light" ? palette.primary.light : "",
-                },
-                "&.Mui-selected:hover": {
-                  backgroundColor:
-                    mode === "light" ? palette.primary.light : "",
-                },
-              }}
-            >
-              <Typography>Notification 2</Typography>
-            </MenuItem>
-            <MenuItem
-              onClick={() => handleCloseMenu()}
-              sx={{
-                m: "1px 5px",
-                borderRadius: 1,
-                "&.Mui-selected": {
-                  backgroundColor:
-                    mode === "light" ? palette.primary.light : "",
-                },
-                "&.Mui-selected:hover": {
-                  backgroundColor:
-                    mode === "light" ? palette.primary.light : "",
-                },
-              }}
-            >
-              <Typography>Notification 3</Typography>
-            </MenuItem>
-          </>
-        ) : null}
+        {renderMenuItems()}
       </Menu>
     </>
   );
