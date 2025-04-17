@@ -1,32 +1,39 @@
-// import { Box, Card } from "@mui/material";
+import { Box } from "@mui/material";
 import DataTable from "../../components/data_display/DataTable";
-
-// TODO: Maybe add a few cards at the side of the list?
+import ModularTabs from "../../components/ModularTabs.tsx";
+import SearchInput from "../../components/topbar/SearchInput.tsx";
+import FiltersGroup from "../../components/FiltersGroup.tsx";
 
 function Goods() {
   return (
-    <DataTable type="goods" />
-    // <Box
-    //   sx={{
-    //     width: "100%",
-    //     height: "100%",
-    //     // display: "flex",
-    //   }}
-    // >
-    //   <Box sx={{ width: "1320px" }}>
-    //     <DataTable type="goods" />
-    //   </Box>
-    //   <Box sx={{ display: "flex", flexGrow: "1", justifyContent: "center" }}>
-    //     <Card
-    //       variant="outlined"
-    //       sx={{
-    //         width: "240px",
-    //         height: "20px",
-    //         backgroundColor: "black",
-    //       }}
-    //     ></Card>
-    //   </Box>
-    // </Box>
+    <>
+      <ModularTabs tabNames={["List", "Analytics"]} sx={{ width: "100%" }}>
+        <Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <SearchInput />
+            {/* TODO: Change the filters here there is no point in these */}
+            <FiltersGroup includeFilters={["AllTimeBtn", "TimeFilter"]} />
+          </Box>
+          <DataTable sx={{ mt: "12px" }} type="goods" />
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <SearchInput />
+          <FiltersGroup includeFilters={["AllTimeBtn", "TimeFilter"]} />
+        </Box>
+      </ModularTabs>
+    </>
   );
 }
 

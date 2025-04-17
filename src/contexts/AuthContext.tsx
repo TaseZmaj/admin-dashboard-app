@@ -1,5 +1,6 @@
 import { useReducer, createContext } from "react";
 
+//Types
 interface State {
   username: string;
   isAuthenticated: boolean;
@@ -12,6 +13,7 @@ interface AuthContextType extends State {
   logOut: () => void;
 }
 
+// Context
 const initialState: State = {
   username: "",
   isAuthenticated: false,

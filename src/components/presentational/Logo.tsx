@@ -1,6 +1,6 @@
 import { useColorScheme } from "@mui/material";
-import LightTranzitLogo from "../assets/logos/Tranzit logo belo v2.svg";
-import DarkTranzitLogo from "../assets/logos/Tranzit logo crno v2.svg";
+import LightTranzitLogo from "../../assets/logos/Tranzit logo belo v2.svg";
+import DarkTranzitLogo from "../../assets/logos/Tranzit logo crno v2.svg";
 import { useNavigate } from "react-router";
 
 interface LogoProps {

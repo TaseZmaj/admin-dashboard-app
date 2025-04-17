@@ -71,23 +71,19 @@ export default function IconDropDownMenu({
     setAnchorEl(e.currentTarget);
   }
   function handleHoverEffect() {
-    resolvedMode === "dark" ? shadow && setPaperElevation(1) : () => null;
+    resolvedMode === "dark" && shadow && setPaperElevation(1);
   }
   function handleCloseMenu() {
     handleHoverEffect();
     setAnchorEl(null);
   }
 
-  //   For colormode toggle
   function handleModeChange(mode: ColorMode) {
     setMode(mode);
     handleCloseMenu();
   }
 
   //TODO: maybe make the menu items abstract 🤔, a lot of the code repeats itself
-
-  // TODO: make the DropDown menu in Avatar INNACESSIBLE if the user is not logged in
-  // Or make the pages the list items take the user to - protected
 
   //TODO: When notifications exist - icon is the bell ringing
   //When there are no notifications - the icon is the normal bell
@@ -96,6 +92,7 @@ export default function IconDropDownMenu({
     if (type === "colorModeToggle") {
       return [
         <MenuItem
+          key="system"
           selected={mode === "system"}
           sx={{
             m: "1px 5px",
@@ -112,6 +109,7 @@ export default function IconDropDownMenu({
           <Typography>System</Typography>
         </MenuItem>,
         <MenuItem
+          key="light"
           selected={mode === "light"}
           sx={{
             m: "0 5px",
@@ -128,6 +126,7 @@ export default function IconDropDownMenu({
           <Typography>Light</Typography>
         </MenuItem>,
         <MenuItem
+          key="dark"
           selected={mode === "dark"}
           sx={{
             m: "0 5px",
@@ -142,6 +141,7 @@ export default function IconDropDownMenu({
     if (type === "avatar") {
       return [
         <MenuItem
+          key={1}
           onClick={() => handleCloseMenu()}
           sx={{
             m: "1px 5px",
@@ -157,6 +157,7 @@ export default function IconDropDownMenu({
           <Typography>Item 1</Typography>
         </MenuItem>,
         <MenuItem
+          key={2}
           onClick={() => handleCloseMenu()}
           sx={{
             m: "0 5px",
@@ -172,6 +173,7 @@ export default function IconDropDownMenu({
           <Typography>Item 2</Typography>
         </MenuItem>,
         <MenuItem
+          key={3}
           onClick={() => handleCloseMenu()}
           sx={{
             m: "0 5px",
@@ -185,6 +187,7 @@ export default function IconDropDownMenu({
     if (type === "notifications") {
       return [
         <MenuItem
+          key={1}
           onClick={() => handleCloseMenu()}
           sx={{
             m: "1px 5px",
@@ -200,6 +203,7 @@ export default function IconDropDownMenu({
           <Typography>Notification 1</Typography>
         </MenuItem>,
         <MenuItem
+          key={2}
           onClick={() => handleCloseMenu()}
           sx={{
             m: "1px 5px",
@@ -215,6 +219,7 @@ export default function IconDropDownMenu({
           <Typography>Notification 2</Typography>
         </MenuItem>,
         <MenuItem
+          key={3}
           onClick={() => handleCloseMenu()}
           sx={{
             m: "1px 5px",

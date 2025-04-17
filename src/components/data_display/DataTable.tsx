@@ -10,29 +10,33 @@ import {
   Theme,
 } from "@mui/material";
 import useResolvedMode from "../../hooks/useResolvedMode.ts";
+import { DataTableType } from "../../utils/customTypes.ts";
 
 interface TableProps {
-  type: "goods" | "services";
+  type: DataTableType;
   sx?: SxProps;
 }
 
 const tableHeadings = {
-  goods: ["#", "Name", "Type", "Stock", "Price"],
+  goods: ["#", "Name", "Type", "Brand", "Stock", "Price"],
   services: ["#", "Name", "Type", "Price"],
+  employees: [],
+  "sales-channels": [],
+  customers: [],
+  orders: [],
+  reviews: [],
 };
 
 export default function DataTable({ type, sx = {} }: TableProps) {
   const { palette } = useTheme() as Theme;
   const resolvedMode = useResolvedMode();
 
-  // const [goods, setGoods] = useState(null);
-
   const headings = tableHeadings[type];
 
   return (
     <TableContainer
       component={Paper}
-      elevation={2}
+      elevation={1}
       sx={{
         backgroundColor: palette.background.default,
         border: resolvedMode === "dark" ? `1px solid ${palette.divider}` : "",

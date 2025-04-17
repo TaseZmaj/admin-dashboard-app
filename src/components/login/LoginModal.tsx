@@ -15,7 +15,7 @@ import {
   Theme,
 } from "@mui/material";
 import FromInput from "./FormInput.tsx";
-import Logo from "../Logo.tsx";
+import Logo from "../presentational/Logo.tsx";
 import useResolvedMode from "../../hooks/useResolvedMode.ts";
 
 interface LoginModalProps {

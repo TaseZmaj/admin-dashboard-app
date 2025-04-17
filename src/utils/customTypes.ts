@@ -112,3 +112,16 @@ export type NavLinks =
   | "compare"
   | "reviews"
   | "logout";
+
+export type FilterGroups = "TimeFilter" | "AllTimeBtn" | "DateFilter";
+
+export type DataTableType =
+  | "goods"
+  | "services"
+  | "employees"
+  | "sales-channels"
+  | "customers"
+  | "orders"
+  | "reviews";
+
+export type ProductTypes = "Tire" | "Rim" | "Car battery";

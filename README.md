@@ -597,6 +597,8 @@ Same as the main pages, but with a smaller navbar.
 
 Freestyle this one
 
+- [Nice Design 1](https://dribbble.com/shots/25673005-Nexus-Company-List-View-CRM-Dashboard-Webapp-Saas)
+
 # Admin-dashboard example <!--TODO: Remove after completion -->
 
 - [An example](https://example.admin.refine.dev)

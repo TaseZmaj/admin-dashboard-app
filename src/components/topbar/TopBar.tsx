@@ -1,41 +1,36 @@
-import {
-  AppBar,
-  Box,
-  Breadcrumbs,
-  Toolbar,
-  Typography,
-  useColorScheme,
-} from "@mui/material";
-import { Theme, useTheme, Link } from "@mui/material";
+import { AppBar, Box, SxProps, Toolbar } from "@mui/material";
+import { Theme, useTheme } from "@mui/material";
 import SearchInput from "./SearchInput.tsx";
 import IconDropDownMenu from "../IconDropDownMenu.tsx";
-import { useLocation } from "react-router";
-import { normalizePathname } from "../../utils/stringUtils.ts";
+import useResolvedMode from "../../hooks/useResolvedMode.ts";
+import CustomBreadCrumbs from "./CustomBreadCrumbs.tsx";
 
-export default function TopBar() {
+interface TopBarProps {
+  sx?: SxProps;
+}
+
+export default function TopBar({ sx = {} }: TopBarProps) {
   const { palette } = useTheme() as Theme;
-  const { mode } = useColorScheme();
-  const { pathname } = useLocation();
+  const resolvedMode = useResolvedMode();
 
   return (
     <AppBar
       sx={{
         display: "flex",
         justifyContent: "center",
-        minHeight: "83px",
-        height: "83px",
         boxSizing: "border-box",
         p: "10px",
         backgroundColor:
-          mode === "light"
+          resolvedMode === "light"
             ? palette.background.default
             : palette.background.paper,
         borderTop: "none",
         borderLeft: "none",
         borderRight: "none",
-        position: "relative",
+        position: "fixed",
+        paddingLeft: "227px",
+        ...sx,
       }}
-      position="static"
       variant="outlined"
     >
       <Toolbar
@@ -45,12 +40,7 @@ export default function TopBar() {
           justifyContent: "flex-start",
         }}
       >
-        <Breadcrumbs sx={{ cursor: "default" }}>
-          <Typography>Pages</Typography>
-          <Link sx={{ textDecoration: "none" }}>
-            {pathname === "/" ? "Homepage" : normalizePathname(pathname)}
-          </Link>
-        </Breadcrumbs>
+        <CustomBreadCrumbs />
         <SearchInput sx={{ ml: "auto" }} />
         <Box
           sx={{
