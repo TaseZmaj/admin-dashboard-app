@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 import useResolvedMode from "../../hooks/useResolvedMode.ts";
 import { DataTableType } from "../../utils/customTypes.ts";
+import { useEffect } from "react";
+import useGoods from "../../hooks/useGoods.ts";
 
 interface TableProps {
   type: DataTableType;
@@ -28,10 +30,37 @@ const tableHeadings = {
 };
 
 export default function DataTable({ type, sx = {} }: TableProps) {
+  const { getProductsList } = useGoods();
+
+  //TODO: find an optimization fix so that the DataTable doesn't fetch from all
+  //the different contexts at once
+
   const { palette } = useTheme() as Theme;
   const resolvedMode = useResolvedMode();
 
   const headings = tableHeadings[type];
+
+  useEffect(() => {
+    switch (type) {
+      case "goods":
+        getProductsList();
+        break;
+      case "services":
+        break;
+      case "employees":
+        break;
+      case "sales-channels":
+        break;
+      case "customers":
+        break;
+      case "orders":
+        break;
+      case "reviews":
+        break;
+      default:
+        throw new Error("ERROR: Invalid data table type!");
+    }
+  }, []);
 
   return (
     <TableContainer

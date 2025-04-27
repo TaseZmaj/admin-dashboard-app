@@ -29,7 +29,7 @@ export default function ModularTabs({
         <Tabs value={value} onChange={handleChange}>
           {tabNames.map((tabName, i) =>
             tabName === "List" ? (
-              <Tab label={`${normalizePathname(pathname)} List`} />
+              <Tab key={i} label={`${normalizePathname(pathname)} List`} />
             ) : (
               <Tab key={i} label={tabName} />
             )

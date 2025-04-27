@@ -1,12 +1,15 @@
-import { createContext, useReducer } from "react";
+import { createContext, useCallback, useReducer } from "react";
 import { ProductTypes } from "../utils/customTypes.ts";
 import supabase from "../utils/supabase.ts";
 
 // Types
 interface Product {
   id: number;
-  name: "string";
+  name: string;
   type: ProductTypes;
+  brand: string;
+  stock: number;
+  price: number | number[];
 }
 
 interface State {
@@ -21,8 +24,8 @@ type Action =
   | { type: "product/loaded"; payload: Product };
 
 interface GoodsContextType extends State {
-  getProductsList: () => void;
-  getProduct: () => void;
+  getProductsList: () => Promise<void>;
+  getProduct: (id: number) => Promise<void>;
 }
 
 // Context
@@ -57,37 +60,40 @@ export default function GoodsProvider({
     initialState
   );
 
-  const getProductsList = async () => {
+  const getProductsList = useCallback(async () => {
+    if (products && products.length > 0) {
+      console.log("Products already fetched - skipping fetch!");
+      return;
+    }
+    // console.log("Fetching!");
     dispatch({ type: "loading" });
 
-    const { data: Goods, error } = await supabase
-      .from("Goods")
-      .select("*")
-      .returns<Product[]>();
+    const { data: Goods, error } = await supabase.from("Goods").select(
+      `id,
+        name,
+        type,
+        brand,
+        stock,
+        price,
+        tires(id, price),
+        rims(id, price),
+        car_batteries(id, price)
+        `
+    );
+    // .returns<Product[]>();
+
+    //TODO: FIX THE FETCHING - so that the price shows up
+
     if (Goods) {
       dispatch({ type: "products/loaded", payload: Goods });
     } else {
+      // TODO: Add the error context setter function here instead of throwing an error
       throw new Error(`ERROR: ${error.message}`);
     }
-  };
+    // console.log("Products: ", products);
+  }, []);
 
-  const getProduct = async () => {};
-
-  // TODO: Test the context!
-
-  // useEffect(() => {
-  //   async function fetchGoods() {
-  //     const { data, error } = await supabase.from("Goods").select("*");
-
-  //     if (error) {
-  //       console.log("SUPABASE ERROR: ", error);
-  //     } else {
-  //       console.log("Fetched data:", data);
-  //     }
-  //   }
-
-  //   fetchGoods();
-  // }, []);
+  const getProduct = useCallback(async (id: number) => {}, []);
 
   return (
     <GoodsContext.Provider
