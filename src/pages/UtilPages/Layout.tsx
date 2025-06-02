@@ -32,6 +32,7 @@ export default function Layout() {
             flexDirection: "column",
             p: "24px",
             mt: TopBarHeight,
+            // backgroundColor: "red",
           }}
         >
           <Outlet />

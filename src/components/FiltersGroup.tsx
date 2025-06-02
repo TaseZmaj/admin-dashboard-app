@@ -1,5 +1,5 @@
 import { Box, Button, SxProps, Theme, useTheme } from "@mui/material";
-import { FilterGroups } from "../utils/customTypes";
+import { FilterGroups } from "../utils/Types/utilTypes";
 import DropDownMenu from "./DropDownMenu";
 import useResolvedMode from "../hooks/useResolvedMode";
 

@@ -8,6 +8,7 @@ function Goods() {
   return (
     <>
       <ModularTabs tabNames={["List", "Analytics"]} sx={{ width: "100%" }}>
+        {/* List TAB */}
         <Box>
           <Box
             sx={{
@@ -16,12 +17,14 @@ function Goods() {
               alignItems: "center",
             }}
           >
-            <SearchInput />
+            <SearchInput sx={{ zIndex: 15 }} />
             {/* TODO: Change the filters here there is no point in these */}
-            <FiltersGroup includeFilters={["AllTimeBtn", "TimeFilter"]} />
+            {/* <FiltersGroup includeFilters={["AllTimeBtn", "TimeFilter"]} /> */}
           </Box>
-          <DataTable sx={{ mt: "12px" }} type="goods" />
+          <DataTable sx={{ mt: "12px", maxHeight: "100%" }} type="goods" />
         </Box>
+
+        {/* Analytics TAB */}
         <Box
           sx={{
             display: "flex",

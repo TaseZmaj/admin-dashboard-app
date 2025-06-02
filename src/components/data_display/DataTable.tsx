@@ -1,4 +1,13 @@
-import { SxProps, useTheme } from "@mui/material";
+import {
+  Box,
+  capitalize,
+  FormControlLabel,
+  Switch,
+  SxProps,
+  TablePagination,
+  TableSortLabel,
+  useTheme,
+} from "@mui/material";
 import {
   TableContainer,
   Table,
@@ -10,40 +19,125 @@ import {
   Theme,
 } from "@mui/material";
 import useResolvedMode from "../../hooks/useResolvedMode.ts";
-import { DataTableType } from "../../utils/customTypes.ts";
-import { useEffect } from "react";
+import { DataTableType } from "../../utils/Types/utilTypes.ts";
+import { Product } from "../../utils/Types/modelTypes.ts";
+import { useEffect, useMemo, useState } from "react";
 import useGoods from "../../hooks/useGoods.ts";
+import { visuallyHidden } from "@mui/utils";
+import { DataTableSchemaMap } from "../../utils/Types/utilTypes.ts";
+import Loading from "../Loading.tsx";
 
 interface TableProps {
   type: DataTableType;
   sx?: SxProps;
 }
 
-const tableHeadings = {
-  goods: ["#", "Name", "Type", "Brand", "Stock", "Price"],
-  services: ["#", "Name", "Type", "Price"],
-  employees: [],
-  "sales-channels": [],
-  customers: [],
+type Order = "asc" | "desc";
+
+function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+function getComparator<Key extends keyof any>(
+  order: Order,
+  orderBy: Key
+): (
+  a: { [key in Key]: number | string },
+  b: { [key in Key]: number | string }
+) => number {
+  return order === "desc"
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+const tableHeadings: {
+  [K in keyof DataTableSchemaMap]: (keyof DataTableSchemaMap[K])[];
+} = {
+  goods: ["id", "name", "type", "brand", "stock", "price"],
+  services: ["id", "name", "type"],
+  employees: ["id", "name"],
+  "sales-channels": ["id", "name"],
+  customers: ["id", "name"],
   orders: [],
   reviews: [],
 };
 
-export default function DataTable({ type, sx = {} }: TableProps) {
-  const { getProductsList } = useGoods();
+const tableHeadingSizes = {
+  // id: "10%",
+  name: "560px",
+  // brand: "240px",
+  // type: "10%",
+  // stock: "10%",
+  // price: "",
+};
 
-  //TODO: find an optimization fix so that the DataTable doesn't fetch from all
-  //the different contexts at once
+export default function DataTable({ type, sx = {} }: TableProps) {
+  const { getProductsList, products, isLoading } = useGoods();
+  // const [items, setItems] = useState(null);
 
   const { palette } = useTheme() as Theme;
   const resolvedMode = useResolvedMode();
 
   const headings = tableHeadings[type];
 
+  //MUI table state
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [page, setPage] = useState(0);
+  const [dense, setDense] = useState(false);
+  const [order, setOrder] = useState<Order>("asc");
+  const [orderBy, setOrderBy] = useState<keyof Product>("id");
+
+  //MUI table handlers
+  const handleRequestSort = (
+    _event: React.MouseEvent<unknown>,
+    property: keyof Product
+  ) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  };
+  const handleChangePage = (_event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+  const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDense(event.target.checked);
+  };
+  const createSortHandler =
+    (property: keyof Product) => (event: React.MouseEvent<unknown>) => {
+      handleRequestSort(event, property);
+    };
+
+  //MUI table variables
+  const emptyRows =
+    products && page > 0
+      ? Math.max(0, (1 + page) * rowsPerPage - products.length)
+      : 0;
+  const visibleRows = useMemo(() => {
+    if (!products) return [];
+    return [...products]
+      .sort(getComparator(order, orderBy))
+      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  }, [products, order, orderBy, page, rowsPerPage]);
+
   useEffect(() => {
     switch (type) {
       case "goods":
         getProductsList();
+        // if (products) {
+        //    setItems(products);
+        // }
         break;
       case "services":
         break;
@@ -63,47 +157,116 @@ export default function DataTable({ type, sx = {} }: TableProps) {
   }, []);
 
   return (
-    <TableContainer
-      component={Paper}
-      elevation={1}
-      sx={{
-        backgroundColor: palette.background.default,
-        border: resolvedMode === "dark" ? `1px solid ${palette.divider}` : "",
-        ...sx,
-      }}
-    >
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            {headings.map((heading) => (
-              <TableCell
-                align="left"
-                key={heading}
-                sx={{ width: heading === "#" ? "25px" : null }}
-              >
-                {heading}
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {/* {rows.map((row) => (
-            // <TableRow
-            //   key={row.name}
-            //   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            // >
-            //   <TableCell component="th" scope="row">
-            //     {row.name}
-            //   </TableCell>
-            //   <TableCell align="right">{row.calories}</TableCell>
-            //   <TableCell align="right">{row.fat}</TableCell>
-            //   <TableCell align="right">{row.carbs}</TableCell>
-            //   <TableCell align="right">{row.protein}</TableCell>
-            // </TableRow>
-          ))} */}
-          <TableRow></TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      {isLoading ? (
+        <Loading sx={{ position: "relative", top: 300 }} size={60} />
+      ) : (
+        <Paper
+          sx={{
+            backgroundColor: palette.background.default,
+            border:
+              resolvedMode === "dark" ? `1px solid ${palette.divider}` : "",
+
+            ...sx,
+          }}
+          elevation={1}
+        >
+          <TableContainer>
+            <Table
+              stickyHeader={true}
+              sx={{ minWidth: 650 }}
+              size={dense ? "small" : "medium"}
+            >
+              <TableHead>
+                <TableRow>
+                  {headings.map((heading: string) => (
+                    <TableCell
+                      variant="head"
+                      key={heading}
+                      sx={{
+                        width:
+                          tableHeadingSizes[
+                            heading as keyof typeof tableHeadingSizes
+                          ],
+                      }}
+                      sortDirection={orderBy === heading ? order : false}
+                    >
+                      <TableSortLabel
+                        active={orderBy === heading}
+                        direction={orderBy === heading ? order : "asc"}
+                        onClick={createSortHandler(heading as keyof Product)}
+                      >
+                        {capitalize(heading)}
+                        {orderBy === heading ? (
+                          <Box component="span" sx={visuallyHidden}>
+                            {order === "desc"
+                              ? "sorted descending"
+                              : "sorted ascending"}
+                          </Box>
+                        ) : null}
+                      </TableSortLabel>
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody sx={{ overflowY: "auto" }}>
+                {type === "goods" && products
+                  ? visibleRows.map((product, i) => (
+                      <TableRow
+                        key={i}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell component="th" scope="row">
+                          {product.id}
+                        </TableCell>
+                        <TableCell align="left">{product.name}</TableCell>
+                        <TableCell align="left">{product.type}</TableCell>
+                        <TableCell align="left">{product.brand}</TableCell>
+                        <TableCell align="left">{product.stock}</TableCell>
+                        <TableCell align="left">null</TableCell>
+                      </TableRow>
+                    ))
+                  : null}
+                {/* {type === "services" && services ? services.map() .  .  .} */}
+                {emptyRows > 0 && (
+                  <TableRow
+                    style={{
+                      height: (dense ? 33 : 53) * emptyRows,
+                    }}
+                  >
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+            }}
+          >
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25, 50]}
+              component="div"
+              count={products ? products.length : 0}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              sx={{ order: 1 }}
+            />
+            <FormControlLabel
+              control={<Switch checked={dense} onChange={handleChangeDense} />}
+              label="Dense"
+            />
+          </Box>
+        </Paper>
+      )}
+    </>
   );
 }

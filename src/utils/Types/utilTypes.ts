@@ -1,3 +1,13 @@
+import {
+  Product,
+  Order,
+  Customer,
+  Employee,
+  Service,
+  SalesChannel,
+  Review,
+} from "./modelTypes";
+
 export type Percentage = `${
   | 0
   | 1
@@ -124,4 +134,12 @@ export type DataTableType =
   | "orders"
   | "reviews";
 
-export type ProductTypes = "Tire" | "Rim" | "Car battery";
+export type DataTableSchemaMap = {
+  goods: Product;
+  services: Service;
+  orders: Order;
+  customers: Customer;
+  employees: Employee;
+  reviews: Review;
+  "sales-channels": SalesChannel;
+};

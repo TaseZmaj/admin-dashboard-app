@@ -1,16 +1,8 @@
 import { createContext, useCallback, useReducer } from "react";
-import { ProductTypes } from "../utils/customTypes.ts";
 import supabase from "../utils/supabase.ts";
 
 // Types
-interface Product {
-  id: number;
-  name: string;
-  type: ProductTypes;
-  brand: string;
-  stock: number;
-  price: number | number[];
-}
+import { Product } from "../utils/Types/modelTypes.ts";
 
 interface State {
   isLoading: boolean;
@@ -65,22 +57,16 @@ export default function GoodsProvider({
       console.log("Products already fetched - skipping fetch!");
       return;
     }
-    // console.log("Fetching!");
+    console.log("Fetching!");
     dispatch({ type: "loading" });
 
-    const { data: Goods, error } = await supabase.from("Goods").select(
-      `id,
-        name,
-        type,
-        brand,
-        stock,
-        price,
-        tires(id, price),
-        rims(id, price),
-        car_batteries(id, price)
-        `
-    );
-    // .returns<Product[]>();
+    const { data: Goods, error } = await supabase
+      .from("Goods")
+      .select("id,name,type,brand,stock");
+
+    // const { data: Goods, error } = await supabase
+    //   .from("Goods")
+    //   .select("id,name,type,brand,stock,Tires(price)");
 
     //TODO: FIX THE FETCHING - so that the price shows up
 
@@ -90,8 +76,7 @@ export default function GoodsProvider({
       // TODO: Add the error context setter function here instead of throwing an error
       throw new Error(`ERROR: ${error.message}`);
     }
-    // console.log("Products: ", products);
-  }, []);
+  }, [products]);
 
   const getProduct = useCallback(async (id: number) => {}, []);
 

@@ -45,6 +45,7 @@ const SingleOrder = lazy(
 );
 
 export default function App() {
+  // TODO: Add a refresh button at the Pages to fetch the newest data
   {
     //--->Theme switch transition implementiraj
   }

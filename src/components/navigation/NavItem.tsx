@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { capitalize } from "../../utils/stringUtils";
-import { NavLinks } from "../../utils/customTypes";
+import { NavLinks } from "../../utils/Types/utilTypes";
 import useAuth from "../../hooks/useAuth";
 
 // Icons
