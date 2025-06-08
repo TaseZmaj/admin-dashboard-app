@@ -54,7 +54,7 @@ export default function GoodsProvider({
 
   const getProductsList = useCallback(async () => {
     if (products && products.length > 0) {
-      console.log("Products already fetched - skipping fetch!");
+      // console.log("Products already fetched - skipping fetch!");
       return;
     }
     console.log("Fetching!");
