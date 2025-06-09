@@ -19,9 +19,9 @@ function Goods() {
           >
             <SearchInput sx={{ zIndex: 15 }} />
             {/* TODO: Change the filters here there is no point in these */}
-            {/* <FiltersGroup includeFilters={["AllTimeBtn", "TimeFilter"]} /> */}
+            <FiltersGroup includeFilters={["AllTimeBtn", "TimeFilter"]} />
           </Box>
-          <DataTable sx={{ mt: "12px", maxHeight: "100%" }} type="goods" />
+          <DataTable sx={{ mt: "12px" }} type="goods" />
         </Box>
 
         {/* Analytics TAB */}

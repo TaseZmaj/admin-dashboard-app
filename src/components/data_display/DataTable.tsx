@@ -18,7 +18,6 @@ import {
   Paper,
   Theme,
 } from "@mui/material";
-import useResolvedMode from "../../hooks/useResolvedMode.ts";
 import { DataTableType } from "../../utils/Types/utilTypes.ts";
 import { Product } from "../../utils/Types/modelTypes.ts";
 import { useEffect, useMemo, useState } from "react";
@@ -69,12 +68,14 @@ const tableHeadings: {
 };
 
 const tableHeadingSizes = {
-  // id: "10%",
-  name: "560px",
-  // brand: "240px",
-  // type: "10%",
-  // stock: "10%",
-  // price: "",
+  goods: {
+    id: "10%",
+    name: "40%",
+    brand: "20%",
+    type: "10%",
+    stock: "10%",
+    price: "`0%",
+  },
 };
 
 export default function DataTable({ type, sx = {} }: TableProps) {
@@ -82,12 +83,11 @@ export default function DataTable({ type, sx = {} }: TableProps) {
   // const [items, setItems] = useState(null);
 
   const { palette } = useTheme() as Theme;
-  const resolvedMode = useResolvedMode();
 
   const headings = tableHeadings[type];
 
   //MUI table state
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [order, setOrder] = useState<Order>("asc");
@@ -120,10 +120,10 @@ export default function DataTable({ type, sx = {} }: TableProps) {
     };
 
   //MUI table variables
-  const emptyRows =
-    products && page > 0
-      ? Math.max(0, (1 + page) * rowsPerPage - products.length)
-      : 0;
+  // const emptyRows =
+  //   products && page > 0
+  //     ? Math.max(0, (1 + page) * rowsPerPage - products.length)
+  //     : 0;
   const visibleRows = useMemo(() => {
     if (!products) return [];
     return [...products]
@@ -156,117 +156,155 @@ export default function DataTable({ type, sx = {} }: TableProps) {
     }
   }, []);
 
-  return (
-    <>
-      {isLoading ? (
-        <Loading sx={{ position: "relative", top: 300 }} size={60} />
-      ) : (
-        <Paper
-          sx={{
-            backgroundColor: palette.background.default,
-            border:
-              resolvedMode === "dark" ? `1px solid ${palette.divider}` : "",
+  // TODO: Make the footer of the table be visible on zooming in!!!
 
-            ...sx,
-          }}
-          elevation={1}
+  return (
+    <Paper
+      sx={{
+        backgroundColor: palette.background.default,
+        border: `1px solid ${palette.divider}`,
+        zIndex: "15",
+        overflow: "hidden",
+        flexDirection: "column",
+        ...sx,
+        height: "100%",
+        // minHeight: 650,
+      }}
+      elevation={1}
+    >
+      <TableContainer
+        sx={{
+          // NOTE: Ovie heights se tie shto dozvoluvaat da moze da se skrola vo tabelata, a ne vo parentot
+          //Ako gi trgnes, ke mozes da skrolas vo parent, a nema da mozes da skrolash tuka
+
+          height: 650,
+          minHeight: 650,
+
+          // maxHeight: "65vh",
+          // minHeight: "65vh",
+
+          // minHeight: 650,
+          // height: "100%",
+
+          overflowX: "auto",
+          overflowY: "auto",
+        }}
+      >
+        <Table
+          stickyHeader
+          sx={{ minWidth: 650 }}
+          size={dense ? "small" : "medium"}
         >
-          <TableContainer>
-            <Table
-              stickyHeader={true}
-              sx={{ minWidth: 650 }}
-              size={dense ? "small" : "medium"}
-            >
-              <TableHead>
-                <TableRow>
-                  {headings.map((heading: string) => (
-                    <TableCell
-                      variant="head"
-                      key={heading}
-                      sx={{
-                        width:
-                          tableHeadingSizes[
-                            heading as keyof typeof tableHeadingSizes
-                          ],
-                      }}
-                      sortDirection={orderBy === heading ? order : false}
-                    >
-                      <TableSortLabel
-                        active={orderBy === heading}
-                        direction={orderBy === heading ? order : "asc"}
-                        onClick={createSortHandler(heading as keyof Product)}
-                      >
-                        {capitalize(heading)}
-                        {orderBy === heading ? (
-                          <Box component="span" sx={visuallyHidden}>
-                            {order === "desc"
-                              ? "sorted descending"
-                              : "sorted ascending"}
-                          </Box>
-                        ) : null}
-                      </TableSortLabel>
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody sx={{ overflowY: "auto" }}>
-                {type === "goods" && products
-                  ? visibleRows.map((product, i) => (
-                      <TableRow
-                        key={i}
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }}
-                      >
-                        <TableCell component="th" scope="row">
-                          {product.id}
-                        </TableCell>
-                        <TableCell align="left">{product.name}</TableCell>
-                        <TableCell align="left">{product.type}</TableCell>
-                        <TableCell align="left">{product.brand}</TableCell>
-                        <TableCell align="left">{product.stock}</TableCell>
-                        <TableCell align="left">null</TableCell>
-                      </TableRow>
-                    ))
-                  : null}
-                {/* {type === "services" && services ? services.map() .  .  .} */}
-                {emptyRows > 0 && (
-                  <TableRow
-                    style={{
-                      height: (dense ? 33 : 53) * emptyRows,
-                    }}
+          <TableHead>
+            <TableRow>
+              {headings.map((heading: string) => (
+                <TableCell
+                  variant="head"
+                  key={heading}
+                  sx={{
+                    width:
+                      tableHeadingSizes.goods[
+                        heading as keyof typeof tableHeadingSizes.goods
+                      ],
+                  }}
+                  sortDirection={orderBy === heading ? order : false}
+                >
+                  <TableSortLabel
+                    active={orderBy === heading}
+                    direction={orderBy === heading ? order : "asc"}
+                    onClick={createSortHandler(heading as keyof Product)}
                   >
-                    <TableCell colSpan={6} />
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <Box
-            sx={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-            }}
-          >
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, 50]}
-              component="div"
-              count={products ? products.length : 0}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              sx={{ order: 1 }}
-            />
-            <FormControlLabel
-              control={<Switch checked={dense} onChange={handleChangeDense} />}
-              label="Dense"
-            />
-          </Box>
-        </Paper>
-      )}
-    </>
+                    {capitalize(heading)}
+                    {orderBy === heading ? (
+                      <Box component="span" sx={visuallyHidden}>
+                        {order === "desc"
+                          ? "sorted descending"
+                          : "sorted ascending"}
+                      </Box>
+                    ) : null}
+                  </TableSortLabel>
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          {isLoading ? (
+            <TableRow>
+              <TableCell colSpan={6} sx={{ border: 0, height: "561px" }}>
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Loading size={60} />
+                </Box>
+              </TableCell>
+            </TableRow>
+          ) : (
+            <TableBody>
+              {!isLoading && type === "goods" && products
+                ? visibleRows.map((product, i) => (
+                    <TableRow
+                      key={i}
+                      sx={{
+                        // "&:last-child td, &:last-child th": { border: 0 },
+                        height: !dense ? "59.3px" : undefined,
+                      }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {product.id}
+                      </TableCell>
+                      <TableCell align="left">{product.name}</TableCell>
+                      <TableCell align="left">{product.type}</TableCell>
+                      <TableCell align="left">{product.brand}</TableCell>
+                      <TableCell align="left">{product.stock}</TableCell>
+                      <TableCell align="left">null</TableCell>
+                    </TableRow>
+                  ))
+                : null}
+              {/* {type === "services" && services ? services.map() .  .  .} */}
+              {/* {emptyRows > 0 && (
+              <TableRow sx={{ height: !dense ? "59px" : undefined }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )} */}
+            </TableBody>
+          )}
+        </Table>
+      </TableContainer>
+
+      <Box
+        sx={{
+          borderTop: `1px solid ${palette.divider}`,
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+          // flexShrink: 0,
+          // position: "sticky",
+          // zIndex: 20,
+          // bottom: 0,
+          marginBottom: "auto",
+        }}
+      >
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 50]}
+          component="div"
+          count={products ? products.length : 0}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          sx={{ order: 1 }}
+        />
+        <FormControlLabel
+          control={<Switch checked={dense} onChange={handleChangeDense} />}
+          label="Dense"
+        />
+      </Box>
+    </Paper>
   );
 }
