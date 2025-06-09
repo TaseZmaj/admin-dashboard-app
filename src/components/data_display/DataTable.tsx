@@ -74,9 +74,14 @@ const tableHeadingSizes = {
     brand: "20%",
     type: "10%",
     stock: "10%",
-    price: "`0%",
+    price: "10%",
+  },
+  services: {
+    id: "10%",
   },
 };
+
+const TopBarHeight = 83;
 
 export default function DataTable({ type, sx = {} }: TableProps) {
   const { getProductsList, products, isLoading } = useGoods();
@@ -161,40 +166,24 @@ export default function DataTable({ type, sx = {} }: TableProps) {
   return (
     <Paper
       sx={{
+        display: "flex",
+        flexDirection: "column",
         backgroundColor: palette.background.default,
         border: `1px solid ${palette.divider}`,
-        zIndex: "15",
         overflow: "hidden",
-        flexDirection: "column",
         ...sx,
-        height: "100%",
-        // minHeight: 650,
+        height: `calc(100vh - ${TopBarHeight}px - 175px )`,
+        minHeight: 0,
       }}
       elevation={1}
     >
       <TableContainer
         sx={{
-          // NOTE: Ovie heights se tie shto dozvoluvaat da moze da se skrola vo tabelata, a ne vo parentot
-          //Ako gi trgnes, ke mozes da skrolas vo parent, a nema da mozes da skrolash tuka
-
-          height: 650,
-          minHeight: 650,
-
-          // maxHeight: "65vh",
-          // minHeight: "65vh",
-
-          // minHeight: 650,
-          // height: "100%",
-
           overflowX: "auto",
           overflowY: "auto",
         }}
       >
-        <Table
-          stickyHeader
-          sx={{ minWidth: 650 }}
-          size={dense ? "small" : "medium"}
-        >
+        <Table stickyHeader size={dense ? "small" : "medium"}>
           <TableHead>
             <TableRow>
               {headings.map((heading: string) => (
@@ -251,7 +240,7 @@ export default function DataTable({ type, sx = {} }: TableProps) {
                       key={i}
                       sx={{
                         // "&:last-child td, &:last-child th": { border: 0 },
-                        height: !dense ? "59.3px" : undefined,
+                        height: !dense ? "59.8px" : undefined,
                       }}
                     >
                       <TableCell component="th" scope="row">
@@ -287,7 +276,7 @@ export default function DataTable({ type, sx = {} }: TableProps) {
           // position: "sticky",
           // zIndex: 20,
           // bottom: 0,
-          marginBottom: "auto",
+          marginTop: "auto",
         }}
       >
         <TablePagination

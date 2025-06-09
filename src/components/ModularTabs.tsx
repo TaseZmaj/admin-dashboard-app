@@ -53,7 +53,7 @@ function TabPanel({ children, value, index, ...other }: any) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      sx={{ flexGrow: 1 }}
+      sx={{ flexGrow: 1, overflowY: "auto" }}
       {...other}
     >
       {value === index && <Box sx={{ pt: "20px" }}>{children}</Box>}

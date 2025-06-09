@@ -7,7 +7,10 @@ import FiltersGroup from "../../components/FiltersGroup.tsx";
 function Goods() {
   return (
     <>
-      <ModularTabs tabNames={["List", "Analytics"]} sx={{ width: "100%" }}>
+      <ModularTabs
+        tabNames={["List", "Analytics"]}
+        sx={{ width: "100%", minHeight: "100%" }}
+      >
         {/* List TAB */}
         <Box>
           <Box
@@ -21,7 +24,17 @@ function Goods() {
             {/* TODO: Change the filters here there is no point in these */}
             <FiltersGroup includeFilters={["AllTimeBtn", "TimeFilter"]} />
           </Box>
-          <DataTable sx={{ mt: "12px" }} type="goods" />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              flexGrow: 1,
+              overflow: "hidden",
+              minHeight: 0,
+            }}
+          >
+            <DataTable sx={{ mt: "12px", flexGrow: 1 }} type="goods" />
+          </Box>
         </Box>
 
         {/* Analytics TAB */}

@@ -25,6 +25,9 @@ export default function Layout() {
         sx={{
           width: "100%",
           height: "100%",
+          overflow: "hidden",
+          minHeight: 0,
+          // overflow: "hidden",
           // backgroundColor:"tomato"
           // height: "fit-content",
           // minHeight: "100vh",
@@ -37,9 +40,11 @@ export default function Layout() {
         <Box
           sx={{
             mt: `${TopBarHeight}px`,
-            /// backgroundColor: "tomato",
-            // p: "0 24px 20px 24px",
-            p: "0 24px",
+            // backgroundColor: "tomato",
+            p: "20px 24px 20px 24px",
+            // p: "0 24px",
+            height: `calc(100vh - ${TopBarHeight}px)`,
+            overflowY: "auto", // ✅ enables scrolling
           }}
         >
           <Outlet />
