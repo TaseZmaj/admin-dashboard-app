@@ -6,6 +6,7 @@ import ErrorProvider from "./contexts/ErrorContext.tsx";
 
 import AppTheme from "./theme/AppTheme.tsx";
 import GoodsProvider from "./contexts/GoodsContext.tsx";
+import { Box } from "@mui/material";
 
 const Homepage = lazy(() => import("./pages/protected/Homepage.tsx"));
 const Goods = lazy(() => import("./pages/protected/Goods.tsx"));
@@ -85,7 +86,21 @@ export default function App() {
         <GoodsProvider>
           <BrowserRouter>
             <AppTheme>
-              <Suspense fallback={<Loading />}>
+              <Suspense
+                fallback={
+                  <Box
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Loading size={60} />
+                  </Box>
+                }
+              >
                 <Routes>
                   {/* Public routes */}
                   <Route path="login" element={<Login />} />

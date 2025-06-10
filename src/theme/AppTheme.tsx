@@ -9,7 +9,7 @@ export default function AppTheme({ children }: { children: React.ReactNode }) {
           mode: "light",
           primary: {
             main: orange[400], //#ffca28
-            light: orange[200],
+            light: orange[100],
             dark: orange[600],
           },
           secondary: {

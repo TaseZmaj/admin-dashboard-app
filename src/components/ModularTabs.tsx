@@ -1,14 +1,11 @@
 import { Box, SxProps, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
-import { useLocation } from "react-router";
-import { normalizePathname } from "../utils/stringUtils";
-
-type TabNames = "Analytics" | "List";
+// type TabTypes = "Analytics" | "List";
 
 interface CustomTabsProps {
   sx?: SxProps;
   children: React.ReactNode;
-  tabNames: [TabNames, ...TabNames[]];
+  tabNames: [string, ...string[]];
 }
 
 export default function ModularTabs({
@@ -17,7 +14,6 @@ export default function ModularTabs({
   children,
 }: CustomTabsProps) {
   const [value, setValue] = useState(0);
-  const { pathname } = useLocation();
 
   function handleChange(_event: React.SyntheticEvent, newValue: number) {
     setValue(newValue);
@@ -27,13 +23,9 @@ export default function ModularTabs({
     <Box sx={{ ...sx }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={value} onChange={handleChange}>
-          {tabNames.map((tabName, i) =>
-            tabName === "List" ? (
-              <Tab key={i} label={`${normalizePathname(pathname)} List`} />
-            ) : (
-              <Tab key={i} label={tabName} />
-            )
-          )}
+          {tabNames.map((tabName, i) => (
+            <Tab key={i} label={tabName} />
+          ))}
         </Tabs>
       </Box>
       {Array.isArray(children) &&

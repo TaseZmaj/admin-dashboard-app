@@ -2,9 +2,9 @@ import { Box, Drawer, drawerClasses, Theme, useTheme } from "@mui/material";
 // import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import NavMenu from "./NavMenu";
 import Logo from "../presentational/Logo";
+import { TopBarHeight } from "../../utils/UiVariables";
 
 const drawerWidth = "220px";
-const logoSectionHeight = "83px";
 
 function SideBarNav() {
   const { palette } = useTheme() as Theme;
@@ -28,8 +28,8 @@ function SideBarNav() {
           alignItems: "center",
           justifyContent: "center",
           p: "17px 10px",
-          minHeight: logoSectionHeight,
-          height: logoSectionHeight,
+          minHeight: TopBarHeight,
+          height: TopBarHeight,
           boxSizing: "border-box",
           borderBottomWidth: "1px",
           borderBottomColor: palette.divider,
@@ -40,13 +40,6 @@ function SideBarNav() {
         <Logo size="medium" homeLink={true} />
         {/* <MenuRoundedIcon sx={{ ml: "auto", cursor: "pointer" }} /> */}
       </Box>
-      {/* <Box
-        sx={{
-          height: logoSectionHeight,
-          minHeight: logoSectionHeight,
-          maxHeight: logoSectionHeight,
-        }}
-      ></Box> */}
       <NavMenu
         links={[
           "dashboard",

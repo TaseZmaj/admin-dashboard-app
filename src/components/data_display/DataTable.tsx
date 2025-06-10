@@ -1,11 +1,13 @@
 import {
   Box,
   capitalize,
+  Fade,
   FormControlLabel,
   Switch,
   SxProps,
   TablePagination,
   TableSortLabel,
+  Tooltip,
   useTheme,
 } from "@mui/material";
 import {
@@ -25,6 +27,10 @@ import useGoods from "../../hooks/useGoods.ts";
 import { visuallyHidden } from "@mui/utils";
 import { DataTableSchemaMap } from "../../utils/Types/utilTypes.ts";
 import Loading from "../Loading.tsx";
+import { TopBarHeight } from "../../utils/UiVariables.ts";
+import ErrorBox from "../ErrorBox.tsx";
+import { formatPrice } from "../../utils/stringUtils.ts";
+import useResolvedMode from "../../hooks/useResolvedMode.ts";
 
 interface TableProps {
   type: DataTableType;
@@ -71,28 +77,29 @@ const tableHeadingSizes = {
   goods: {
     id: "10%",
     name: "40%",
-    brand: "20%",
-    type: "10%",
-    stock: "10%",
-    price: "10%",
+    brand: "10%",
+    type: "13.33%",
+    stock: "13.33%",
+    price: "13.33%",
   },
   services: {
     id: "10%",
   },
 };
 
-const TopBarHeight = 83;
-
-export default function DataTable({ type, sx = {} }: TableProps) {
-  const { getProductsList, products, isLoading } = useGoods();
+export default function DataTable({ type, sx }: TableProps) {
+  const { getProductsList, getProduct, products, productsLoading, error } =
+    useGoods();
   // const [items, setItems] = useState(null);
+
+  const resolvedMode = useResolvedMode();
 
   const { palette } = useTheme() as Theme;
 
   const headings = tableHeadings[type];
 
   //MUI table state
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [order, setOrder] = useState<Order>("asc");
@@ -161,8 +168,6 @@ export default function DataTable({ type, sx = {} }: TableProps) {
     }
   }, []);
 
-  // TODO: Make the footer of the table be visible on zooming in!!!
-
   return (
     <Paper
       sx={{
@@ -216,52 +221,101 @@ export default function DataTable({ type, sx = {} }: TableProps) {
               ))}
             </TableRow>
           </TableHead>
-          {isLoading ? (
-            <TableRow>
-              <TableCell colSpan={6} sx={{ border: 0, height: "561px" }}>
-                <Box
-                  sx={{
-                    width: "100%",
-                    height: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Loading size={60} />
-                </Box>
-              </TableCell>
-            </TableRow>
-          ) : (
-            <TableBody>
-              {!isLoading && type === "goods" && products
-                ? visibleRows.map((product, i) => (
+          <TableBody>
+            {error && !products && !productsLoading ? (
+              <TableRow key="error">
+                <TableCell colSpan={6} sx={{ border: 0, height: "561px" }}>
+                  <Box
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <ErrorBox tryAgainFunc={getProductsList}>
+                      There was a problem while trying to establish a connection
+                      to the database...
+                    </ErrorBox>
+                  </Box>
+                </TableCell>
+              </TableRow>
+            ) : null}
+            {productsLoading ? (
+              <>
+                <TableRow key="productsLoading">
+                  <TableCell colSpan={6} sx={{ border: 0, height: "561px" }}>
+                    <Box
+                      sx={{
+                        width: "100%",
+                        height: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Loading size={60} />
+                    </Box>
+                  </TableCell>
+                </TableRow>
+              </>
+            ) : null}
+            {type === "goods" && products
+              ? visibleRows.map((product, i) => (
+                  <Tooltip
+                    arrow
+                    key={i}
+                    placement="top"
+                    title={`Click for more info about ${product.name}...`}
+                    slots={{
+                      transition: Fade,
+                    }}
+                    slotProps={{
+                      transition: { timeout: 500 },
+                    }}
+                    enterDelay={700}
+                    leaveDelay={100}
+                  >
                     <TableRow
-                      key={i}
+                      onClick={() => getProduct(product.id)}
                       sx={{
                         // "&:last-child td, &:last-child th": { border: 0 },
                         height: !dense ? "59.8px" : undefined,
+                        transition: "all 0.22s ease-out",
+                        cursor: "pointer",
+                        "&:hover": {
+                          backgroundColor:
+                            resolvedMode === "light"
+                              ? `${palette.primary.light}`
+                              : `${palette.divider}`,
+                        },
                       }}
                     >
                       <TableCell component="th" scope="row">
                         {product.id}
                       </TableCell>
-                      <TableCell align="left">{product.name}</TableCell>
+                      <TableCell align="left">
+                        {product.name}&nbsp;{product?.diameter}
+                        {product.diameter ? <span>"</span> : null}
+                      </TableCell>
                       <TableCell align="left">{product.type}</TableCell>
                       <TableCell align="left">{product.brand}</TableCell>
                       <TableCell align="left">{product.stock}</TableCell>
-                      <TableCell align="left">null</TableCell>
+                      <TableCell align="left">
+                        {formatPrice(product.price)} MKD
+                      </TableCell>
                     </TableRow>
-                  ))
-                : null}
-              {/* {type === "services" && services ? services.map() .  .  .} */}
-              {/* {emptyRows > 0 && (
+                  </Tooltip>
+                ))
+              : null}
+            {/* {type === "services" && services ? services.map() .  .  .} */}
+            {/* {emptyRows > 0 && (
               <TableRow sx={{ height: !dense ? "59px" : undefined }}>
                 <TableCell colSpan={6} />
               </TableRow>
             )} */}
-            </TableBody>
-          )}
+          </TableBody>
         </Table>
       </TableContainer>
 
@@ -272,15 +326,11 @@ export default function DataTable({ type, sx = {} }: TableProps) {
           display: "flex",
           alignItems: "center",
           justifyContent: "flex-end",
-          // flexShrink: 0,
-          // position: "sticky",
-          // zIndex: 20,
-          // bottom: 0,
           marginTop: "auto",
         }}
       >
         <TablePagination
-          rowsPerPageOptions={[10, 25, 50]}
+          rowsPerPageOptions={[10, 25, 50, 100]}
           component="div"
           count={products ? products.length : 0}
           rowsPerPage={rowsPerPage}

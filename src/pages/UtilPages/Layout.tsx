@@ -3,8 +3,7 @@ import { Paper, Box } from "@mui/material";
 import { Theme, useTheme } from "@mui/material";
 import { Outlet } from "react-router";
 import TopBar from "../../components/topbar/TopBar";
-
-const TopBarHeight = 83;
+import { TopBarHeight } from "../../utils/UiVariables";
 
 export default function Layout() {
   const { palette } = useTheme() as Theme;
@@ -25,13 +24,10 @@ export default function Layout() {
         sx={{
           width: "100%",
           height: "100%",
-          overflow: "hidden",
-          minHeight: 0,
-          // overflow: "hidden",
-          // backgroundColor:"tomato"
-          // height: "fit-content",
-          // minHeight: "100vh",
-          // maxHeight: "100%",
+          //Im swapping between auto and hidden to check for visual bugs
+          //TODO: Before hosting, make it hidden!
+          // overflow: "auto",
+          oveflow: "hidden",
         }}
       >
         <TopBar
@@ -42,9 +38,6 @@ export default function Layout() {
             mt: `${TopBarHeight}px`,
             // backgroundColor: "tomato",
             p: "20px 24px 20px 24px",
-            // p: "0 24px",
-            height: `calc(100vh - ${TopBarHeight}px)`,
-            overflowY: "auto", // ✅ enables scrolling
           }}
         >
           <Outlet />
