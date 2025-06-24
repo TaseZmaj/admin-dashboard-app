@@ -127,8 +127,13 @@ export type FilterGroups = "TimeFilter" | "AllTimeBtn" | "DateFilter";
 
 export type DataTableType =
   | "goods"
+  | "goods/tires"
+  | "goods/rims"
+  | "goods/car_batteries"
   | "services"
   | "employees"
+  | "employees/salespersons"
+  | "employees/servicemen"
   | "sales-channels"
   | "customers"
   | "orders"
@@ -143,3 +148,5 @@ export type DataTableSchemaMap = {
   reviews: Review;
   "sales-channels": SalesChannel;
 };
+
+export type ErrorType = "Items failed to load" | "Item failed to load";

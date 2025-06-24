@@ -1,8 +1,10 @@
 import { Box } from "@mui/material";
 import DataTable from "../../components/data_display/DataTable";
 import ModularTabs from "../../components/ModularTabs.tsx";
-import SearchInput from "../../components/topbar/SearchInput.tsx";
+// import SearchInput from "../../components/topbar/SearchInput.tsx";
 import FiltersGroup from "../../components/FiltersGroup.tsx";
+
+// TODO: Add a refresh button to refetch the Goods - at the top of the page above the table
 
 function Goods() {
   return (
@@ -12,105 +14,33 @@ function Goods() {
         sx={{ width: "100%", minHeight: "100%" }}
       >
         {/* All goods List TAB */}
-        <Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <SearchInput />
-            {/* TODO: Change the filters here there is no point in these */}
-            {/* <FiltersGroup includeFilters={["AllTimeBtn", "TimeFilter"]} /> */}
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              flexGrow: 1,
-              overflow: "hidden",
-              minHeight: 0,
-            }}
-          >
-            <DataTable sx={{ mt: "12px", flexGrow: 1 }} type="goods" />
-          </Box>
-        </Box>
+        <DataTable
+          sx={{ mt: "12px", flexGrow: 1 }}
+          type="goods"
+          includeSearch={true}
+        />
+
         {/* Tires list TAB*/}
-        <Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <SearchInput />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              flexGrow: 1,
-              overflow: "hidden",
-              minHeight: 0,
-            }}
-          >
-            {/* TODO: Make this possible */}
-            {/* <DataTable sx={{ mt: "12px", flexGrow: 1 }} type="goods/tires" /> */}
-            <DataTable sx={{ mt: "12px", flexGrow: 1 }} type="services" />
-          </Box>
-        </Box>
+        <DataTable
+          sx={{ mt: "12px", flexGrow: 1 }}
+          includeSearch={true}
+          type="goods/tires"
+        />
+
         {/* Rims list TAB */}
-        <Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <SearchInput />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              flexGrow: 1,
-              overflow: "hidden",
-              minHeight: 0,
-            }}
-          >
-            {/* TODO: Make this possible */}
-            {/* <DataTable sx={{ mt: "12px", flexGrow: 1 }} type="goods/tires" /> */}
-            <DataTable sx={{ mt: "12px", flexGrow: 1 }} type="services" />
-          </Box>
-        </Box>
+        <DataTable
+          sx={{ mt: "12px", flexGrow: 1 }}
+          includeSearch={true}
+          type="goods/rims"
+        />
+
         {/* Car Batteries list TAB */}
-        <Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <SearchInput />
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              flexGrow: 1,
-              overflow: "hidden",
-              minHeight: 0,
-            }}
-          >
-            {/* TODO: Make this possible */}
-            {/* <DataTable sx={{ mt: "12px", flexGrow: 1 }} type="goods/tires" /> */}
-            <DataTable sx={{ mt: "12px", flexGrow: 1 }} type="services" />
-          </Box>
-        </Box>
+        <DataTable
+          sx={{ mt: "12px", flexGrow: 1 }}
+          includeSearch={true}
+          type="goods/car_batteries"
+        />
+
         {/* Analytics TAB */}
         <Box
           sx={{
@@ -119,7 +49,7 @@ function Goods() {
             alignItems: "center",
           }}
         >
-          <SearchInput />
+          {/* <SearchInput /> */}
           <FiltersGroup includeFilters={["AllTimeBtn", "TimeFilter"]} />
         </Box>
       </ModularTabs>

@@ -1,11 +1,14 @@
-function capitalize(str: string) {
+export function capitalize(str: string) {
   return str.slice(0, 1).toUpperCase() + str.slice(1);
 }
 
-function normalizePathname(pathname: string) {
-  return capitalize(pathname.slice(1).replace("-", " "));
+export function normalizePathname(pathname: string) {
+  return capitalize(pathname.slice(1).replace(/-/g, " "));
 }
-function formatPrice(price: number) {
+export function snakeCaseToNormal(str: string) {
+  return capitalize(str).replace(/_/g, " ");
+}
+export function formatPrice(price: number) {
   const parts = String(price).toString().split(".");
   const integerPart = parts[0];
 
@@ -13,5 +16,3 @@ function formatPrice(price: number) {
 
   return `${formatted},00`;
 }
-
-export { capitalize, normalizePathname, formatPrice };

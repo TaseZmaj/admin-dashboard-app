@@ -5,9 +5,15 @@ import { useState } from "react";
 
 interface SearchInputProps {
   sx?: SxProps;
+  query: string;
+  setQuery: (e: string) => void;
 }
 
-export default function SearchInput({ sx = {} }: SearchInputProps) {
+export default function SearchInput({
+  query,
+  setQuery,
+  sx = {},
+}: SearchInputProps) {
   const [focused, setFocused] = useState<Boolean>(false);
   const { palette } = useTheme() as Theme;
 
@@ -33,6 +39,8 @@ export default function SearchInput({ sx = {} }: SearchInputProps) {
           ),
         },
       }}
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
     ></TextField>
   );
 }

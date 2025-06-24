@@ -10,7 +10,7 @@ export interface Product extends Generic {
   type: ProductTypes;
   brand: string;
   stock: number;
-  price: number;
+  sales_price: number;
   diameter: number; //for the Rim Variants
 }
 
