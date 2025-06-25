@@ -1,18 +1,16 @@
 import { createContext, useCallback, useReducer } from "react";
-import { ErrorType } from "../utils/Types/utilTypes.ts";
+import { ProductsErrorType } from "../utils/Types/utilTypes.ts";
 import supabase from "../utils/supabase.ts";
 
 // Types
 import { Product } from "../utils/Types/modelTypes.ts";
 
-// type QueryTypes = "tires" | "rims" | "car batteries";
-
 interface State {
-  productLoading: boolean;
   productsLoading: boolean;
+  productLoading: boolean;
   products: Product[] | [];
   product: Product | null;
-  productsError: ErrorType | null;
+  productsError: ProductsErrorType | null;
 }
 
 type Action =
@@ -24,7 +22,7 @@ type Action =
   | { type: "product/failedToLoad" };
 
 interface GoodsContextType extends State {
-  getProductsList: (/*query?: QueryTypes*/) => Promise<void>;
+  getProductsList: () => Promise<void>;
   getProduct: (id: number) => Promise<void>;
 }
 
@@ -51,16 +49,16 @@ function reducer(state: State, action: Action) {
       return {
         ...state,
         productsLoading: false,
-        productsError: "Products failed to load" as ErrorType,
+        productsError: "Products failed to load" as ProductsErrorType,
       };
     case "product/failedToLoad":
       return {
         ...state,
         productLoading: false,
-        productsError: "Product failed to load" as ErrorType,
+        productsError: "Product failed to load" as ProductsErrorType,
       };
     default:
-      throw new Error("Unknown action type!");
+      throw new Error(`ERROR: Unknown action type of ${action}!`);
   }
 }
 
@@ -84,20 +82,7 @@ export default function GoodsProvider({
     dispatch({ type: "products/loading" });
     console.log("Fetching products!");
 
-    let { data: Goods, error } = await supabase.rpc("goods_inventory_query_v2");
-
-    // switch (query) {
-    //   case null:
-    //     break;
-    //   case "tires":
-    //     break;
-    //   case "rims":
-    //     break;
-    //   case "car batteries":
-    //     break;
-    //   default:
-    //     throw new Error(`ERROR: Invalid fetch query: ${query}`);
-    // }
+    const { data: Goods, error } = await supabase.rpc("goods_inventory_query");
 
     if (Goods) {
       dispatch({ type: "products/loaded", payload: Goods });

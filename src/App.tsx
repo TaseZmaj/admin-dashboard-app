@@ -6,6 +6,7 @@ import ErrorProvider from "./contexts/ErrorContext.tsx";
 
 import AppTheme from "./theme/AppTheme.tsx";
 import GoodsProvider from "./contexts/GoodsContext.tsx";
+import ServicesProvider from "./contexts/ServicesContext.tsx";
 import { Box } from "@mui/material";
 
 const Homepage = lazy(() => import("./pages/protected/Homepage.tsx"));
@@ -84,73 +85,75 @@ export default function App() {
     <ErrorProvider>
       <AuthProvider>
         <GoodsProvider>
-          <BrowserRouter>
-            <AppTheme>
-              <Suspense
-                fallback={
-                  <Box
-                    sx={{
-                      width: "100%",
-                      height: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Loading size={60} />
-                  </Box>
-                }
-              >
-                <Routes>
-                  {/* Public routes */}
-                  <Route path="login" element={<Login />} />
+          <ServicesProvider>
+            <BrowserRouter>
+              <AppTheme>
+                <Suspense
+                  fallback={
+                    <Box
+                      sx={{
+                        width: "100%",
+                        height: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Loading size={60} />
+                    </Box>
+                  }
+                >
+                  <Routes>
+                    {/* Public routes */}
+                    <Route path="login" element={<Login />} />
 
-                  {/* Protected Routes */}
-                  <Route
-                    element={
-                      <ProtectedRoute>
-                        <Layout />
-                      </ProtectedRoute>
-                    }
-                  >
-                    <Route index path="/" element={<Homepage />}></Route>
-                    <Route path="goods" element={<Goods />}></Route>
-                    <Route path="services" element={<Services />}></Route>
-                    <Route path="employees" element={<Employees />}></Route>
+                    {/* Protected Routes */}
                     <Route
-                      path="sales-channels"
-                      element={<SalesChannels />}
-                    ></Route>
-                    <Route path="customers" element={<Customers />}></Route>
-                    <Route path="orders" element={<Orders />}></Route>
-                    <Route path="reviews" element={<Reviews />}></Route>
-                    <Route path="compare" element={<Compare />}></Route>
-                    <Route path="*" element={<Error />} />
+                      element={
+                        <ProtectedRoute>
+                          <Layout />
+                        </ProtectedRoute>
+                      }
+                    >
+                      <Route index path="/" element={<Homepage />}></Route>
+                      <Route path="goods" element={<Goods />}></Route>
+                      <Route path="services" element={<Services />}></Route>
+                      <Route path="employees" element={<Employees />}></Route>
+                      <Route
+                        path="sales-channels"
+                        element={<SalesChannels />}
+                      ></Route>
+                      <Route path="customers" element={<Customers />}></Route>
+                      <Route path="orders" element={<Orders />}></Route>
+                      <Route path="reviews" element={<Reviews />}></Route>
+                      <Route path="compare" element={<Compare />}></Route>
+                      <Route path="*" element={<Error />} />
 
-                    {/* Dynamic Routes */}
-                    <Route path="goods/:goodId" element={<SingleGood />} />
-                    <Route
-                      path="services/:serviceId"
-                      element={<SingleService />}
-                    />
-                    <Route
-                      path="customers/:customerId"
-                      element={<SingleCustomer />}
-                    />
-                    <Route path="order/:orderId" element={<SingleOrder />} />
-                    <Route
-                      path="sales-channels/:salesChannelId"
-                      element={<SingleSalesChannel />}
-                    />
-                    <Route
-                      path="salesperson/:salesPersonId"
-                      element={<SingleSalesPerson />}
-                    />
-                  </Route>
-                </Routes>
-              </Suspense>
-            </AppTheme>
-          </BrowserRouter>
+                      {/* Dynamic Routes */}
+                      <Route path="goods/:goodId" element={<SingleGood />} />
+                      <Route
+                        path="services/:serviceId"
+                        element={<SingleService />}
+                      />
+                      <Route
+                        path="customers/:customerId"
+                        element={<SingleCustomer />}
+                      />
+                      <Route path="order/:orderId" element={<SingleOrder />} />
+                      <Route
+                        path="sales-channels/:salesChannelId"
+                        element={<SingleSalesChannel />}
+                      />
+                      <Route
+                        path="salesperson/:salesPersonId"
+                        element={<SingleSalesPerson />}
+                      />
+                    </Route>
+                  </Routes>
+                </Suspense>
+              </AppTheme>
+            </BrowserRouter>
+          </ServicesProvider>
         </GoodsProvider>
       </AuthProvider>
     </ErrorProvider>

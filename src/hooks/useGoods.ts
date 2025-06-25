@@ -4,7 +4,7 @@ import { GoodsContext } from "../contexts/GoodsContext.tsx";
 function useGoods() {
   const context = useContext(GoodsContext);
   if (!context)
-    throw new Error("GoodsContext was used outside of GoodsProvider");
+    throw new Error("ERROR: GoodsContext was used outside of GoodsProvider");
   return context;
 }
 

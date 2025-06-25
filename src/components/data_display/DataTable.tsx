@@ -20,7 +20,7 @@ import {
   Theme,
 } from "@mui/material";
 import { DataTableType } from "../../utils/Types/utilTypes.ts";
-import { Product } from "../../utils/Types/modelTypes.ts";
+import { DataTableItem } from "../../utils/Types/modelTypes.ts";
 import { useEffect, useMemo, useState } from "react";
 import { visuallyHidden } from "@mui/utils";
 import Loading from "../Loading.tsx";
@@ -64,19 +64,27 @@ function getComparator<Key extends keyof any>(
 }
 
 // Style vars
+const goodsHeadings = ["id", "name", "type", "brand", "stock", "sales_price"];
+const serviceHeadings = [
+  "id",
+  "name",
+  "type",
+  "sales_price",
+  "price_without_tax",
+  "cost",
+];
+
 const tableHeadings: Record<DataTableType, string[]> = {
-  goods: ["id", "name", "type", "brand", "stock", "sales_price"],
-  "goods/tires": ["id", "name", "type", "brand", "stock", "sales_price"],
-  "goods/rims": ["id", "name", "type", "brand", "stock", "sales_price"],
-  "goods/car_batteries": [
-    "id",
-    "name",
-    "type",
-    "brand",
-    "stock",
-    "sales_price",
-  ],
-  services: ["id", "name", "type"],
+  goods: goodsHeadings,
+  "goods/tires": goodsHeadings,
+  "goods/rims": goodsHeadings,
+  "goods/car_batteries": goodsHeadings,
+  services: serviceHeadings,
+  "services/tires": serviceHeadings,
+  "services/undercarriage_repair": serviceHeadings,
+  "services/oil_filter_change": serviceHeadings,
+  "services/car_battery": serviceHeadings,
+  "services/auto_ac": serviceHeadings,
   employees: ["id", "name"],
   "employees/salespersons": ["id", "name"],
   "employees/servicemen": ["id", "name"],
@@ -86,42 +94,35 @@ const tableHeadings: Record<DataTableType, string[]> = {
   reviews: [],
 };
 
+const goodsTableHeadingSizes = {
+  id: "10%",
+  name: "40%",
+  brand: "10%",
+  type: "13.34%",
+  stock: "13.34%",
+  price: "13.34%",
+};
+
+const servicesTableHeadingSizes = {
+  id: "10%",
+  name: "40%",
+  type: "20%",
+  sales_price: "10%",
+  price_without_tax: "10%",
+  cost: "10%",
+};
+
 const tableHeadingSizes = {
-  goods: {
-    id: "10%",
-    name: "40%",
-    brand: "10%",
-    type: "13.333333%",
-    stock: "13.333333%",
-    price: "13.333333%",
-  },
-  "goods/tires": {
-    id: "10%",
-    name: "40%",
-    brand: "10%",
-    type: "13.333333%",
-    stock: "13.333333%",
-    price: "13.333333%",
-  },
-  "goods/rims": {
-    id: "10%",
-    name: "40%",
-    brand: "10%",
-    type: "13.333333%",
-    stock: "13.333333%",
-    price: "13.333333%",
-  },
-  "goods/car_batteries": {
-    id: "10%",
-    name: "40%",
-    brand: "10%",
-    type: "13.333333%",
-    stock: "13.333333%",
-    price: "13.333333%",
-  },
-  services: {
-    id: "10%",
-  },
+  goods: goodsTableHeadingSizes,
+  "goods/tires": goodsTableHeadingSizes,
+  "goods/rims": goodsTableHeadingSizes,
+  "goods/car_batteries": goodsTableHeadingSizes,
+  services: servicesTableHeadingSizes,
+  "services/tires": servicesTableHeadingSizes,
+  "services/undercarriage_repair": servicesTableHeadingSizes,
+  "services/oil_filter_change": servicesTableHeadingSizes,
+  "services/car_battery": servicesTableHeadingSizes,
+  "services/auto_ac": servicesTableHeadingSizes,
 };
 
 export default function DataTable({ type, includeSearch, sx }: TableProps) {
@@ -145,7 +146,7 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [order, setOrder] = useState<Order>("asc");
-  const [orderBy, setOrderBy] = useState<keyof Product>("id");
+  const [orderBy, setOrderBy] = useState<keyof DataTableItem>("id");
 
   //MUI table variables
   const visibleRows = useMemo(() => {
@@ -158,7 +159,7 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
   //MUI table handlers
   const handleRequestSort = (
     _event: React.MouseEvent<unknown>,
-    property: keyof Product
+    property: keyof DataTableItem
   ) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -177,38 +178,9 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
     setDense(event.target.checked);
   };
   const createSortHandler =
-    (property: keyof Product) => (event: React.MouseEvent<unknown>) => {
+    (property: keyof DataTableItem) => (event: React.MouseEvent<unknown>) => {
       handleRequestSort(event, property);
     };
-
-  // Fetch items func
-  // const getItems = async () => {
-  //   switch (type) {
-  //     case "goods":
-  //       getProductsList();
-  //       break;
-  //     case "services":
-  //       break;
-  //     default:
-  //       throw new Error("ERROR: Invalid data table type!");
-  //   }
-  // };
-
-  // const getItem = async (itemId: number) => {
-  //   switch (type) {
-  //     case "goods":
-  //     case "goods/tires":
-  //     case "goods/rims":
-  //     case "goods/car_batteries":
-  //       getProduct(itemId);
-  //       break;
-  //     // case "services":
-  //     //   getService(itemId);
-  //     // break;
-  //     default:
-  //       throw new Error("ERROR: Invalid data table type!");
-  //   }
-  // };
 
   //Sync with the global good context
   useEffect(() => {
@@ -268,7 +240,8 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
             overflow: "hidden",
             height: `calc(100vh - ${TopBarHeight}px - 175px )`,
             minHeight: 0,
-
+            mt: "12px",
+            flexGrow: 1,
             ...sx,
           }}
           elevation={1}
@@ -298,7 +271,9 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
                       <TableSortLabel
                         active={orderBy === heading}
                         direction={orderBy === heading ? order : "asc"}
-                        onClick={createSortHandler(heading as keyof Product)}
+                        onClick={createSortHandler(
+                          heading as keyof DataTableItem
+                        )}
                       >
                         {snakeCaseToNormal(heading)}
                         {orderBy === heading ? (
@@ -384,10 +359,7 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
                             },
                           }}
                         >
-                          {type == "goods" ||
-                          type == "goods/tires" ||
-                          type == "goods/rims" ||
-                          type == "goods/car_batteries" ? (
+                          {type.startsWith("goods") ? (
                             <>
                               <TableCell component="th" scope="row">
                                 {tableItem.id}
@@ -410,13 +382,29 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
                               </TableCell>
                             </>
                           ) : null}
-                          {/* TODO: Implement the proper table data display for the different context types below accordingly */}
-                          {type == "services" ? <></> : null}
-                          {type == "employees" ||
-                          type == "employees/salespersons" ||
-                          type == "employees/servicemen" ? (
-                            <></>
+                          {type.startsWith("services") ? (
+                            <>
+                              <TableCell component="th" scope="row">
+                                {tableItem.id}
+                              </TableCell>
+                              <TableCell align="left">
+                                {tableItem.name}
+                              </TableCell>
+                              <TableCell align="left">
+                                {tableItem.type}
+                              </TableCell>
+                              <TableCell align="left">
+                                {formatPrice(tableItem.sales_price)} MKD
+                              </TableCell>
+                              <TableCell align="left">
+                                {formatPrice(tableItem.price_without_tax)} MKD
+                              </TableCell>
+                              <TableCell>
+                                {formatPrice(tableItem.cost)} MKD
+                              </TableCell>
+                            </>
                           ) : null}
+                          {type.startsWith("employees") ? <></> : null}
                         </TableRow>
                       </Tooltip>
                     ))

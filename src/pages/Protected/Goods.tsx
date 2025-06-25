@@ -6,40 +6,26 @@ import FiltersGroup from "../../components/FiltersGroup.tsx";
 
 // TODO: Add a refresh button to refetch the Goods - at the top of the page above the table
 
-function Goods() {
+export default function Goods() {
   return (
     <>
       <ModularTabs
         tabNames={["All Goods", "Tires", "Rims", "Car Batteries", "Analytics"]}
         sx={{ width: "100%", minHeight: "100%" }}
       >
+        {/* TODO: Include the price_without_tax and cost for each of the goods */}
+
         {/* All goods List TAB */}
-        <DataTable
-          sx={{ mt: "12px", flexGrow: 1 }}
-          type="goods"
-          includeSearch={true}
-        />
+        <DataTable includeSearch={true} type="goods" />
 
         {/* Tires list TAB*/}
-        <DataTable
-          sx={{ mt: "12px", flexGrow: 1 }}
-          includeSearch={true}
-          type="goods/tires"
-        />
+        <DataTable includeSearch={true} type="goods/tires" />
 
         {/* Rims list TAB */}
-        <DataTable
-          sx={{ mt: "12px", flexGrow: 1 }}
-          includeSearch={true}
-          type="goods/rims"
-        />
+        <DataTable includeSearch={true} type="goods/rims" />
 
         {/* Car Batteries list TAB */}
-        <DataTable
-          sx={{ mt: "12px", flexGrow: 1 }}
-          includeSearch={true}
-          type="goods/car_batteries"
-        />
+        <DataTable includeSearch={true} type="goods/car_batteries" />
 
         {/* Analytics TAB */}
         <Box
@@ -56,5 +42,3 @@ function Goods() {
     </>
   );
 }
-
-export default Goods;

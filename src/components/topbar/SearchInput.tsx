@@ -19,7 +19,12 @@ export default function SearchInput({
 
   return (
     <TextField
-      sx={{ width: "300px", mr: "10px", transitionDuration: "150ms", ...sx }}
+      sx={{
+        width: "300px",
+        mr: "10px",
+        transitionDuration: "150ms",
+        ...sx,
+      }}
       variant="outlined"
       label="Search..."
       size="small"

@@ -131,6 +131,11 @@ export type DataTableType =
   | "goods/rims"
   | "goods/car_batteries"
   | "services"
+  | "services/tires"
+  | "services/undercarriage_repair"
+  | "services/oil_filter_change"
+  | "services/car_battery"
+  | "services/auto_ac"
   | "employees"
   | "employees/salespersons"
   | "employees/servicemen"
@@ -149,4 +154,37 @@ export type DataTableSchemaMap = {
   "sales-channels": SalesChannel;
 };
 
-export type ErrorType = "Items failed to load" | "Item failed to load";
+export type ServicesErrorType =
+  | "Services failed to load"
+  | "Service failed to load";
+
+export type ProductsErrorType =
+  | "Products failed to load"
+  | "Product failed to load";
+
+export type EmployeesErrorType =
+  | "Employees failed to load"
+  | "Employee failed to load";
+
+export type SalesChannelsErrorType =
+  | "Sales channels failed to load"
+  | "Sales channel failed to load";
+
+export type CustomersErrorType =
+  | "Customers failed to load"
+  | "Customer failed to load";
+
+export type OrdersErrorType = "Orders failed to load" | "Order failed to load";
+
+export type ReviewsErrorType =
+  | "Reviews failed to load"
+  | "Review failed to load";
+
+export type ErrorType =
+  | ProductsErrorType
+  | ServicesErrorType
+  | EmployeesErrorType
+  | SalesChannelsErrorType
+  | CustomersErrorType
+  | OrdersErrorType
+  | ReviewsErrorType;
