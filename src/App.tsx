@@ -5,9 +5,17 @@ import AuthProvider from "./contexts/AuthContext.tsx";
 import ErrorProvider from "./contexts/ErrorContext.tsx";
 
 import AppTheme from "./theme/AppTheme.tsx";
+
+import { Box } from "@mui/material";
+
 import GoodsProvider from "./contexts/GoodsContext.tsx";
 import ServicesProvider from "./contexts/ServicesContext.tsx";
-import { Box } from "@mui/material";
+import EmployeesProvider from "./contexts/EmployeesContext.tsx";
+import CustomersProvider from "./contexts/CustomersContext.tsx";
+import OrdersProvider from "./contexts/OrdersContext.tsx";
+import ReviewsProvider from "./contexts/ReviewsContext.tsx";
+
+import SalesChannelsProvider from "./contexts/SalesChannelsContext.tsx";
 
 const Homepage = lazy(() => import("./pages/protected/Homepage.tsx"));
 const Goods = lazy(() => import("./pages/protected/Goods.tsx"));
@@ -48,13 +56,6 @@ const SingleOrder = lazy(
 
 export default function App() {
   // TODO: Add a refresh button at the Pages to fetch the newest data
-  {
-    //--->Theme switch transition implementiraj
-  }
-
-  // TODO: Active page display-ni na navbar
-
-  // TODO: Implementiraj Styled API za po clean code
 
   //TODO: Mobile Responsive NavBar
 
@@ -63,7 +64,6 @@ export default function App() {
   //--> Navbar toggle opcija na tablet + backdrop dimmed koga
   //ke e uklucen
   {
-    // TODO: Make firebase mock data and figure out how to connect it
     // TODO: Add another account with firebase via POST method in the "+Account page" 🤔
     // TODO: Implement firebase for the admin user and the company data
     // IMPORTANT: Make a separate git branch for this so as to not confilct with the already coded AuthContext.
@@ -73,7 +73,6 @@ export default function App() {
   // TODO: Make style overrides in the theme for:
   //-> Make the color theme dropdown menu items have prettier colors on hover and selected
 
-  // TODO: Add GLOWING effects in dark mode throughout the whole App
   // TODO: Create a toggle for the glowing effects in a new Settings page under UI section 🤔
 
   // TODO: Make a settings page and implement it at the navbar for customizing: 1.Users and the 2.UI of the Dashboard
@@ -86,73 +85,111 @@ export default function App() {
       <AuthProvider>
         <GoodsProvider>
           <ServicesProvider>
-            <BrowserRouter>
-              <AppTheme>
-                <Suspense
-                  fallback={
-                    <Box
-                      sx={{
-                        width: "100%",
-                        height: "100%",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Loading size={60} />
-                    </Box>
-                  }
-                >
-                  <Routes>
-                    {/* Public routes */}
-                    <Route path="login" element={<Login />} />
+            <EmployeesProvider>
+              <SalesChannelsProvider>
+                <CustomersProvider>
+                  <OrdersProvider>
+                    <ReviewsProvider>
+                      <BrowserRouter>
+                        <AppTheme>
+                          <Suspense
+                            fallback={
+                              <Box
+                                sx={{
+                                  width: "100%",
+                                  height: "100%",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                }}
+                              >
+                                <Loading size={60} />
+                              </Box>
+                            }
+                          >
+                            <Routes>
+                              {/* Public routes */}
+                              <Route path="login" element={<Login />} />
 
-                    {/* Protected Routes */}
-                    <Route
-                      element={
-                        <ProtectedRoute>
-                          <Layout />
-                        </ProtectedRoute>
-                      }
-                    >
-                      <Route index path="/" element={<Homepage />}></Route>
-                      <Route path="goods" element={<Goods />}></Route>
-                      <Route path="services" element={<Services />}></Route>
-                      <Route path="employees" element={<Employees />}></Route>
-                      <Route
-                        path="sales-channels"
-                        element={<SalesChannels />}
-                      ></Route>
-                      <Route path="customers" element={<Customers />}></Route>
-                      <Route path="orders" element={<Orders />}></Route>
-                      <Route path="reviews" element={<Reviews />}></Route>
-                      <Route path="compare" element={<Compare />}></Route>
-                      <Route path="*" element={<Error />} />
+                              {/* Protected Routes */}
+                              <Route
+                                element={
+                                  <ProtectedRoute>
+                                    <Layout />
+                                  </ProtectedRoute>
+                                }
+                              >
+                                <Route
+                                  index
+                                  path="/"
+                                  element={<Homepage />}
+                                ></Route>
+                                <Route path="goods" element={<Goods />}></Route>
+                                <Route
+                                  path="services"
+                                  element={<Services />}
+                                ></Route>
+                                <Route
+                                  path="employees"
+                                  element={<Employees />}
+                                ></Route>
+                                <Route
+                                  path="sales-channels"
+                                  element={<SalesChannels />}
+                                ></Route>
+                                <Route
+                                  path="customers"
+                                  element={<Customers />}
+                                ></Route>
+                                <Route
+                                  path="orders"
+                                  element={<Orders />}
+                                ></Route>
+                                <Route
+                                  path="reviews"
+                                  element={<Reviews />}
+                                ></Route>
+                                <Route
+                                  path="compare"
+                                  element={<Compare />}
+                                ></Route>
+                                <Route path="*" element={<Error />} />
 
-                      {/* Dynamic Routes */}
-                      <Route path="goods/:goodId" element={<SingleGood />} />
-                      <Route
-                        path="services/:serviceId"
-                        element={<SingleService />}
-                      />
-                      <Route
-                        path="customers/:customerId"
-                        element={<SingleCustomer />}
-                      />
-                      <Route path="order/:orderId" element={<SingleOrder />} />
-                      <Route
-                        path="sales-channels/:salesChannelId"
-                        element={<SingleSalesChannel />}
-                      />
-                      <Route
-                        path="salesperson/:salesPersonId"
-                        element={<SingleSalesPerson />}
-                      />
-                    </Route>
-                  </Routes>
-                </Suspense>
-              </AppTheme>
-            </BrowserRouter>
+                                {/* Dynamic Routes */}
+                                <Route
+                                  path="goods/:goodId"
+                                  element={<SingleGood />}
+                                />
+                                <Route
+                                  path="services/:serviceId"
+                                  element={<SingleService />}
+                                />
+                                <Route
+                                  path="customers/:customerId"
+                                  element={<SingleCustomer />}
+                                />
+                                <Route
+                                  path="order/:orderId"
+                                  element={<SingleOrder />}
+                                />
+                                <Route
+                                  path="sales-channels/:salesChannelId"
+                                  element={<SingleSalesChannel />}
+                                />
+                                <Route
+                                  path="salesperson/:salesPersonId"
+                                  element={<SingleSalesPerson />}
+                                />
+                              </Route>
+                            </Routes>
+                          </Suspense>
+                        </AppTheme>
+                      </BrowserRouter>
+                    </ReviewsProvider>
+                  </OrdersProvider>
+                </CustomersProvider>
+              </SalesChannelsProvider>
+            </EmployeesProvider>
           </ServicesProvider>
         </GoodsProvider>
       </AuthProvider>

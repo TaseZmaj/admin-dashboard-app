@@ -38,24 +38,34 @@ const initialState: State = {
 function reducer(state: State, action: Action) {
   switch (action.type) {
     case "services/loading":
-      return { ...state, servicesLoading: true };
+      return { ...state, servicesLoading: true, servicesError: null };
     case "service/loading":
-      return { ...state, serviceLoading: true };
+      return { ...state, serviceLoading: true, servicesError: null };
     case "services/loaded":
-      return { ...state, servicesLoading: false, services: action.payload };
+      return {
+        ...state,
+        servicesLoading: false,
+        servicesError: null,
+        services: action.payload,
+      };
     case "service/loaded":
-      return { ...state, serviceLoading: false, service: action.payload };
+      return {
+        ...state,
+        serviceLoading: false,
+        servicesError: null,
+        service: action.payload,
+      };
     case "services/failedToLoad":
       return {
         ...state,
         servicesLoading: false,
-        productsError: "Services failed to load" as ServicesErrorType,
+        servicesError: "Services failed to load." as ServicesErrorType,
       };
     case "service/failedToLoad":
       return {
         ...state,
         serviceLoading: false,
-        productsError: "Service failed to load" as ServicesErrorType,
+        servicesError: "Service failed to load." as ServicesErrorType,
       };
     default:
       throw new Error(`ERROR: Unknown action type of ${action}!`);
@@ -84,31 +94,31 @@ export default function ServicesProvider({
 
     if (Services) {
       dispatch({ type: "services/loaded", payload: Services });
-      console.log("Successfully fetched products!");
+      console.log("Successfully fetched services!");
     } else {
       dispatch({ type: "services/failedToLoad" });
       throw new Error(`ERROR: ${error?.message}`);
     }
   }, [services]);
 
-  //TODO: Change the query here as to better match the needs of the
-  // Single Product Page and also redirect to said page
   const getService = useCallback(
     async (targetId: number) => {
       if (service?.id && service?.id == targetId) {
-        console.log("The service is already fetched, skipping fetch!");
+        console.log(
+          `Service #${service.id} is already fetched, skipping fetch!`
+        );
         return;
       }
       dispatch({ type: "service/loading" });
       console.log("Fetching service!");
 
-      let { data: Product, error } = await supabase
-        .from("goods")
+      const { data: Service, error } = await supabase
+        .from("services")
         .select("*")
         .eq("id", targetId)
         .single();
-      if (Product) {
-        dispatch({ type: "service/loaded", payload: Product });
+      if (Service) {
+        dispatch({ type: "service/loaded", payload: Service });
         console.log("Successfully fetched service!");
       } else {
         dispatch({ type: "service/failedToLoad" });

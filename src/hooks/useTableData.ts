@@ -2,6 +2,11 @@ import { useMemo } from "react";
 import { DataTableType } from "../utils/Types/utilTypes";
 import useGoods from "./useGoods";
 import useServices from "./useServices";
+import useEmployees from "./useEmployees";
+import useSalesChannels from "./useSalesChannels";
+import useCustomers from "./useCustomers";
+import useOrders from "./useOrders";
+import useReviews from "./useReviews";
 
 export default function useTableData(type: DataTableType) {
   switch (true) {
@@ -62,6 +67,8 @@ export default function useTableData(type: DataTableType) {
             );
           case "services/auto_ac":
             return services.filter((item) => item.type === "Auto AC service");
+          case "services/other":
+            return services.filter((item) => item.type === "Other");
           case "services":
           default:
             return services;
@@ -75,6 +82,69 @@ export default function useTableData(type: DataTableType) {
         fetchItems: getServicesList,
         fetchItem: getService,
       };
+    case type.startsWith("employees"):
+      const {
+        getEmployeesList,
+        getEmployee,
+        employees,
+        employeesLoading,
+        employeesError,
+      } = useEmployees();
+
+      const filteredEmployees = useMemo(() => {
+        if (!employees) return [];
+        switch (type) {
+          case "employees/salespersons":
+            return employees.filter((item) => item.type === "Salesperson");
+          case "employees/servicemen":
+            return employees.filter((item) => item.type === "Serviceman");
+          case "employees":
+          default:
+            return services;
+        }
+      }, [employees, type]);
+
+      return {
+        data: filteredEmployees,
+        loading: employeesLoading,
+        error: employeesError,
+        fetchItems: getEmployeesList,
+        fetchItem: getEmployee,
+      };
+    case type.startsWith("salesChannels"):
+      const {
+        getSalesChannelsList,
+        getSalesChannel,
+        salesChannels,
+        salesChannelsLoading,
+        salesChannelsError,
+      } = useSalesChannels();
+
+      const filteredSalesChannels = useMemo(() => {
+        if (!salesChannels) return [];
+        switch (type) {
+          case "sales_channels/physical_stores":
+            return salesChannels.filter(
+              (item) => item.type === "Physical store"
+            );
+          case "sales_channels/online_stores":
+            return salesChannels.filter((item) => item.type === "Online store");
+          case "sales_channels":
+          default:
+            return services;
+        }
+      }, [salesChannels, type]);
+
+      return {
+        data: filteredSalesChannels,
+        loading: salesChannelsLoading,
+        error: salesChannelsError,
+        fetchItems: getSalesChannelsList,
+        fetchItem: getSalesChannel,
+      };
+    case type.startsWith("customers"):
+    case type.startsWith("orders"):
+    case type.startsWith("reviews"):
     default:
       throw new Error(`ERROR: Invalid type ${type}`);
   }

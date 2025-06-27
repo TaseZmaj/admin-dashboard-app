@@ -32,7 +32,7 @@ CREATE TABLE public.channel_types (
 );
 CREATE TABLE public.customers (
   id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
-  name text NOT NULL,
+  name text,
   customer_type_id bigint NOT NULL,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   email text,
@@ -285,7 +285,7 @@ CREATE TABLE public.services (
   sales_price numeric NOT NULL,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   name text NOT NULL,
-  servies_type_id bigint,
+  servies_type_id bigint NOT NULL,
   cost numeric NOT NULL,
   price_without_tax numeric NOT NULL,
   CONSTRAINT services_pkey PRIMARY KEY (id),

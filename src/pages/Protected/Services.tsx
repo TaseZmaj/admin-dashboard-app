@@ -27,19 +27,19 @@ export default function Services() {
         <DataTable includeSearch={true} type="services/tires" />
 
         {/* Undercarriage repairs list TAB */}
-        <DataTable includeSearch={true} type="services/undercarriage_repair" />
+        <DataTable includeSearch={true} type="services/undercarriageRepairs" />
 
         {/* Oil filter changes list TAB */}
-        <DataTable includeSearch={true} type="services/oil_filter_change" />
+        <DataTable includeSearch={true} type="services/oilFilterChanges" />
 
         {/* Car battery services list TAB */}
-        <DataTable includeSearch={true} type="services/car_battery" />
+        <DataTable includeSearch={true} type="services/carBattery" />
 
-        {/* Auto AC services services list TAB */}
-        <DataTable includeSearch={true} type="services/auto_ac" />
+        {/* Auto AC services list TAB */}
+        <DataTable includeSearch={true} type="services/autoAc" />
 
-        {/* TODO: Add the "services/other" dataTable and list TAB */}
-        <Box></Box>
+        {/* Other services list TAB */}
+        <DataTable includeSearch={true} type="services/other" />
 
         {/* Analytics TAB */}
         <Box

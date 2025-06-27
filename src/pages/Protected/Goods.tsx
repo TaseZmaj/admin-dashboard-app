@@ -25,7 +25,7 @@ export default function Goods() {
         <DataTable includeSearch={true} type="goods/rims" />
 
         {/* Car Batteries list TAB */}
-        <DataTable includeSearch={true} type="goods/car_batteries" />
+        <DataTable includeSearch={true} type="goods/carBatteries" />
 
         {/* Analytics TAB */}
         <Box

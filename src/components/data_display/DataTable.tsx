@@ -63,8 +63,17 @@ function getComparator<Key extends keyof any>(
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// Style vars
-const goodsHeadings = ["id", "name", "type", "brand", "stock", "sales_price"];
+//Table heading names
+const goodsHeadings = [
+  "id",
+  "name",
+  "type",
+  "brand",
+  "stock",
+  "sales_price",
+  "price_without_tax",
+  "cost",
+];
 const serviceHeadings = [
   "id",
   "name",
@@ -74,55 +83,187 @@ const serviceHeadings = [
   "cost",
 ];
 
+const employeesHeadings = [
+  "id",
+  "avatar",
+  "name",
+  "type",
+  "email",
+  "job_title",
+  "is_active",
+  "employment_status",
+  "salary",
+];
+const salesChannelsHeadings = [
+  "id",
+  "name",
+  "type",
+  "address",
+  "is_active",
+  "start_date",
+  "end_date",
+];
+const customersHeadings = [
+  "id",
+  "name",
+  "type",
+  "email",
+  "phone_number",
+  "alt_phone_number",
+];
+const ordersHeadings = [
+  "id",
+  "type",
+  "customer_id",
+  "salesperson_id",
+  "delivery_status_type",
+  "order_date",
+  "shipping_cost",
+];
+const reviewsHeadings = [
+  "id",
+  "type",
+  "customer_id",
+  "rating",
+  "reviewed_item",
+];
+
 const tableHeadings: Record<DataTableType, string[]> = {
   goods: goodsHeadings,
   "goods/tires": goodsHeadings,
   "goods/rims": goodsHeadings,
-  "goods/car_batteries": goodsHeadings,
+  "goods/carBatteries": goodsHeadings,
   services: serviceHeadings,
   "services/tires": serviceHeadings,
-  "services/undercarriage_repair": serviceHeadings,
-  "services/oil_filter_change": serviceHeadings,
-  "services/car_battery": serviceHeadings,
-  "services/auto_ac": serviceHeadings,
-  employees: ["id", "name"],
-  "employees/salespersons": ["id", "name"],
-  "employees/servicemen": ["id", "name"],
-  "sales-channels": ["id", "name"],
-  customers: ["id", "name"],
-  orders: [],
-  reviews: [],
+  "services/undercarriageRepairs": serviceHeadings,
+  "services/oilFilterChanges": serviceHeadings,
+  "services/carBattery": serviceHeadings,
+  "services/autoAc": serviceHeadings,
+  "services/other": serviceHeadings,
+  employees: employeesHeadings,
+  "employees/salespersons": employeesHeadings,
+  "employees/servicemen": employeesHeadings,
+  salesChannels: salesChannelsHeadings,
+  "salesChannels/physicalStores": salesChannelsHeadings,
+  "salesChannels/onlineStores": salesChannelsHeadings,
+  customers: customersHeadings,
+  "customers/individuals": customersHeadings,
+  "customers/walkInCustomers": customersHeadings,
+  "customers/wholesalePartners": customersHeadings,
+  "customers/businessAccounts": customersHeadings,
+  orders: ordersHeadings,
+  "orders/onSite": ordersHeadings,
+  "orders/online": ordersHeadings,
+  reviews: reviewsHeadings,
+  "reviews/goods": reviewsHeadings,
+  "reviews/services": reviewsHeadings,
+  "reviews/salesChannels": reviewsHeadings,
 };
 
+// Table heading widths (column widths)
 const goodsTableHeadingSizes = {
-  id: "10%",
-  name: "40%",
+  id: "5%",
+  name: "20%",
   brand: "10%",
-  type: "13.34%",
-  stock: "13.34%",
-  price: "13.34%",
+  type: "13%",
+  stock: "7%",
+  sales_price: "15%",
+  price_without_tax: "15%",
+  cost: "15%",
 };
 
 const servicesTableHeadingSizes = {
-  id: "10%",
-  name: "40%",
-  type: "20%",
-  sales_price: "10%",
-  price_without_tax: "10%",
-  cost: "10%",
+  id: "5%",
+  name: "38%",
+  type: "12%",
+  sales_price: "15%",
+  price_without_tax: "15%",
+  cost: "15%",
 };
 
-const tableHeadingSizes = {
+const employeesTableHeadingSizes = {
+  id: "5%",
+  avatar: "10%",
+  name: "30%",
+  email: "15%",
+  job_title: "10%",
+  is_active: "10%",
+  employment_status: "10%",
+  salary: "10%",
+};
+
+const salesChannelsTableHeadingSizes = {
+  id: "5%",
+  name: "30%",
+  type: "10%",
+  address: "25%",
+  is_active: "10%",
+  start_date: "10%",
+  end_date: "10%",
+};
+
+const customersTableHeadingSizes = {
+  id: "5%",
+  name: "30%",
+  type: "10%",
+  email: "25%",
+  phone_number: "15%",
+  alt_phone_number: "15%",
+};
+
+const ordersTableHeadingSizes = {
+  id: "5%",
+  type: "11%",
+  customer_id: "7%",
+  salesperson_id: "7%",
+  delivery_status_type: "10%",
+  order_date: "10%",
+  shipping_cost: "10%",
+  //Unique columns, not included in orders
+  total_sales_price: "10%",
+  total_sales_price_without_tax: "10%",
+  cost_without_shipping: "10%", //total_sales_price + shipping_cost
+  total_cost: "10%",
+};
+
+const reviewsTableHeadingSizes = {
+  id: "5%",
+  type: "20%",
+  customer_id: "10%",
+  rating: "20%",
+  reviewed_item: "45%",
+};
+
+const tableHeadingSizes: Record<DataTableType, object> = {
   goods: goodsTableHeadingSizes,
   "goods/tires": goodsTableHeadingSizes,
   "goods/rims": goodsTableHeadingSizes,
-  "goods/car_batteries": goodsTableHeadingSizes,
+  "goods/carBatteries": goodsTableHeadingSizes,
   services: servicesTableHeadingSizes,
   "services/tires": servicesTableHeadingSizes,
-  "services/undercarriage_repair": servicesTableHeadingSizes,
-  "services/oil_filter_change": servicesTableHeadingSizes,
-  "services/car_battery": servicesTableHeadingSizes,
-  "services/auto_ac": servicesTableHeadingSizes,
+  "services/undercarriageRepairs": servicesTableHeadingSizes,
+  "services/oilFilterChanges": servicesTableHeadingSizes,
+  "services/carBattery": servicesTableHeadingSizes,
+  "services/autoAc": servicesTableHeadingSizes,
+  "services/other": servicesTableHeadingSizes,
+  employees: employeesTableHeadingSizes,
+  "employees/salespersons": employeesTableHeadingSizes,
+  "employees/servicemen": employeesTableHeadingSizes,
+  salesChannels: salesChannelsTableHeadingSizes,
+  "salesChannels/physicalStores": salesChannelsTableHeadingSizes,
+  "salesChannels/onlineStores": salesChannelsTableHeadingSizes,
+  customers: customersTableHeadingSizes,
+  "customers/individuals": customersTableHeadingSizes,
+  "customers/walkInCustomers": customersTableHeadingSizes,
+  "customers/wholesalePartners": customersTableHeadingSizes,
+  "customers/businessAccounts": customersTableHeadingSizes,
+  orders: ordersTableHeadingSizes,
+  "orders/onSite": ordersTableHeadingSizes,
+  "orders/online": ordersTableHeadingSizes,
+  reviews: reviewsTableHeadingSizes,
+  "reviews/goods": reviewsTableHeadingSizes,
+  "reviews/services": reviewsTableHeadingSizes,
+  "reviews/salesChannels": reviewsTableHeadingSizes,
 };
 
 export default function DataTable({ type, includeSearch, sx }: TableProps) {
@@ -147,6 +288,12 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
   const [dense, setDense] = useState(false);
   const [order, setOrder] = useState<Order>("asc");
   const [orderBy, setOrderBy] = useState<keyof DataTableItem>("id");
+
+  //For adjusting the table column widths
+  const tableType =
+    type.indexOf("/") !== -1
+      ? (type.slice(0, type.indexOf("/")) as keyof typeof tableHeadingSizes)
+      : type;
 
   //MUI table variables
   const visibleRows = useMemo(() => {
@@ -262,8 +409,8 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
                       key={heading}
                       sx={{
                         width:
-                          tableHeadingSizes.goods[
-                            heading as keyof typeof tableHeadingSizes.goods
+                          tableHeadingSizes[tableType][
+                            heading as keyof (typeof tableHeadingSizes)[typeof tableType]
                           ],
                       }}
                       sortDirection={orderBy === heading ? order : false}
@@ -275,7 +422,7 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
                           heading as keyof DataTableItem
                         )}
                       >
-                        {snakeCaseToNormal(heading)}
+                        {heading === "id" ? "ID" : snakeCaseToNormal(heading)}
                         {orderBy === heading ? (
                           <Box component="span" sx={visuallyHidden}>
                             {order === "desc"
@@ -289,7 +436,7 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {tableError && !tableData && !tableItemsLoading ? (
+                {tableError && !tableItemsLoading ? (
                   <TableRow key="error">
                     <TableCell colSpan={6} sx={{ border: 0, height: "561px" }}>
                       <Box
@@ -302,8 +449,7 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
                         }}
                       >
                         <ErrorBox tryAgainFunc={fetchItems}>
-                          There was a problem while trying to establish a
-                          connection to the database...
+                          {tableError}
                         </ErrorBox>
                       </Box>
                     </TableCell>
@@ -378,7 +524,13 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
                                 {tableItem.stock}
                               </TableCell>
                               <TableCell align="left">
-                                {formatPrice(tableItem.sales_price)} MKD
+                                {formatPrice(tableItem?.sales_price)} MKD
+                              </TableCell>
+                              <TableCell align="left">
+                                {formatPrice(tableItem.price_without_tax)} MKD
+                              </TableCell>
+                              <TableCell>
+                                {formatPrice(tableItem.cost)} MKD
                               </TableCell>
                             </>
                           ) : null}
@@ -412,7 +564,6 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
               </TableBody>
             </Table>
           </TableContainer>
-
           <Box
             sx={{
               borderTop: `1px solid ${palette.divider}`,

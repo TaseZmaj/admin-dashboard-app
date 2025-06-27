@@ -51,7 +51,11 @@ function reducer(state: State, action: Action) {
 
 const ErrorContext = createContext<ErrorContextType | null>(null);
 
-function ErrorProvider({ children }: { children: React.ReactNode }) {
+export default function ErrorProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [{ error, errorMessage, errorType }, dispatch] = useReducer(
     reducer,
     initialState
@@ -80,5 +84,4 @@ function ErrorProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default ErrorProvider;
 export { ErrorContext };

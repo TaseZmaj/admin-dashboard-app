@@ -38,24 +38,34 @@ const initialState: State = {
 function reducer(state: State, action: Action) {
   switch (action.type) {
     case "products/loading":
-      return { ...state, productsLoading: true };
+      return { ...state, productsLoading: true, productsError: null };
     case "product/loading":
-      return { ...state, productLoading: true };
+      return { ...state, productLoading: true, productsError: null };
     case "products/loaded":
-      return { ...state, productsLoading: false, products: action.payload };
+      return {
+        ...state,
+        productsLoading: false,
+        productsError: null,
+        products: action.payload,
+      };
     case "product/loaded":
-      return { ...state, productLoading: false, product: action.payload };
+      return {
+        ...state,
+        productLoading: false,
+        productsError: null,
+        product: action.payload,
+      };
     case "products/failedToLoad":
       return {
         ...state,
         productsLoading: false,
-        productsError: "Products failed to load" as ProductsErrorType,
+        productsError: "Products failed to load." as ProductsErrorType,
       };
     case "product/failedToLoad":
       return {
         ...state,
         productLoading: false,
-        productsError: "Product failed to load" as ProductsErrorType,
+        productsError: "Product failed to load." as ProductsErrorType,
       };
     default:
       throw new Error(`ERROR: Unknown action type of ${action}!`);
@@ -82,7 +92,9 @@ export default function GoodsProvider({
     dispatch({ type: "products/loading" });
     console.log("Fetching products!");
 
-    const { data: Goods, error } = await supabase.rpc("goods_inventory_query");
+    const { data: Goods, error } = await supabase.rpc(
+      "goods_inventory_query_v1"
+    );
 
     if (Goods) {
       dispatch({ type: "products/loaded", payload: Goods });
@@ -98,7 +110,9 @@ export default function GoodsProvider({
   const getProduct = useCallback(
     async (targetId: number) => {
       if (product?.id && product?.id == targetId) {
-        console.log("The product is already fetched, skipping fetch!");
+        console.log(
+          `Product #${product.id} is already fetched, skipping fetch!`
+        );
         return;
       }
       dispatch({ type: "product/loading" });
