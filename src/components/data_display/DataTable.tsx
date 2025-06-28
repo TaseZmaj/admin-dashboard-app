@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Fade,
   FormControlLabel,
@@ -20,7 +21,16 @@ import {
   Theme,
 } from "@mui/material";
 import { DataTableType } from "../../utils/Types/utilTypes.ts";
-import { DataTableItem } from "../../utils/Types/modelTypes.ts";
+import {
+  DataTableItem,
+  Employee,
+  Order,
+  Review,
+  Product,
+  SalesChannel,
+  Service,
+  Customer,
+} from "../../utils/Types/modelTypes.ts";
 import { useEffect, useMemo, useState } from "react";
 import { visuallyHidden } from "@mui/utils";
 import Loading from "../Loading.tsx";
@@ -31,6 +41,14 @@ import useResolvedMode from "../../hooks/useResolvedMode.ts";
 import { ErrorType } from "../../utils/Types/utilTypes.ts";
 import useTableData from "../../hooks/useTableData.ts";
 import SearchInput from "../topbar/SearchInput.tsx";
+import { tableHeadings, tableHeadingSizes } from "../../utils/UiVariables.ts";
+
+//Images
+import maleWorkerAvatar from "../../assets/avatars/maleWorkerAvatar.png";
+import MaleServiceman1 from "../../assets/avatars/MaleServicemen1.png";
+import MaleServiceman2 from "../../assets/avatars/MaleServicemen2.png";
+import FemaleSalesPerson from "../../assets/avatars/FemaleSalesPerson.png";
+import MaleSalesPerson from "../../assets/avatars/MaleSalesPerson.png";
 
 interface TableProps {
   type: DataTableType;
@@ -39,7 +57,7 @@ interface TableProps {
 }
 
 // MUI Data Table functions and types
-type Order = "asc" | "desc";
+type LocalOrder = "asc" | "desc";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -52,7 +70,7 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 }
 
 function getComparator<Key extends keyof any>(
-  order: Order,
+  order: LocalOrder,
   orderBy: Key
 ): (
   a: { [key in Key]: number | string },
@@ -62,209 +80,6 @@ function getComparator<Key extends keyof any>(
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
-
-//Table heading names
-const goodsHeadings = [
-  "id",
-  "name",
-  "type",
-  "brand",
-  "stock",
-  "sales_price",
-  "price_without_tax",
-  "cost",
-];
-const serviceHeadings = [
-  "id",
-  "name",
-  "type",
-  "sales_price",
-  "price_without_tax",
-  "cost",
-];
-
-const employeesHeadings = [
-  "id",
-  "avatar",
-  "name",
-  "type",
-  "email",
-  "job_title",
-  "is_active",
-  "employment_status",
-  "salary",
-];
-const salesChannelsHeadings = [
-  "id",
-  "name",
-  "type",
-  "address",
-  "is_active",
-  "start_date",
-  "end_date",
-];
-const customersHeadings = [
-  "id",
-  "name",
-  "type",
-  "email",
-  "phone_number",
-  "alt_phone_number",
-];
-const ordersHeadings = [
-  "id",
-  "type",
-  "customer_id",
-  "salesperson_id",
-  "delivery_status_type",
-  "order_date",
-  "shipping_cost",
-];
-const reviewsHeadings = [
-  "id",
-  "type",
-  "customer_id",
-  "rating",
-  "reviewed_item",
-];
-
-const tableHeadings: Record<DataTableType, string[]> = {
-  goods: goodsHeadings,
-  "goods/tires": goodsHeadings,
-  "goods/rims": goodsHeadings,
-  "goods/carBatteries": goodsHeadings,
-  services: serviceHeadings,
-  "services/tires": serviceHeadings,
-  "services/undercarriageRepairs": serviceHeadings,
-  "services/oilFilterChanges": serviceHeadings,
-  "services/carBattery": serviceHeadings,
-  "services/autoAc": serviceHeadings,
-  "services/other": serviceHeadings,
-  employees: employeesHeadings,
-  "employees/salespersons": employeesHeadings,
-  "employees/servicemen": employeesHeadings,
-  salesChannels: salesChannelsHeadings,
-  "salesChannels/physicalStores": salesChannelsHeadings,
-  "salesChannels/onlineStores": salesChannelsHeadings,
-  customers: customersHeadings,
-  "customers/individuals": customersHeadings,
-  "customers/walkInCustomers": customersHeadings,
-  "customers/wholesalePartners": customersHeadings,
-  "customers/businessAccounts": customersHeadings,
-  orders: ordersHeadings,
-  "orders/onSite": ordersHeadings,
-  "orders/online": ordersHeadings,
-  reviews: reviewsHeadings,
-  "reviews/goods": reviewsHeadings,
-  "reviews/services": reviewsHeadings,
-  "reviews/salesChannels": reviewsHeadings,
-};
-
-// Table heading widths (column widths)
-const goodsTableHeadingSizes = {
-  id: "5%",
-  name: "20%",
-  brand: "10%",
-  type: "13%",
-  stock: "7%",
-  sales_price: "15%",
-  price_without_tax: "15%",
-  cost: "15%",
-};
-
-const servicesTableHeadingSizes = {
-  id: "5%",
-  name: "38%",
-  type: "12%",
-  sales_price: "15%",
-  price_without_tax: "15%",
-  cost: "15%",
-};
-
-const employeesTableHeadingSizes = {
-  id: "5%",
-  avatar: "10%",
-  name: "30%",
-  email: "15%",
-  job_title: "10%",
-  is_active: "10%",
-  employment_status: "10%",
-  salary: "10%",
-};
-
-const salesChannelsTableHeadingSizes = {
-  id: "5%",
-  name: "30%",
-  type: "10%",
-  address: "25%",
-  is_active: "10%",
-  start_date: "10%",
-  end_date: "10%",
-};
-
-const customersTableHeadingSizes = {
-  id: "5%",
-  name: "30%",
-  type: "10%",
-  email: "25%",
-  phone_number: "15%",
-  alt_phone_number: "15%",
-};
-
-const ordersTableHeadingSizes = {
-  id: "5%",
-  type: "11%",
-  customer_id: "7%",
-  salesperson_id: "7%",
-  delivery_status_type: "10%",
-  order_date: "10%",
-  shipping_cost: "10%",
-  //Unique columns, not included in orders
-  total_sales_price: "10%",
-  total_sales_price_without_tax: "10%",
-  cost_without_shipping: "10%", //total_sales_price + shipping_cost
-  total_cost: "10%",
-};
-
-const reviewsTableHeadingSizes = {
-  id: "5%",
-  type: "20%",
-  customer_id: "10%",
-  rating: "20%",
-  reviewed_item: "45%",
-};
-
-const tableHeadingSizes: Record<DataTableType, object> = {
-  goods: goodsTableHeadingSizes,
-  "goods/tires": goodsTableHeadingSizes,
-  "goods/rims": goodsTableHeadingSizes,
-  "goods/carBatteries": goodsTableHeadingSizes,
-  services: servicesTableHeadingSizes,
-  "services/tires": servicesTableHeadingSizes,
-  "services/undercarriageRepairs": servicesTableHeadingSizes,
-  "services/oilFilterChanges": servicesTableHeadingSizes,
-  "services/carBattery": servicesTableHeadingSizes,
-  "services/autoAc": servicesTableHeadingSizes,
-  "services/other": servicesTableHeadingSizes,
-  employees: employeesTableHeadingSizes,
-  "employees/salespersons": employeesTableHeadingSizes,
-  "employees/servicemen": employeesTableHeadingSizes,
-  salesChannels: salesChannelsTableHeadingSizes,
-  "salesChannels/physicalStores": salesChannelsTableHeadingSizes,
-  "salesChannels/onlineStores": salesChannelsTableHeadingSizes,
-  customers: customersTableHeadingSizes,
-  "customers/individuals": customersTableHeadingSizes,
-  "customers/walkInCustomers": customersTableHeadingSizes,
-  "customers/wholesalePartners": customersTableHeadingSizes,
-  "customers/businessAccounts": customersTableHeadingSizes,
-  orders: ordersTableHeadingSizes,
-  "orders/onSite": ordersTableHeadingSizes,
-  "orders/online": ordersTableHeadingSizes,
-  reviews: reviewsTableHeadingSizes,
-  "reviews/goods": reviewsTableHeadingSizes,
-  "reviews/services": reviewsTableHeadingSizes,
-  "reviews/salesChannels": reviewsTableHeadingSizes,
-};
 
 export default function DataTable({ type, includeSearch, sx }: TableProps) {
   const { data, loading, error, fetchItems, fetchItem } = useTableData(type);
@@ -286,7 +101,7 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
   const [rowsPerPage, setRowsPerPage] = useState(25);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
-  const [order, setOrder] = useState<Order>("asc");
+  const [order, setOrder] = useState<LocalOrder>("asc");
   const [orderBy, setOrderBy] = useState<keyof DataTableItem>("id");
 
   //For adjusting the table column widths
@@ -336,16 +151,21 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
     setTableItemsLoading(loading);
   }, [data, error, loading]);
 
+  //Fetch items on mount
   useEffect(() => {
     fetchItems();
   }, []);
 
   //For filtering by name
+  //TODO: Write a better query function, where it parses the string at each " ",
+  //and looks for the words individually
+  //TODO: Adjust the query for the customers tab because some of them dont
+  //have a name
   useEffect(() => {
     setTableData(
       data.filter((item) =>
-        item.name.toLowerCase().includes(query.toLowerCase())
-      )
+        item?.name?.toLowerCase().includes(query.toLowerCase())
+      ) as typeof data
     );
   }, [query]);
 
@@ -438,11 +258,18 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
               <TableBody>
                 {tableError && !tableItemsLoading ? (
                   <TableRow key="error">
-                    <TableCell colSpan={6} sx={{ border: 0, height: "561px" }}>
+                    <TableCell
+                      colSpan={headings.length}
+                      sx={{
+                        border: 0,
+                        height: "100%" /*"561px"*/,
+                        position: "relative",
+                      }}
+                    >
                       <Box
                         sx={{
                           width: "100%",
-                          height: "100%",
+                          height: `calc(100vh - ${TopBarHeight}px - 350px)`,
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
@@ -455,10 +282,13 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
                     </TableCell>
                   </TableRow>
                 ) : null}
-                {tableItemsLoading ? (
+                {tableItemsLoading && !tableError ? (
                   <>
                     <TableRow key="tableItemsLoading">
-                      <TableCell colSpan={6} sx={{ border: 0, height: "100%" }}>
+                      <TableCell
+                        colSpan={headings.length}
+                        sx={{ border: 0, height: "100%" }}
+                      >
                         <Box
                           sx={{
                             width: "100%",
@@ -511,26 +341,35 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
                                 {tableItem.id}
                               </TableCell>
                               <TableCell align="left">
-                                {tableItem.name}&nbsp;{tableItem?.diameter}
-                                {tableItem.diameter ? <span>"</span> : null}
+                                {tableItem.name}&nbsp;
+                                {(tableItem as Product)?.diameter}
+                                {(tableItem as Product).diameter ? (
+                                  <span>"</span>
+                                ) : null}
                               </TableCell>
                               <TableCell align="left">
                                 {tableItem.type}
                               </TableCell>
                               <TableCell align="left">
-                                {tableItem.brand}
+                                {(tableItem as Product).brand}
                               </TableCell>
                               <TableCell align="left">
-                                {tableItem.stock}
+                                {(tableItem as Product).stock}
                               </TableCell>
                               <TableCell align="left">
-                                {formatPrice(tableItem?.sales_price)} MKD
+                                {formatPrice(
+                                  (tableItem as Product)?.sales_price
+                                )}
+                                MKD
                               </TableCell>
                               <TableCell align="left">
-                                {formatPrice(tableItem.price_without_tax)} MKD
+                                {formatPrice(
+                                  (tableItem as Product).price_without_tax
+                                )}
+                                MKD
                               </TableCell>
                               <TableCell>
-                                {formatPrice(tableItem.cost)} MKD
+                                {formatPrice((tableItem as Product).cost)} MKD
                               </TableCell>
                             </>
                           ) : null}
@@ -546,17 +385,192 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
                                 {tableItem.type}
                               </TableCell>
                               <TableCell align="left">
-                                {formatPrice(tableItem.sales_price)} MKD
+                                {formatPrice(
+                                  (tableItem as Service).sales_price
+                                )}{" "}
+                                MKD
                               </TableCell>
                               <TableCell align="left">
-                                {formatPrice(tableItem.price_without_tax)} MKD
+                                {formatPrice(
+                                  (tableItem as Service).price_without_tax
+                                )}{" "}
+                                MKD
                               </TableCell>
                               <TableCell>
-                                {formatPrice(tableItem.cost)} MKD
+                                {formatPrice((tableItem as Service).cost)} MKD
                               </TableCell>
                             </>
                           ) : null}
-                          {type.startsWith("employees") ? <></> : null}
+                          {type.startsWith("employees") ? (
+                            <>
+                              <TableCell component="th" scope="row">
+                                {tableItem.id}
+                              </TableCell>
+                              <TableCell align="left" sx={{ padding: "2px" }}>
+                                {(tableItem as Employee).gender == "Male" &&
+                                tableItem.type === "Serviceman" ? (
+                                  <Avatar
+                                    src={MaleServiceman1}
+                                    alt="Male serviceman avatar"
+                                  ></Avatar>
+                                ) : null}
+                                {(tableItem as Employee).gender == "Male" &&
+                                tableItem.type === "Salesperson" ? (
+                                  <Avatar
+                                    src={MaleSalesPerson}
+                                    alt="Male salesperson avatar"
+                                  ></Avatar>
+                                ) : null}
+                                {(tableItem as Employee).gender == "Female" &&
+                                tableItem.type === "Salesperson" ? (
+                                  <Avatar
+                                    src={FemaleSalesPerson}
+                                    alt="Female salesperson avatar"
+                                  ></Avatar>
+                                ) : null}
+                                {/* This is for a female serviceman */}
+                                {/* {tableItem.gender === "female" &&
+                                tableItem.type === "Serviceman" ? (
+                                  <img
+                                    src={maleWorkerAvatar}
+                                    alt="Female serviceman avatar"
+                                  ></img>
+                                ) : null} */}
+                              </TableCell>
+                              <TableCell align="left">
+                                {tableItem.name}
+                              </TableCell>
+                              <TableCell align="left">
+                                {tableItem.type}
+                              </TableCell>
+                              <TableCell align="left">
+                                {(tableItem as Employee).email}
+                              </TableCell>
+                              <TableCell align="left">
+                                {(tableItem as Employee).job_title}
+                              </TableCell>
+                              <TableCell>
+                                {(tableItem as Employee).is_active
+                                  ? "YES"
+                                  : "NO"}
+                              </TableCell>
+                              <TableCell>
+                                {(tableItem as Employee).employment_status}
+                              </TableCell>
+                              <TableCell>
+                                {formatPrice((tableItem as Employee).salary)}
+                                MKD
+                              </TableCell>
+                            </>
+                          ) : null}
+                          {type.startsWith("salesChannels") ? (
+                            <>
+                              <TableCell component="th" scope="row">
+                                {tableItem.id}
+                              </TableCell>
+                              <TableCell align="left">
+                                {tableItem.name}
+                              </TableCell>
+                              <TableCell align="left">
+                                {tableItem.type}
+                              </TableCell>
+                              <TableCell align="left">
+                                {(tableItem as SalesChannel).address}
+                              </TableCell>
+                              <TableCell align="left">
+                                {(tableItem as SalesChannel).is_active
+                                  ? "Yes"
+                                  : "No"}
+                              </TableCell>
+                              <TableCell align="left">
+                                {(
+                                  tableItem as SalesChannel
+                                ).start_date?.toDateString()}
+                              </TableCell>
+                              <TableCell align="left">
+                                {(tableItem as SalesChannel).endDate
+                                  ? (
+                                      tableItem as SalesChannel
+                                    ).endDate?.toDateString()
+                                  : "N/A"}
+                              </TableCell>
+                            </>
+                          ) : null}
+                          {type.startsWith("customers") ? (
+                            <>
+                              <TableCell component="th" scope="row">
+                                {tableItem.id}
+                              </TableCell>
+                              <TableCell align="left">
+                                {tableItem.name}
+                              </TableCell>
+                              <TableCell align="left">
+                                {tableItem.type}
+                              </TableCell>
+                              <TableCell align="left">
+                                {(tableItem as Customer).email}
+                              </TableCell>
+                              <TableCell align="left">
+                                {(tableItem as Customer).phone_number}
+                              </TableCell>
+                              <TableCell align="left">
+                                {(tableItem as Customer).alt_phone_number}
+                              </TableCell>
+                            </>
+                          ) : null}
+                          {/* NOTE: Order and Review types return an error because they are not 
+                          handeled in the useDataTable hook yet, fix that, and they will work */}
+                          {type.startsWith("orders") ? (
+                            <>
+                              <TableCell component="th" scope="row">
+                                {tableItem.id}
+                              </TableCell>
+                              <TableCell align="left">
+                                {tableItem.type}
+                              </TableCell>
+                              <TableCell align="left">
+                                {tableItem.customer_id}
+                              </TableCell>
+                              <TableCell align="left">
+                                {tableItem.salesperson_id}
+                              </TableCell>
+                              <TableCell align="left">
+                                {tableItem.delivery_status_type}
+                              </TableCell>
+                              <TableCell align="left">
+                                {new Date(
+                                  tableItem.order_date
+                                ).toLocaleDateString()}
+                              </TableCell>
+                              <TableCell align="left">
+                                {formatPrice(tableItem.shipping_cost)} MKD
+                              </TableCell>
+                            </>
+                          ) : null}
+                          {type.startsWith("reviews") ? (
+                            <>
+                              <TableCell component="th" scope="row">
+                                {tableItem.id}
+                              </TableCell>
+                              <TableCell align="left">
+                                {tableItem.type}
+                              </TableCell>
+                              <TableCell align="left">
+                                {tableItem.customer_id}
+                              </TableCell>
+                              <TableCell align="left">
+                                {tableItem.rating}
+                              </TableCell>
+                              <TableCell align="left">
+                                {/* This logic might need refinement based on how you link good/service/sales_channel for display */}
+                                {tableItem.good_id ||
+                                tableItem.service_id ||
+                                tableItem.sales_channel_id
+                                  ? "Reviewed Item"
+                                  : "N/A"}
+                              </TableCell>
+                            </>
+                          ) : null}
                         </TableRow>
                       </Tooltip>
                     ))

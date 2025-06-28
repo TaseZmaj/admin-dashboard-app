@@ -26,7 +26,7 @@ export default function useTableData(type: DataTableType) {
             return products.filter((item) => item.type === "Tire");
           case "goods/rims":
             return products.filter((item) => item.type === "Rim");
-          case "goods/car_batteries":
+          case "goods/carBatteries":
             return products.filter((item) => item.type === "Car battery");
           case "goods":
           default:
@@ -55,17 +55,17 @@ export default function useTableData(type: DataTableType) {
         switch (type) {
           case "services/tires":
             return services.filter((item) => item.type === "Tire service");
-          case "services/undercarriage_repair":
+          case "services/undercarriageRepairs":
             return services.filter(
               (item) => item.type === "Undercarriage repair"
             );
-          case "services/oil_filter_change":
+          case "services/oilFilterChanges":
             return services.filter((item) => item.type == "Oil filter change");
-          case "services/car_battery":
+          case "services/carBattery":
             return services.filter(
               (item) => item.type === "Car battery service"
             );
-          case "services/auto_ac":
+          case "services/autoAc":
             return services.filter((item) => item.type === "Auto AC service");
           case "services/other":
             return services.filter((item) => item.type === "Other");
@@ -100,7 +100,7 @@ export default function useTableData(type: DataTableType) {
             return employees.filter((item) => item.type === "Serviceman");
           case "employees":
           default:
-            return services;
+            return employees;
         }
       }, [employees, type]);
 
@@ -123,15 +123,15 @@ export default function useTableData(type: DataTableType) {
       const filteredSalesChannels = useMemo(() => {
         if (!salesChannels) return [];
         switch (type) {
-          case "sales_channels/physical_stores":
+          case "salesChannels/physicalStores":
             return salesChannels.filter(
               (item) => item.type === "Physical store"
             );
-          case "sales_channels/online_stores":
+          case "salesChannels/onlineStores":
             return salesChannels.filter((item) => item.type === "Online store");
-          case "sales_channels":
+          case "salesChannels":
           default:
-            return services;
+            return salesChannels;
         }
       }, [salesChannels, type]);
 
@@ -143,6 +143,42 @@ export default function useTableData(type: DataTableType) {
         fetchItem: getSalesChannel,
       };
     case type.startsWith("customers"):
+      const {
+        getCustomersList,
+        getCustomer,
+        customers,
+        customerLoading,
+        customersError,
+      } = useCustomers();
+
+      const filteredCustomers = useMemo(() => {
+        if (!customers) return [];
+        switch (type) {
+          case "customers/individuals":
+            return customers.filter(
+              (item) => item.type === "Individual customer"
+            );
+          case "customers/walkInCustomers":
+            return customers.filter((item) => item.type === "Walk-in customer");
+          case "customers/wholesalePartners":
+            return customers.filter(
+              (item) => item.type === "Wholesale partner"
+            );
+          case "customers/businessAccounts":
+            return customers.filter((item) => item.type === "Business account");
+          case "customers":
+          default:
+            return customers;
+        }
+      }, [customers, type]);
+
+      return {
+        data: filteredCustomers,
+        loading: customerLoading,
+        error: customersError,
+        fetchItems: getCustomersList,
+        fetchItem: getCustomer,
+      };
     case type.startsWith("orders"):
     case type.startsWith("reviews"):
     default:

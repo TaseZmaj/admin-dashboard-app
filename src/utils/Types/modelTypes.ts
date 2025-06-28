@@ -52,6 +52,7 @@ export interface Employee extends Base {
   kind: "employee";
   name: string;
 
+  gender: string;
   email: string;
   phone_number: string;
   job_title: string;
