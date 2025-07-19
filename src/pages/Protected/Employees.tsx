@@ -10,13 +10,13 @@ function Employees() {
       sx={{ width: "100%", minHeight: "100%" }}
     >
       {/* All employees List TAB */}
-      <DataTable includeSearch={true} type="employees" />
+      <DataTable type="employees" />
 
       {/* Salespersons list TAB*/}
-      <DataTable includeSearch={true} type="employees/salespersons" />
+      <DataTable type="employees/salespersons" />
 
       {/* Servicemen list TAB */}
-      <DataTable includeSearch={true} type="employees/servicemen" />
+      <DataTable type="employees/servicemen" />
 
       {/* Analytics TAB */}
       <Box

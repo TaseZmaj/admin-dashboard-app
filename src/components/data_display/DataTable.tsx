@@ -36,7 +36,11 @@ import { visuallyHidden } from "@mui/utils";
 import Loading from "../Loading.tsx";
 import { TopBarHeight } from "../../utils/UiVariables.ts";
 import ErrorBox from "../ErrorBox.tsx";
-import { formatPrice, snakeCaseToNormal } from "../../utils/stringUtils.ts";
+import {
+  formatPrice,
+  normalizeDate,
+  snakeCaseToNormal,
+} from "../../utils/stringUtils.ts";
 import useResolvedMode from "../../hooks/useResolvedMode.ts";
 import { ErrorType } from "../../utils/Types/utilTypes.ts";
 import useTableData from "../../hooks/useTableData.ts";
@@ -81,7 +85,11 @@ function getComparator<Key extends keyof any>(
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-export default function DataTable({ type, includeSearch, sx }: TableProps) {
+export default function DataTable({
+  type,
+  includeSearch = true,
+  sx,
+}: TableProps) {
   const { data, loading, error, fetchItems, fetchItem } = useTableData(type);
 
   // // Search input state
@@ -475,7 +483,9 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
                                 {tableItem.type}
                               </TableCell>
                               <TableCell align="left">
-                                {(tableItem as SalesChannel).address}
+                                {(tableItem as SalesChannel).address
+                                  ? (tableItem as SalesChannel).address
+                                  : "N/A"}
                               </TableCell>
                               <TableCell align="left">
                                 {(tableItem as SalesChannel).is_active
@@ -483,15 +493,19 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
                                   : "No"}
                               </TableCell>
                               <TableCell align="left">
-                                {(
-                                  tableItem as SalesChannel
-                                ).start_date?.toDateString()}
+                                {normalizeDate(
+                                  (
+                                    tableItem as SalesChannel
+                                  ).start_date.toString() as string
+                                )}
                               </TableCell>
                               <TableCell align="left">
-                                {(tableItem as SalesChannel).endDate
-                                  ? (
-                                      tableItem as SalesChannel
-                                    ).endDate?.toDateString()
+                                {(tableItem as SalesChannel).end_date
+                                  ? normalizeDate(
+                                      (
+                                        tableItem as SalesChannel
+                                      ).end_date?.toString() as string
+                                    )
                                   : "N/A"}
                               </TableCell>
                             </>
@@ -502,19 +516,23 @@ export default function DataTable({ type, includeSearch, sx }: TableProps) {
                                 {tableItem.id}
                               </TableCell>
                               <TableCell align="left">
-                                {tableItem.name}
+                                {tableItem.name ? tableItem.name : "N/A"}
                               </TableCell>
                               <TableCell align="left">
                                 {tableItem.type}
                               </TableCell>
                               <TableCell align="left">
-                                {(tableItem as Customer).email}
+                                {(tableItem as Customer).email
+                                  ? (tableItem as Customer).email
+                                  : "N/A"}
                               </TableCell>
                               <TableCell align="left">
                                 {(tableItem as Customer).phone_number}
                               </TableCell>
                               <TableCell align="left">
-                                {(tableItem as Customer).alt_phone_number}
+                                {(tableItem as Customer).alt_phone_number
+                                  ? (tableItem as Customer).alt_phone_number
+                                  : "N/A"}
                               </TableCell>
                             </>
                           ) : null}

@@ -16,3 +16,7 @@ export function formatPrice(price: number) {
 
   return `${formatted},00`;
 }
+export function normalizeDate(date: string) {
+  const [year, month, day] = date.split("-");
+  return `${day}/${month}/${year}`;
+}

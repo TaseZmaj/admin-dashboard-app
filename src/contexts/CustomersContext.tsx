@@ -88,9 +88,7 @@ export default function customersProvider({
     dispatch({ type: "customers/loading" });
     console.log("Fetching Customers!");
 
-    const { data: customers, error } = await supabase.rpc(
-      "customers_inventory_query"
-    );
+    const { data: customers, error } = await supabase.rpc("customers_query");
 
     if (customers) {
       dispatch({ type: "customers/loaded", payload: customers });

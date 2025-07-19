@@ -68,7 +68,7 @@ export interface SalesChannel extends Base {
   address: string;
   is_active: boolean;
   start_date: Date;
-  endDate: Date | null;
+  end_date: Date | null;
 }
 export interface Customer extends Base {
   type: CustomerTypes;

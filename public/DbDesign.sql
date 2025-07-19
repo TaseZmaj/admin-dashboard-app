@@ -21,8 +21,8 @@ CREATE TABLE public.channel_services (
   service_id bigint NOT NULL,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT channel_services_pkey PRIMARY KEY (channel_id, service_id),
-  CONSTRAINT channel_services_service_id_fkey FOREIGN KEY (service_id) REFERENCES public.services(id),
-  CONSTRAINT channel_services_channel_id_fkey FOREIGN KEY (channel_id) REFERENCES public.sales_channels(id)
+  CONSTRAINT channel_services_channel_id_fkey FOREIGN KEY (channel_id) REFERENCES public.sales_channels(id),
+  CONSTRAINT channel_services_service_id_fkey FOREIGN KEY (service_id) REFERENCES public.services(id)
 );
 CREATE TABLE public.channel_types (
   id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
@@ -60,8 +60,8 @@ CREATE TABLE public.employee_channels (
   channel_id bigint NOT NULL,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT employee_channels_pkey PRIMARY KEY (employee_id, channel_id),
-  CONSTRAINT employee_channels_channel_id_fkey FOREIGN KEY (channel_id) REFERENCES public.sales_channels(id),
-  CONSTRAINT employee_channels_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES public.employees(id)
+  CONSTRAINT employee_channels_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES public.employees(id),
+  CONSTRAINT employee_channels_channel_id_fkey FOREIGN KEY (channel_id) REFERENCES public.sales_channels(id)
 );
 CREATE TABLE public.employee_services (
   employee_id bigint NOT NULL,
@@ -120,8 +120,8 @@ CREATE TABLE public.goods_sold (
   sold_at timestamp without time zone NOT NULL DEFAULT now(),
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT goods_sold_pkey PRIMARY KEY (employee_id, good_id),
-  CONSTRAINT goods_sold_good_id_fkey FOREIGN KEY (good_id) REFERENCES public.goods(id),
-  CONSTRAINT goods_sold_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES public.salespersons(id)
+  CONSTRAINT goods_sold_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES public.salespersons(id),
+  CONSTRAINT goods_sold_good_id_fkey FOREIGN KEY (good_id) REFERENCES public.goods(id)
 );
 CREATE TABLE public.goods_types (
   id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
@@ -163,12 +163,12 @@ CREATE TABLE public.orders (
   salesperson_id bigint NOT NULL,
   sales_channel_id bigint NOT NULL,
   CONSTRAINT orders_pkey PRIMARY KEY (id),
-  CONSTRAINT orders_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES public.customers(id),
   CONSTRAINT orders_salesperson_id_fkey FOREIGN KEY (salesperson_id) REFERENCES public.salespersons(id),
-  CONSTRAINT orders_sales_channel_id_fkey FOREIGN KEY (sales_channel_id) REFERENCES public.sales_channels(id),
+  CONSTRAINT orders_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES public.customers(id),
+  CONSTRAINT orders_delivery_status_type_id_fkey FOREIGN KEY (delivery_status_type_id) REFERENCES public.delivery_status_types(id),
   CONSTRAINT orders_order_type_id_fkey FOREIGN KEY (order_type_id) REFERENCES public.orders_types(id),
   CONSTRAINT orders_payment_method_type_id_fkey FOREIGN KEY (payment_method_type_id) REFERENCES public.payment_method_types(id),
-  CONSTRAINT orders_delivery_status_type_id_fkey FOREIGN KEY (delivery_status_type_id) REFERENCES public.delivery_status_types(id)
+  CONSTRAINT orders_sales_channel_id_fkey FOREIGN KEY (sales_channel_id) REFERENCES public.sales_channels(id)
 );
 CREATE TABLE public.orders_types (
   id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
@@ -181,6 +181,14 @@ CREATE TABLE public.payment_method_types (
   name text NOT NULL,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT payment_method_types_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.physical_channels (
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL UNIQUE,
+  address text NOT NULL,
+  has_parking boolean NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT physical_channels_pkey PRIMARY KEY (id),
+  CONSTRAINT physical_channels_id_fkey FOREIGN KEY (id) REFERENCES public.sales_channels(id)
 );
 CREATE TABLE public.review_types (
   id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
@@ -198,8 +206,8 @@ CREATE TABLE public.reviews (
   edited boolean NOT NULL DEFAULT false,
   rating smallint NOT NULL,
   CONSTRAINT reviews_pkey PRIMARY KEY (id),
-  CONSTRAINT reviews_review_type_id_fkey FOREIGN KEY (review_type_id) REFERENCES public.review_types(id),
-  CONSTRAINT reviews_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES public.customers(id)
+  CONSTRAINT reviews_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES public.customers(id),
+  CONSTRAINT reviews_review_type_id_fkey FOREIGN KEY (review_type_id) REFERENCES public.review_types(id)
 );
 CREATE TABLE public.reviews_for_goods (
   id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
@@ -207,8 +215,8 @@ CREATE TABLE public.reviews_for_goods (
   created_at timestamp with time zone NOT NULL,
   customer_id bigint,
   CONSTRAINT reviews_for_goods_pkey PRIMARY KEY (id),
-  CONSTRAINT reviews_for_goods_id_fkey FOREIGN KEY (id) REFERENCES public.reviews(id),
-  CONSTRAINT reviews_for_goods_good_id_fkey FOREIGN KEY (good_id) REFERENCES public.goods(id)
+  CONSTRAINT reviews_for_goods_good_id_fkey FOREIGN KEY (good_id) REFERENCES public.goods(id),
+  CONSTRAINT reviews_for_goods_id_fkey FOREIGN KEY (id) REFERENCES public.reviews(id)
 );
 CREATE TABLE public.reviews_for_sales_channels (
   id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
@@ -271,8 +279,8 @@ CREATE TABLE public.service_providers (
   employee_id bigint NOT NULL,
   CONSTRAINT service_providers_pkey PRIMARY KEY (order_id, service_id, employee_id),
   CONSTRAINT service_providers_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES public.employees(id),
-  CONSTRAINT service_providers_service_id_fkey FOREIGN KEY (service_id) REFERENCES public.services(id),
-  CONSTRAINT service_providers_order_id_fkey FOREIGN KEY (order_id) REFERENCES public.orders(id)
+  CONSTRAINT service_providers_order_id_fkey FOREIGN KEY (order_id) REFERENCES public.orders(id),
+  CONSTRAINT service_providers_service_id_fkey FOREIGN KEY (service_id) REFERENCES public.services(id)
 );
 CREATE TABLE public.servicemen (
   id bigint NOT NULL UNIQUE,
