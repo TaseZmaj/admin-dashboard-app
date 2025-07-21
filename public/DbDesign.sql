@@ -48,28 +48,21 @@ CREATE TABLE public.customers_types (
   description text,
   CONSTRAINT customers_types_pkey PRIMARY KEY (id)
 );
-CREATE TABLE public.delivery_status_types (
-  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
-  name text NOT NULL,
-  created_at timestamp with time zone NOT NULL DEFAULT now(),
-  description text NOT NULL,
-  CONSTRAINT delivery_status_types_pkey PRIMARY KEY (id)
-);
 CREATE TABLE public.employee_channels (
   employee_id bigint NOT NULL,
   channel_id bigint NOT NULL,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT employee_channels_pkey PRIMARY KEY (employee_id, channel_id),
-  CONSTRAINT employee_channels_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES public.employees(id),
-  CONSTRAINT employee_channels_channel_id_fkey FOREIGN KEY (channel_id) REFERENCES public.sales_channels(id)
+  CONSTRAINT employee_channels_channel_id_fkey FOREIGN KEY (channel_id) REFERENCES public.sales_channels(id),
+  CONSTRAINT employee_channels_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES public.employees(id)
 );
 CREATE TABLE public.employee_services (
   employee_id bigint NOT NULL,
   service_id bigint NOT NULL,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT employee_services_pkey PRIMARY KEY (employee_id, service_id),
-  CONSTRAINT employee_services_service_id_fkey FOREIGN KEY (service_id) REFERENCES public.services(id),
-  CONSTRAINT employee_services_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES public.servicemen(id)
+  CONSTRAINT employee_services_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES public.servicemen(id),
+  CONSTRAINT employee_services_service_id_fkey FOREIGN KEY (service_id) REFERENCES public.services(id)
 );
 CREATE TABLE public.employees (
   id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
@@ -111,8 +104,8 @@ CREATE TABLE public.goods_in_channels (
   price numeric NOT NULL,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT goods_in_channels_pkey PRIMARY KEY (channel_id, good_id),
-  CONSTRAINT goods_in_channels_channel_id_fkey FOREIGN KEY (channel_id) REFERENCES public.sales_channels(id),
-  CONSTRAINT goods_in_channels_good_id_fkey FOREIGN KEY (good_id) REFERENCES public.goods(id)
+  CONSTRAINT goods_in_channels_good_id_fkey FOREIGN KEY (good_id) REFERENCES public.goods(id),
+  CONSTRAINT goods_in_channels_channel_id_fkey FOREIGN KEY (channel_id) REFERENCES public.sales_channels(id)
 );
 CREATE TABLE public.goods_sold (
   employee_id bigint NOT NULL,
@@ -120,8 +113,8 @@ CREATE TABLE public.goods_sold (
   sold_at timestamp without time zone NOT NULL DEFAULT now(),
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT goods_sold_pkey PRIMARY KEY (employee_id, good_id),
-  CONSTRAINT goods_sold_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES public.salespersons(id),
-  CONSTRAINT goods_sold_good_id_fkey FOREIGN KEY (good_id) REFERENCES public.goods(id)
+  CONSTRAINT goods_sold_good_id_fkey FOREIGN KEY (good_id) REFERENCES public.goods(id),
+  CONSTRAINT goods_sold_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES public.salespersons(id)
 );
 CREATE TABLE public.goods_types (
   id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
@@ -130,6 +123,48 @@ CREATE TABLE public.goods_types (
   tax_amount numeric NOT NULL,
   CONSTRAINT goods_types_pkey PRIMARY KEY (id)
 );
+CREATE TABLE public.online_channels (
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT online_channels_pkey PRIMARY KEY (id),
+  CONSTRAINT online_channels_id_fkey FOREIGN KEY (id) REFERENCES public.sales_channels(id)
+);
+CREATE TABLE public.online_delivery_status_types (
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+  name text NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  description text NOT NULL,
+  CONSTRAINT online_delivery_status_types_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.online_orders (
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  delivery_status_type_id bigint NOT NULL,
+  shipping_price numeric,
+  shipping_price_without_tax numeric NOT NULL,
+  online_channel_id bigint NOT NULL,
+  CONSTRAINT online_orders_pkey PRIMARY KEY (id),
+  CONSTRAINT online_orders_delivery_status_type_id_fkey FOREIGN KEY (delivery_status_type_id) REFERENCES public.online_delivery_status_types(id),
+  CONSTRAINT online_orders_online_channel_id_fkey FOREIGN KEY (online_channel_id) REFERENCES public.online_channels(id),
+  CONSTRAINT online_orders_id_fkey FOREIGN KEY (id) REFERENCES public.orders(id)
+);
+CREATE TABLE public.onsite_order_status_types (
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+  name text NOT NULL,
+  description text NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT onsite_order_status_types_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.onsite_orders (
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+  status_type_id bigint NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  physical_channel_id bigint NOT NULL,
+  CONSTRAINT onsite_orders_pkey PRIMARY KEY (id),
+  CONSTRAINT onsite_orders_id_fkey FOREIGN KEY (id) REFERENCES public.orders(id),
+  CONSTRAINT onsite_orders_status_type_id_fkey FOREIGN KEY (status_type_id) REFERENCES public.onsite_order_status_types(id),
+  CONSTRAINT onsite_orders_physical_channel_id_fkey FOREIGN KEY (physical_channel_id) REFERENCES public.physical_channels(id)
+);
 CREATE TABLE public.order_goods (
   id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
   order_id bigint NOT NULL,
@@ -137,8 +172,8 @@ CREATE TABLE public.order_goods (
   quantity numeric NOT NULL,
   added_at timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT order_goods_pkey PRIMARY KEY (id),
-  CONSTRAINT order_goods_good_id_fkey FOREIGN KEY (good_id) REFERENCES public.goods(id),
-  CONSTRAINT order_goods_order_id_fkey FOREIGN KEY (order_id) REFERENCES public.orders(id)
+  CONSTRAINT order_goods_order_id_fkey FOREIGN KEY (order_id) REFERENCES public.orders(id),
+  CONSTRAINT order_goods_good_id_fkey FOREIGN KEY (good_id) REFERENCES public.goods(id)
 );
 CREATE TABLE public.order_services (
   order_id bigint NOT NULL,
@@ -147,28 +182,23 @@ CREATE TABLE public.order_services (
   price_at_time numeric NOT NULL,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT order_services_pkey PRIMARY KEY (order_id, service_id),
-  CONSTRAINT fk_service FOREIGN KEY (service_id) REFERENCES public.services(id),
-  CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES public.orders(id)
+  CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES public.orders(id),
+  CONSTRAINT fk_service FOREIGN KEY (service_id) REFERENCES public.services(id)
 );
 CREATE TABLE public.orders (
   id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
   customer_id bigint NOT NULL,
   order_date date NOT NULL,
   order_type_id bigint NOT NULL,
-  shipping_cost numeric NOT NULL,
   payment_method_type_id bigint NOT NULL,
-  delivery_status_type_id bigint NOT NULL,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
-  comment text NOT NULL,
+  comment text,
   salesperson_id bigint NOT NULL,
-  sales_channel_id bigint NOT NULL,
   CONSTRAINT orders_pkey PRIMARY KEY (id),
-  CONSTRAINT orders_salesperson_id_fkey FOREIGN KEY (salesperson_id) REFERENCES public.salespersons(id),
-  CONSTRAINT orders_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES public.customers(id),
-  CONSTRAINT orders_delivery_status_type_id_fkey FOREIGN KEY (delivery_status_type_id) REFERENCES public.delivery_status_types(id),
-  CONSTRAINT orders_order_type_id_fkey FOREIGN KEY (order_type_id) REFERENCES public.orders_types(id),
   CONSTRAINT orders_payment_method_type_id_fkey FOREIGN KEY (payment_method_type_id) REFERENCES public.payment_method_types(id),
-  CONSTRAINT orders_sales_channel_id_fkey FOREIGN KEY (sales_channel_id) REFERENCES public.sales_channels(id)
+  CONSTRAINT orders_salesperson_id_fkey FOREIGN KEY (salesperson_id) REFERENCES public.salespersons(id),
+  CONSTRAINT orders_order_type_id_fkey FOREIGN KEY (order_type_id) REFERENCES public.orders_types(id),
+  CONSTRAINT orders_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES public.customers(id)
 );
 CREATE TABLE public.orders_types (
   id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
@@ -278,9 +308,9 @@ CREATE TABLE public.service_providers (
   service_id bigint NOT NULL,
   employee_id bigint NOT NULL,
   CONSTRAINT service_providers_pkey PRIMARY KEY (order_id, service_id, employee_id),
+  CONSTRAINT service_providers_service_id_fkey FOREIGN KEY (service_id) REFERENCES public.services(id),
   CONSTRAINT service_providers_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES public.employees(id),
-  CONSTRAINT service_providers_order_id_fkey FOREIGN KEY (order_id) REFERENCES public.orders(id),
-  CONSTRAINT service_providers_service_id_fkey FOREIGN KEY (service_id) REFERENCES public.services(id)
+  CONSTRAINT service_providers_order_id_fkey FOREIGN KEY (order_id) REFERENCES public.orders(id)
 );
 CREATE TABLE public.servicemen (
   id bigint NOT NULL UNIQUE,

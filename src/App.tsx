@@ -80,6 +80,15 @@ export default function App() {
 
   //TODO: Dim the colors in the SideNavBar menu Dividers
 
+  // IMPORTANT TODO: Make the search bar appear on each of the relevant columns in the table.
+  // So the search should work with every column not just the "name" column.
+  // Make a small search icon that is next to the sort ascending/decending icon and
+  // make sure that a small tab opens up (look at Refine.dev's dashboard, make it just like
+  //that one)
+
+  //TODO: Make a global state for the rows per page and the dense trigger so that they
+  //remain activated.  Sync it with the local state in the DataTable
+
   return (
     <ErrorProvider>
       <AuthProvider>

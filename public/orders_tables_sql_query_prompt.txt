@@ -1,0 +1,155 @@
+SQL:
+
+CREATE TABLE public.orders (
+
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+
+  customer_id bigint NOT NULL,
+
+  order_date date NOT NULL,
+
+  order_type_id bigint NOT NULL,
+
+  payment_method_type_id bigint NOT NULL,
+
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+
+  comment text,
+
+  salesperson_id bigint NOT NULL,
+
+  CONSTRAINT orders_pkey PRIMARY KEY (id),
+
+  CONSTRAINT orders_payment_method_type_id_fkey FOREIGN KEY (payment_method_type_id) REFERENCES public.payment_method_types(id),
+
+  CONSTRAINT orders_salesperson_id_fkey FOREIGN KEY (salesperson_id) REFERENCES public.salespersons(id),
+
+  CONSTRAINT orders_order_type_id_fkey FOREIGN KEY (order_type_id) REFERENCES public.orders_types(id),
+
+  CONSTRAINT orders_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES public.customers(id)
+
+);
+
+CREATE TABLE public.orders_types (
+
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+
+  names text NOT NULL,
+
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+
+  CONSTRAINT orders_types_pkey PRIMARY KEY (id)
+
+);
+
+CREATE TABLE public.payment_method_types (
+
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+
+  name text NOT NULL,
+
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+
+  CONSTRAINT payment_method_types_pkey PRIMARY KEY (id)
+
+);
+
+CREATE TABLE public.online_orders (
+
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+
+  delivery_status_type_id bigint NOT NULL,
+
+  shipping_price numeric,
+
+  shipping_price_without_tax numeric NOT NULL,
+
+  online_channel_id bigint NOT NULL,
+
+  CONSTRAINT online_orders_pkey PRIMARY KEY (id),
+
+  CONSTRAINT online_orders_delivery_status_type_id_fkey FOREIGN KEY (delivery_status_type_id) REFERENCES public.online_delivery_status_types(id),
+
+  CONSTRAINT online_orders_online_channel_id_fkey FOREIGN KEY (online_channel_id) REFERENCES public.online_channels(id),
+
+  CONSTRAINT online_orders_id_fkey FOREIGN KEY (id) REFERENCES public.orders(id)
+
+);
+
+CREATE TABLE public.onsite_orders (
+
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+
+  status_type_id bigint NOT NULL,
+
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+
+  physical_channel_id bigint NOT NULL,
+
+  CONSTRAINT onsite_orders_pkey PRIMARY KEY (id),
+
+  CONSTRAINT onsite_orders_id_fkey FOREIGN KEY (id) REFERENCES public.orders(id),
+
+  CONSTRAINT onsite_orders_status_type_id_fkey FOREIGN KEY (status_type_id) REFERENCES public.onsite_order_status_types(id),
+
+  CONSTRAINT onsite_orders_physical_channel_id_fkey FOREIGN KEY (physical_channel_id) REFERENCES public.physical_channels(id)
+
+);
+
+CREATE TABLE public.online_delivery_status_types (
+
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+
+  name text NOT NULL,
+
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+
+  description text NOT NULL,
+
+  CONSTRAINT online_delivery_status_types_pkey PRIMARY KEY (id)
+
+);
+
+CREATE TABLE public.onsite_order_status_types (
+
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+
+  name text NOT NULL,
+
+  description text NOT NULL,
+
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+
+  CONSTRAINT onsite_order_status_types_pkey PRIMARY KEY (id)
+
+);
+
+
+
+I need na SQL query that fills up the orders table, online_orders table and onsite_orders table based on the criteria below.
+
+1. Make sure that there are 275 orders in total in the orders table.  
+
+2. The online_orders table includes the orders that have an order_type_id of 1 and the onsite_orders table includes the orders that have and order_type_id of 2.  So, the orders table, onsite_orders and online_orders tables need to be filled up accordingly.
+
+3. In the orders table, make sure the customer_id's range from 1-100.  Make sure that customers with an id of 56,7,37,21,112,77 have the most orders, customers 137, 33, 105, 120, 27, 2, 83, 62, 95, 127, 52, 17, 45, 89, 71 and 11 have around 2-3 orders each and the rest have just 1 or 0 orders each.
+
+4. The payment_method_type_id in the orders table needs to either be 1, 2 or 3.  Make sure the 275 orders that are supposed to fill up the orders table be 33% of each number.
+
+5. Make sure the order_date in the orders_table is between 15/02/1999 and today's date
+
+6. In the online_orders table, make 60% of the orders have a delivery_status_type_id of 3, 20% an id of 2, 10% an id of 4 and 10% and id of 1.  The same goes for the onsite_orders_table.
+
+7. The online_channel_id in the online_orders table has to be either 12 or 13.  Make it be a 50-50 split between the two.
+
+8. Make the shipping_price in the online_orders table be between 100 and 300 and make the shipping_price_without_tax be the same number as the shipping_price for that particullar order but multiply it by 0.82
+
+9. In the onsite_orders table, make sure the physical_channel_id is between 2 and 11 with an even split in each.
+
+10. Make the sales_person_id be an even number from 2-32
+
+
+
+Please ask me questions if I missed out on specifying what a certain columns contents should be.
