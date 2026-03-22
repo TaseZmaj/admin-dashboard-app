@@ -1,4 +1,4 @@
-# Administrator Dashboard App
+# Administrator Dashboard
 
 A work-in-progress project for my portfolio designed with React, Material UI and Firebase.
 
