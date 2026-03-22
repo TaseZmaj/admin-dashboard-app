@@ -31,7 +31,7 @@ pipeline {
 
   }
   environment {
-    IMAGE_NAME = 'TaseZmaj/admin-dashboard-app'
+    IMAGE_NAME = 'tasezmaj/admin-dashboard-app'
     REGISTRY_CREDS = 'dockerhub'
   }
   post {
