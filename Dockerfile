@@ -4,6 +4,7 @@ WORKDIR /app
 # Copy dependency files and install
 COPY package*.json ./
 RUN npm install
+RUN npm install --include=dev
 
 # Copy everything else
 COPY . .
