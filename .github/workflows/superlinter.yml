@@ -19,7 +19,12 @@ jobs:
 
       # Runs the Super-Linter action
       - name: Run Super-Linter
-        uses: github/super-linter@v3
+        uses: super-linter/super-linter/slim@v5
         env:
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Since this is a React app, we can disable linters we don't need to speed it up
+          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_JAVASCRIPT_ESLINT: true
+          VALIDATE_JAVASCRIPT_PRETTIER: true
+          VALIDATE_JSON: true
